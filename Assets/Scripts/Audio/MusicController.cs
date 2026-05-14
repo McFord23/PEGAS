@@ -4,11 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class MusicController : MonoBehaviour
 {
-    public AudioSource flyingMusic;
-    public AudioSource pauseMusic;
-    public AudioSource menuMusic;
-    public AudioSource victoryMusic;
-    public AudioSource creditsMusic;
+    private AudioSource flyingMusic;
+    private AudioSource pauseMusic;
+    private AudioSource menuMusic;
+    private AudioSource victoryMusic;
+    private AudioSource creditsMusic;
 
     AudioSource celestiaMenuStart;
     AudioSource celestiaMenuLoop;
@@ -34,7 +34,7 @@ public class MusicController : MonoBehaviour
                 celestiaMenuLoop = transform.Find("Celestia Menu (loop)").GetComponentInChildren<AudioSource>();
                 lunaMenu = transform.Find("Luna Menu").GetComponentInChildren<AudioSource>();
 
-                switch (Save.players[0].character)
+                switch (Global.players[0].character)
                 {
                     case Character.Luna:
                         menuMusic = lunaMenu;
@@ -56,7 +56,7 @@ public class MusicController : MonoBehaviour
                 celestiaPause = transform.Find("Celestia Pause").GetComponentInChildren<AudioSource>();
                 victoryMusic = transform.Find("Victory").GetComponentInChildren<AudioSource>();
 
-                switch (Save.players[0].character)
+                switch (Global.players[0].character)
                 {
                     case Character.Luna:
                         flyingMusic = lunaFlying;
@@ -83,7 +83,7 @@ public class MusicController : MonoBehaviour
         switch (scene)
         {
             case "Main Menu":
-                if (Save.players[0].character == Character.Celestia && !menuMusic.isPlaying)
+                if (Global.players[0].character == Character.Celestia && !menuMusic.isPlaying)
                 {
                     menuMusic.Stop();
                     menuMusic = celestiaMenuLoop;
@@ -92,7 +92,7 @@ public class MusicController : MonoBehaviour
                 break;
 
             case "Game":
-                if (Save.players[0].character == Character.Celestia && !(flyingMusic.loop) && (flyingMusic.time >= 116.5f))
+                if (Global.players[0].character == Character.Celestia && !(flyingMusic.loop) && (flyingMusic.time >= 116.5f))
                 {
                     flyingMusic.Stop();
                     flyingMusic = celestiaFlyingLoop;

@@ -13,103 +13,69 @@ public class Windigo : MonoBehaviour
     private MoveState saveState;
 
     private Rigidbody2D rb;
-    private MoveState moveState;
-
-    private WindigosManager windigosManager;
-    private SoundController soundController;
+    private MoveState moveState = MoveState.Alive;
 
     public enum MoveState
     {
-        FreeFall,
-        Flap,
+        Alive,
         Dead,
-        Paused,
-        Winner
+        Paused
     }
 
     private CollectingItem item;
 
-    public MoveState GetMoveState()
-    {
-        return moveState;
-    }
-
     public void Start()
     {
-        windigosManager = transform.parent.GetComponent<WindigosManager>();
-        soundController = windigosManager.soundController;
-
         rb = GetComponent<Rigidbody2D>();
         rb.drag = Mathf.Epsilon;
         aspectRatio = (wingSpan * wingSpan) / wingArea;
-        
-        FreeFall();
     }
 
     private void FixedUpdate()
     {
-        if (moveState == MoveState.Flap || moveState == MoveState.FreeFall)
+        if (moveState == MoveState.Alive)
         {
             FlyPhysics();
             Flap(speed);
         }
     }
 
-    public void Reset()
-    {
-        moveState = MoveState.FreeFall;
-        rb.velocity = new Vector2(0, 0);
-        rb.angularVelocity = 0f;
-    }
-
     public void Pause()
     {
         saveState = moveState;
         saveDirection = rb.velocity;
-
         moveState = MoveState.Paused;
-
-        rb.gravityScale = 0f;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     public void Resume()
     {
         moveState = saveState;
-
-        rb.gravityScale = 1f;
         rb.constraints = RigidbodyConstraints2D.None;
         rb.AddForce(saveDirection * 100, ForceMode2D.Impulse);
     }
 
-    public void FreeFall()
+    private void Flap(float flapForce)
     {
-        moveState = MoveState.FreeFall;
-    }
-
-    public void Flap(float flapForce)
-    {
-        float gear;
-
-        moveState = MoveState.Flap;
-
-        gear = (speed < 20) ? 2 : 1;
-        rb.AddForce(transform.right * gear * flapForce);
+        float gear = (speed < 20) ? 2 : 1;
+        rb.AddForce(transform.right * (gear * flapForce));
     }
 
     private void FlyPhysics()
     {
-        var localVelocity = transform.InverseTransformDirection(rb.velocity);
+        var velocity = rb.velocity;
+        var localVelocity = transform.InverseTransformDirection(velocity);
         var angleOfAttack = Mathf.Atan2(localVelocity.y, localVelocity.x);
 
         var inducedLift = angleOfAttack * (aspectRatio / (aspectRatio + 2f)) * 2f * Mathf.PI;
         var inducedDrag = (inducedLift * inducedLift) / (aspectRatio * Mathf.PI);
-        var pressure = rb.velocity.sqrMagnitude * 1.2754f * 0.5f * wingArea;
+        
+        var pressure = velocity.sqrMagnitude * 1.2754f * 0.5f * wingArea;
 
         var lift = inducedLift * pressure;
         var drag = (0.021f + inducedDrag) * pressure;
 
-        var dragDirection = -(Vector3)rb.velocity.normalized;
+        var dragDirection = -(Vector3)velocity.normalized;
         var liftDirection = Vector3.Cross(dragDirection, -transform.forward);
 
         // Lift + Drag = Total Force
@@ -118,22 +84,21 @@ public class Windigo : MonoBehaviour
 
     private void Dead()
     {
-        soundController.Hit();
         gameObject.layer = 8;
         moveState = MoveState.Dead;
 
-        if (item != null)
+        if (item)
         {
-            item.Drop();
+            item.ExecuteDrop();
             item = null;
         }
     }
 
-    public void Destroy()
+    public void Destroy(bool ignoreDeath = false)
     {
-        if (moveState == MoveState.Dead)
+        if (moveState == MoveState.Dead || ignoreDeath)
         {
-            windigosManager.Remove(this);
+            WindigoDestructor.Instance.Destruct(this, ignoreDeath);
         }
     }
 
@@ -144,10 +109,13 @@ public class Windigo : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Item") && item == null && moveState != MoveState.Dead)
+        if (!collider.gameObject.CompareTag("Item") || item || moveState == MoveState.Dead) return;
+        var tempItem = collider.gameObject.GetComponent<CollectingItem>();
+            
+        if (!tempItem.owner)
         {
-            item = collider.gameObject.GetComponent<CollectingItem>();
-            item.Pickup(transform);
+            item = tempItem;
+            item.ExecutePickUp(transform);
         }
     }
 }

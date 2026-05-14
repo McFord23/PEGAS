@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3734004042074135047}
   - component: {fileID: 3734004042074135046}
   - component: {fileID: 3734004042074135041}
-  - component: {fileID: 2088591325440761485}
   - component: {fileID: 55147781497375240}
+  - component: {fileID: 4881339465272396404}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Player
@@ -174,20 +174,6 @@ PolygonCollider2D:
       - {x: -0.4723282, y: 0.21483803}
       - {x: -0.6605914, y: -0.011436179}
     - - {x: -0.8918919, y: -0.16216217}
---- !u!114 &2088591325440761485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734004042074135043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
-  m_Animator: {fileID: 3734004042074135047}
 --- !u!61 &55147781497375240
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -201,7 +187,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: -0.04, y: -0.68}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -212,8 +198,22 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7, y: 1}
+  m_Size: {x: 1.14, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &4881339465272396404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734004042074135043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3dd64186a5c9f2418530bd35fe0785a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 3734004042074135047}
 --- !u!1 &3734004042316625641
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,8 +227,7 @@ GameObject:
   - component: {fileID: 3734004042316625644}
   - component: {fileID: 3734004042316625647}
   - component: {fileID: -3278046268591591839}
-  - component: {fileID: 4850285604553141154}
-  - component: {fileID: 6107939530409559665}
+  - component: {fileID: 8116140972711799174}
   m_Layer: 8
   m_Name: Celestia
   m_TagString: Player
@@ -287,10 +286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crushEffectPrefab: {fileID: 5466016915314235085, guid: 52dd9e522eea9ec41b12d0432fe4bd1a, type: 3}
-  speed: 0
-  angle: 1
-  angleOfAttack: 0
-  landed: 1
   spawnPos: {x: 0, y: 0}
   moveState: 1
   wingSpan: 6
@@ -323,7 +318,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &4850285604553141154
+--- !u!114 &8116140972711799174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -332,33 +327,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3734004042316625641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34ffb5119b103f14e8baa98f7b14f93e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 0
-  SyncRotAngleY: 0
-  SyncRotAngleZ: 1
-  SyncScaleX: 0
-  SyncScaleY: 0
-  SyncScaleZ: 0
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
---- !u!114 &6107939530409559665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734004042316625641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e411944faa27b74ea9e0b468f3c6805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3734004042583969504
@@ -405,5 +374,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309d4228dc0fab249b15381c5604803d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
   fireball: {fileID: 3971052911475143570, guid: 3ae58ac55a2ff5d4bb5c5210413b9e1f, type: 3}

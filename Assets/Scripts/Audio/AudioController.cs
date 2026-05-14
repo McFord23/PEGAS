@@ -14,21 +14,21 @@ public class AudioController : MonoBehaviour
     void Start()
     {
         volume.value = AudioListener.volume;
-        soundToggle.isOn = Save.sound;
-        musicToggle.isOn = Save.music;
+        soundToggle.isOn = Global.sound;
+        musicToggle.isOn = Global.music;
     }
 
     public void EnableSound(bool value)
     {
-        Save.sound = value;
-        if (Save.sound) mixer.audioMixer.SetFloat("SoundVolume", 0); //dB
+        Global.sound = value;
+        if (Global.sound) mixer.audioMixer.SetFloat("SoundVolume", 0); //dB
         else mixer.audioMixer.SetFloat("SoundVolume", -80); //dB
     }
 
     public void EnableMusic(bool value)
     {
-        Save.music = value;
-        if (Save.music) mixer.audioMixer.SetFloat("MusicVolume", -6); //dB
+        Global.music = value;
+        if (Global.music) mixer.audioMixer.SetFloat("MusicVolume", -6); //dB
         else mixer.audioMixer.SetFloat("MusicVolume", -80); //dB
     }
 

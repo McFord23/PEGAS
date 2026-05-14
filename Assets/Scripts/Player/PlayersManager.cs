@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Enums;
+using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayersManager : SingletonBehaviour<PlayersManager>
+public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 {
     private Player[] players = new Player[2];
     private PlayerController[] playerControllers = new PlayerController[2];
@@ -29,11 +30,15 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
         playerControllers[spawnPlayerNum] = newPlayer.GetComponent<PlayerController>();
     }
 
-    void Update()
+    private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton5))
         {
+            if (players[0].moveState == MoveState.Paused)
+            {
+                EventAdapter.Instance.Execute(EventKey.Resume);
+            }
+            
             Reset();
         }
 
@@ -44,7 +49,7 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
             if (players[0].moveState == MoveState.Dead && players[1].moveState == MoveState.Dead) return;
             if (Input.GetButtonDown("Cancel"))
             {
-                Pause();
+                EventAdapter.Instance.Execute(EventKey.Pause);
             }
         }
         else if (players[0])
@@ -54,7 +59,7 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
             
             if (Input.GetButtonDown("Cancel"))
             {
-                Pause();
+                EventAdapter.Instance.Execute(EventKey.Pause);
             }
         }
     }
@@ -85,17 +90,21 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
 
     public float GetSpeed()
     {
-        if (!players[0] && !players[1])
+        switch (Global.gameMode)
         {
-            return 0;
-        }
-        
-        if(HaveOtherPlayer)
-        {
-            return (players[1].speed + players[0].speed) / 2;
-        }
+            case GameMode.Single:
+            case GameMode.Host when HaveBothPlayers:
+                return players[0].speed;
 
-        return players[0].speed;
+            case GameMode.Client when HaveBothPlayers:
+                return players[1].speed;
+            
+            case GameMode.LocalCoop when HaveBothPlayers:
+                return (players[1].speed + players[0].speed) / 2;
+            
+            default:
+                return 0;
+        }
     }
 
     public float GetDirection()
@@ -114,7 +123,6 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
     {
         players[0]?.Pause();
         players[1]?.Pause();
-
         PauseEvent.Invoke();
     }
 
@@ -122,7 +130,6 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
     {
         players[0]?.Resume();
         players[1]?.Resume();
-
         ResumeEvent.Invoke();
     }
 
@@ -137,17 +144,17 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
         {
             if (players[0].moveState == MoveState.Dead && players[1].moveState != MoveState.Dead)
             {
-                Save.players[0].live = false;
+                Global.players[0].live = false;
             }
             else if (players[0].moveState != MoveState.Dead && players[1].moveState == MoveState.Dead)
             {
-                Save.players[1].live = false;
+                Global.players[1].live = false;
             }
             else DeadEvent.Invoke();
         }
         else
         {
-            Save.players[0].live = false;
+            Global.players[0].live = false;
             DeadEvent.Invoke();
         }
     }
@@ -155,10 +162,10 @@ public class PlayersManager : SingletonBehaviour<PlayersManager>
     public void Reset()
     {
         players[0]?.Revive();
-        Save.players[0].live = true;
+        Global.players[0].live = true;
 
         players[1]?.Revive();
-        Save.players[1].live = true;
+        Global.players[1].live = true;
 
         ResetEvent.Invoke();
     }

@@ -1,53 +1,65 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 public class CollectingItem : MonoBehaviour
 {
-    private Vector3 spawnPos = new Vector3(25, 23, 0);
+    public Transform owner;
+
+    private Vector3 spawnPos;
     private Quaternion spawnRot;
 
     private BoxCollider2D trigger;
-
-    public UnityEvent VictoryEvent;
+    private ItemAdapter adapter;
 
     private void Start()
     {
         trigger = GetComponent<BoxCollider2D>();
+        adapter = GetComponent<ItemAdapter>();
 
-        transform.position = spawnPos;
-        spawnRot = transform.rotation;
+        var tempTransform = transform;
+        spawnPos = tempTransform.position;
+        spawnRot = tempTransform.rotation;
+        
+        PlayersManager.Instance.ResetEvent.AddListener(ExecuteReset);
     }
 
+    private void LateUpdate()
+    {
+        if (!owner) return;
+        transform.position = owner.position;
+    }
+
+    public void ExecuteReset()
+    {
+        adapter.Reset();
+    }
+    
     public void Reset()
     {
-        transform.parent = null;
-
-        enabled = true;
+        owner = null;
+        
         trigger.enabled = true;
-
+        
         transform.position = spawnPos;
         transform.rotation = spawnRot;
     }
 
+    public void ExecutePickUp(Transform character)
+    {
+        adapter.PickUp(character);
+    }
+
     public void Pickup(Transform character)
     {
-        if (transform.parent == null)
-        {
-            transform.parent = character;
-            transform.position = character.position;
-        }
+        if (!owner) owner = character;
+    }
+
+    public void ExecuteDrop()
+    {
+        adapter.Drop();
     }
 
     public void Drop()
     {
-        transform.parent = null;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag("Finish"))
-        {
-            VictoryEvent.Invoke();
-        }
+        owner = null;
     }
 }

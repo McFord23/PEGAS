@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-public class SoundController : SingletonBehaviour<SoundController>
+public class SoundController : SingletonMonoBehaviour<SoundController>
 {
     Transform flap;
     AudioSource flapSound;

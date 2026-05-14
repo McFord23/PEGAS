@@ -2,13 +2,12 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CameraController : MonoBehaviour
+public class CameraController : SingletonMonoBehaviour<CameraController>
 {
     private Camera controllableCamera;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb { get; private set; }
     
-    [FormerlySerializedAs("playersController")] 
-    public PlayersManager playersManager;
+    private PlayersManager playersManager;
 
     private Mode mode;
 
@@ -27,16 +26,17 @@ public class CameraController : MonoBehaviour
     public static float flySize = 60f; // ort = 13
     public static float minSize = 30f; // ort = 5
     private float size;
-    private float zoomSpeed = 0.01f;
+    private float zoomSpeed = 0.04f;
 
     private void Start()
     {
         controllableCamera = GetComponent<Camera>();
+        playersManager = PlayersManager.Instance;
         rb = GetComponent<Rigidbody2D>();
 
         mapOffset = new Vector3(0, 0, -10);
         playerOffset = new Vector3(10, 0, 0);
-        interfaceOffset = new Vector3(1.25f, 0, -10);
+        interfaceOffset = new Vector3(2.75f, 0, -10);
         
         size = flySize;
     }
@@ -50,19 +50,22 @@ public class CameraController : MonoBehaviour
         }
         
         Vector3 target = transform.position;
+        
+        // max player speed = 184
+        float speed = Mathf.Max(playersManager.GetSpeed() / 70, 1) * moveSpeed;
 
         switch (mode)
         {
             case Mode.Fly:
                 if (playersManager.GetDirection() > 0) playerOffset = new Vector3(10, 0, 0);
                 else if (playersManager.GetDirection() < 0) playerOffset = new Vector3(-10, 0, 0);
-
-                target = Vector3.Lerp(rb.position, playerPosition + playerOffset + mapOffset, moveSpeed);
+                
+                target = Vector3.Lerp(rb.position, playerPosition + playerOffset + mapOffset, speed);
                 size = flySize;
                 break;
             
             case Mode.Player:
-                target = Vector3.Lerp(rb.position, playerPosition + interfaceOffset, moveSpeed);
+                target = Vector3.Lerp(rb.position, playerPosition + interfaceOffset, 1.5f * speed);
                 size = minSize;
                 break;
         }

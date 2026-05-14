@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Сredits : MonoBehaviour
 {
@@ -34,6 +33,6 @@ public class Сredits : MonoBehaviour
 
     public void Exit()
     {
-        SceneManagerAdapter.LoadScene("Main Menu");
+        SceneManagerAdapter.Instance.LoadScene("Main Menu");
     }
 }

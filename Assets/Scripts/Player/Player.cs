@@ -1,20 +1,35 @@
+using System;
+using System.Globalization;
+using Enums;
 using Unity.Netcode;
 using UnityEngine;
 
+public enum MoveState
+{
+    Loaded,
+    Idle,
+    Run,
+    FreeFall,
+    Flap,
+    Stunned,
+    Dead,
+    Paused,
+    Winner
+}
+
 public class Player : NetworkBehaviour
 {
-    private const float SlowSpeed = 30f;
-    private const float StartFlySpeed = 40f;
-    private const float CrushSpeed = 70f;
-    private const float StartFlyForce = 250f;
+    private const float MaxLandedSpeed = 30f;
+    private const float TakeoffSpeed = 40f;
+    private const float TakeoffForce = 250f;
+    private const float CrushSpeed = 80f;
     private const float ReviveTime = 3f;
 
     [SerializeField] private GameObject crushEffectPrefab;
     
-    public float speed;
-    public float angle;
-    public float angleOfAttack;
-    public bool landed;
+    public float speed { private set; get; }
+    private float angleOfAttack;
+    private bool landed;
 
     public Vector2 spawnPos;
 
@@ -35,11 +50,10 @@ public class Player : NetworkBehaviour
     private CollectingItem item;
 
     // Fly Physics
-    public float wingSpan = 13.56f;
-    public float wingArea = 78.04f;
+    [SerializeField] private float wingSpan = 13.56f;
+    [SerializeField] private float wingArea = 78.04f;
     private float aspectRatio;
-
-    private bool countReviveTimer;
+    
     private float reviveTimer;
 
     private void Start()
@@ -50,28 +64,42 @@ public class Player : NetworkBehaviour
         flyCollider = GetComponentInChildren<PolygonCollider2D>();
         deathCollider = GetComponentInChildren<CapsuleCollider2D>();
         rideCollider = GetComponentInChildren<BoxCollider2D>();
-
-        soundController = SoundController.Instance;
-        animatorController = GetComponentInChildren<Animator>();
+        
         playersManager = PlayersManager.Instance;
         playersManager.LoadPlayer(this);
         spawnPos = playersManager.transform.position;
+        
+        soundController = SoundController.Instance;
+        animatorController = GetComponentInChildren<Animator>();
         
         Idle();
     }
 
     private void Update()
     {
-        UpdateReviveTime();
+        if (Global.gameMode is GameMode.Host or GameMode.Client)
+        {
+            if (!IsOwner) return;
+        }
+
+        if (moveState == MoveState.Stunned)
+        {
+            UpdateReviveTime();
+        }
     }
 
     private void FixedUpdate()
     {
+        if (Global.gameMode is GameMode.Host or GameMode.Client)
+        {
+            if (!IsOwner) return;
+        }
+
         if (moveState is MoveState.Idle or MoveState.Run)
         {
             RidePhysics();
 
-            if (speed >= StartFlySpeed)
+            if (speed >= TakeoffSpeed)
             {
                 SetFlyMode(true);
             }
@@ -82,7 +110,7 @@ public class Player : NetworkBehaviour
             FlyPhysics();
         }
 
-        if (moveState == MoveState.Dead)
+        if (moveState is MoveState.Stunned or MoveState.Dead)
         {
             rb.drag = landed ? 3f : 0.3f;
         }
@@ -90,49 +118,37 @@ public class Player : NetworkBehaviour
         HandleFlyFlip();
 
         speed = rb.velocity.magnitude;
-        angle = transform.eulerAngles.z;
     }
-
-    public void Revive(bool teleportBack = true)
-    {
-        var localTransform = transform;
-        localTransform.localScale = new Vector3(1, 1, 1);
-        rb.velocity = new Vector2(0, 0);
-        rb.drag = Mathf.Epsilon;
-        rb.angularDrag = 2.5f;
-        rb.angularVelocity = 0f;
-        localTransform.right = Vector2.right;
-
-        if (teleportBack)
-        {
-            localTransform.position = spawnPos;
-        }
-
-        if ((bool)item)
-        {
-            item.Drop();
-            item = null;
-        }
-        
-        Resurrect();
-    }
-
+    
     private void UpdateReviveTime()
     {
-        if (!countReviveTimer) return;
-        
         reviveTimer -= Time.deltaTime;
         if (!(reviveTimer <= 0)) return;
         
         Revive(false);
-        countReviveTimer = false;
     }
 
-    private void Resurrect()
+    public void Revive(bool teleportBack = true)
     {
+        rb.velocity = new Vector2(0, 0);
+        rb.drag = Mathf.Epsilon;
+        rb.angularDrag = 2.5f;
+        rb.angularVelocity = 0f;
+        
+        var localTransform = transform;
+        if (teleportBack) rb.position = spawnPos;
+        localTransform.right = Vector2.right;
+        localTransform.localScale = new Vector3(1, 1, 1);
+        
         deathCollider.enabled = false;
         rideCollider.enabled = true;
         Idle();
+
+        if (item)
+        {
+            item.ExecuteDrop();
+            item = null;
+        }
     }
 
     public void Victory()
@@ -239,11 +255,26 @@ public class Player : NetworkBehaviour
         };
         localTransform.localScale = new Vector3(1, scaleY, 1);
     }
+    
+    private void SetFlyMode(bool fly)
+    {
+        rideCollider.enabled = !fly;
+        flyCollider.enabled = fly;
 
+        if (fly)
+        {
+            FreeFall();
+            rb.AddForce(Vector2.up * TakeoffForce);
+        }
+        else
+        {
+            rb.angularVelocity = 0;
+            Idle();
+        }
+    }
+    
     public void Kill()
     {
-        landed = true;
-        moveState = MoveState.Dead;
         deathCollider.enabled = true;
         flyCollider.enabled = false;
         animatorController.Play("Dead");
@@ -253,79 +284,62 @@ public class Player : NetworkBehaviour
         if (speed >= CrushSpeed)
         {
             Instantiate(crushEffectPrefab, transform.position, Quaternion.identity);
+            moveState = MoveState.Dead;
             playersManager.Dead();
         }
         else
         {
-            countReviveTimer = true;
+            moveState = MoveState.Stunned;
             reviveTimer = ReviveTime;
         }
 
-        if ((bool)item)
+        if (item)
         {
-            item.Drop();
+            item.ExecuteDrop();
             item = null;
         }
     }
     
     private void OnCollisionEnter2D()
     {
-        if (moveState is MoveState.Idle or MoveState.Run or MoveState.Dead) return;
-
-        if (speed <= SlowSpeed)
-        {
-            SetFlyMode(false);
-            return;
-        }
+        landed = true;
         
-        soundController.Hit();
-        Kill();
+        if (moveState is MoveState.Dead)
+        {
+            soundController.Hit();
+        }
+        else if (moveState is MoveState.FreeFall or MoveState.Flap)
+        {
+            if (speed <= MaxLandedSpeed)
+            {
+                SetFlyMode(false);
+                return;
+            }
+        
+            soundController.Hit();
+            Kill();
+        }
     }
 
    private void OnCollisionExit2D()
-    {
-        if (moveState is not (MoveState.Idle or MoveState.Run)) return;
-        SetFlyMode(true);
-    }
-   
-   private void SetFlyMode(bool fly)
    {
-       rideCollider.enabled = !fly;
-       flyCollider.enabled = fly;
+       landed = false;
         
-       landed = !fly;
-        
-       if (fly)
-       {
-           FreeFall();
-           rb.AddForce(Vector2.up * StartFlyForce);
-       }
-       else
-       {
-           rb.velocity = Vector3.zero;
-           rb.angularVelocity = 0;
-           Idle();
-       }
-   }
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.CompareTag("Item") && item == null && moveState != MoveState.Dead)
+        if (moveState is MoveState.Idle or MoveState.Run)
         {
-            item = collider.gameObject.GetComponent<CollectingItem>();
-            item.Pickup(transform);
+            SetFlyMode(true);
         }
     }
-}
 
-public enum MoveState
-{
-    Loaded,
-    Idle,
-    Run,
-    FreeFall,
-    Flap,
-    Dead,
-    Paused,
-    Winner
+   private void OnTriggerEnter2D(Collider2D collider)
+   {
+       if (!collider.gameObject.CompareTag("Item") || item || moveState == MoveState.Dead) return;
+       var tempItem = collider.gameObject.GetComponent<CollectingItem>();
+            
+       if (!tempItem.owner)
+       {
+           item = tempItem;
+           item.ExecutePickUp(transform);
+       }
+   }
 }

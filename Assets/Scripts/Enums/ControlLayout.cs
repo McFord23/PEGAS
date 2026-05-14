@@ -4,8 +4,8 @@
     {
         Mouse,
         Numpad,
-        Wasd,
-        Ijkl,
+        WASD,
+        IJKL,
         Arrow
     }
 }

@@ -8,7 +8,7 @@ public class Thermaldome : MonoBehaviour
     void Update()
     {
         if (GetDistance(1) > 225) players.KillPlayer(1);
-        if (Save.gameMode != GameMode.Single && GetDistance(2) > 225) players.KillPlayer(2);
+        if (Global.gameMode != GameMode.Single && GetDistance(2) > 225) players.KillPlayer(2);
     }
 
     float GetDistance(int player)

@@ -15,15 +15,15 @@ public class PlayersSpawner : NetworkBehaviour
     
     private void Awake()
     {
-        if (Save.gameMode == GameMode.Single)
+        if (Global.gameMode == GameMode.Single)
         {
             SpawnSinglePlayer();
             return;
         }
-        
+
         if (NetworkManager.IsHost)
         {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManagerOnOnLoadEventCompleted;
+            NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnOnLoadEventCompleted;
         }
     }
 
@@ -41,7 +41,7 @@ public class PlayersSpawner : NetworkBehaviour
 
     private void SpawnSinglePlayer()
     {
-        var objectToSpawn = GetObjectToSpawn(Save.players[0].character);
+        var objectToSpawn = GetObjectToSpawn(Global.players[0].character);
         var selfTransform = transform;
         Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
     }
@@ -50,7 +50,7 @@ public class PlayersSpawner : NetworkBehaviour
     {
         if (!IsHost) return;
 
-        var objectToSpawn = GetObjectToSpawn(Save.players[playerNum].character);
+        var objectToSpawn = GetObjectToSpawn(Global.players[playerNum].character);
         var selfTransform = transform;
         var instanceTransform = Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
 

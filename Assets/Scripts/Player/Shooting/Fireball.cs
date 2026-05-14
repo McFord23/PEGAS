@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Enums;
+using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
@@ -6,17 +7,27 @@ public class Fireball : MonoBehaviour
 
     private void Start()
     {
-        fireball = transform.gameObject;
+        var tempTransform = transform;
+        fireball = tempTransform.gameObject;
+
         Invoke("AutoDestroy", 1.0f);
     }
 
     private void AutoDestroy()
     {
-        Destroy(fireball);
+        DestroyFireball();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(fireball);
+        DestroyFireball();
+    }
+
+    private void DestroyFireball()
+    {
+        if (Global.gameMode != GameMode.Client)
+        {
+            if (fireball) Destroy(fireball);
+        }
     }
 }

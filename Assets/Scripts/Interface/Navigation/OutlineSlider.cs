@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OutlineSlider : MonoBehaviour
 {
-    public MenuController menu;
+    public MenuManager menu;
     Button button;
     Slider slider;
     bool isSliderSelected = false;

@@ -32,7 +32,7 @@ public class MenuNavigation : MonoBehaviour
 
     void Start()
     {
-        if (Save.gameMode != GameMode.Single) SetTogetherMenuNavigation();
+        if (Global.gameMode != GameMode.Single) SetTogetherMenuNavigation();
         else SetSoloMenuNavigation();
     }
 
@@ -106,7 +106,7 @@ public class MenuNavigation : MonoBehaviour
                 SetMarkNavigation(settingsButtons[0]);
                 break;
             case "Players":
-                SetMarkNavigation(Save.gameMode != GameMode.Single ? togetherButtons[0] : soloButtons[0]);
+                SetMarkNavigation(Global.gameMode != GameMode.Single ? togetherButtons[0] : soloButtons[0]);
                 break;
         }
     }

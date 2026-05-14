@@ -1,39 +1,42 @@
 ﻿using System.Collections.Generic;
+using Enums;
+using Unity.Netcode;
 using UnityEngine;
 
-public class WindigosManager : MonoBehaviour
+public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
 {
-    public GameObject prefab;
-    public Vector3 spawnPos = new Vector3(25, 23, 0);
+    private List<Windigo> windigoList = new List<Windigo>();
 
-    private List<Windigo> windigos = new List<Windigo>();
-
-    public SoundController soundController;
-
-    private void Start()
+    public void AddWindigo(Windigo windigo)
     {
-        Initialize();
+        windigoList.Add(windigo);
     }
-
-    private void Initialize()
-    {
-        var windigo = Instantiate(prefab, spawnPos, transform.rotation, transform).GetComponent<Windigo>();
-        windigos.Add(windigo);
-    }
-
+    
     public void Reset()
     {
-        for (int i = 0; i < windigos.Count; i++)
+        if (Global.gameMode == GameMode.Client)
         {
-            Remove(windigos[i]);
+            RequestResetServerRpc();
+            return;
+        }
+        
+        for (int i = 0; i < windigoList.Count; i++)
+        {
+            windigoList[i].Destroy(true);
         }
 
-        Initialize();
+        WindigoSpawner.Instance.Spawn();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestResetServerRpc()
+    {
+        Reset();
     }
 
     public void Pause()
     {
-        foreach (Windigo windigo in windigos)
+        foreach (Windigo windigo in windigoList)
         {
             windigo.Pause();
         }
@@ -41,7 +44,7 @@ public class WindigosManager : MonoBehaviour
 
     public void Resume()
     {
-        foreach (Windigo windigo in windigos)
+        foreach (Windigo windigo in windigoList)
         {
             windigo.Resume();
         }
@@ -49,7 +52,6 @@ public class WindigosManager : MonoBehaviour
 
     public void Remove(Windigo windigo)
     {
-        windigos.Remove(windigo);
-        Destroy(windigo.gameObject);
+        windigoList.Remove(windigo);
     }
 }

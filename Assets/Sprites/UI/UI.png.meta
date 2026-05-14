@@ -783,7 +783,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gamepad1 Layout
+      name: Gamepad 1 On
       rect:
         serializedVersion: 2
         x: 72
@@ -825,7 +825,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gamepad2 Layout
+      name: Gamepad 2 On
       rect:
         serializedVersion: 2
         x: 72
@@ -993,7 +993,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gamepad1 Off
+      name: Gamepad On
       rect:
         serializedVersion: 2
         x: 230
@@ -1014,7 +1014,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gamepad2 Off
+      name: Gamepad Off
       rect:
         serializedVersion: 2
         x: 230
@@ -1138,10 +1138,10 @@ TextureImporter:
       Control Layout Outline: 238177201661318622
       Deco: 82707731993968007
       Fill Area: -824557042417737680
-      Gamepad1 Layout: -4532114073746202998
-      Gamepad1 Off: 228940821244427079
-      Gamepad2 Layout: -343943630576144839
-      Gamepad2 Off: 9084407170249120912
+      Gamepad 1 On: -4532114073746202998
+      Gamepad 2 On: -343943630576144839
+      Gamepad Off: 9084407170249120912
+      Gamepad On: 228940821244427079
       Handle: -5055451889963847731
       Handle Right Selected: -4464969597253999955
       Handler Selected: -5481780447360278658

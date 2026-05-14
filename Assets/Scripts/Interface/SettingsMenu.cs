@@ -1,29 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    Slider mouseSlider;
-    Slider keyboardSlider;
+    private Slider mouseSlider;
+    private Slider keyboardSlider;
 
-    void Start()
+    private void Start()
     {
         mouseSlider = transform.Find("Mouse Slider").gameObject.GetComponent<Slider>();
         keyboardSlider = transform.Find("Keyboard Slider").gameObject.GetComponent<Slider>();
 
-        mouseSlider.value = Save.Sensitivity.mouse;
-        keyboardSlider.value = Save.Sensitivity.keyboard;
+        mouseSlider.value = Global.Sensitivity.mouse;
+        keyboardSlider.value = Global.Sensitivity.keyboard;
     }
 
     public void SetMouseSensitivity(float value)
     {
-        Save.Sensitivity.mouse = value;
+        Global.Sensitivity.mouse = value;
     }
 
     public void SetKeyboardSensitivity(float value)
     {
-        Save.Sensitivity.keyboard = value;
+        Global.Sensitivity.keyboard = value;
     }
 }
