@@ -52,13 +52,13 @@ public class WindigoDestructor : SingletonNetworkBehaviour<WindigoDestructor>
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestUpdateClientSeeServerRpc(bool client)
     {
         clientDontSee.Value = client;
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestDestroyServerRpc(FixedString64Bytes path)
     {
         RequestRemoveClientRpc(path);

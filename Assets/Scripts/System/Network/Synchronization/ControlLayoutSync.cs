@@ -68,7 +68,7 @@ public class ControlLayoutSync : NetworkBehaviour
         playersMenu.UpdatePlayersLayout();
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestChangeLayoutServerRpc(ControlLayout layout)
     {
         layoutClient.Value = layout;

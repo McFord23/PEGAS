@@ -59,7 +59,7 @@ public class Player : NetworkBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.drag = Mathf.Epsilon;
+        rb.linearDamping = Mathf.Epsilon;
         aspectRatio = (wingSpan * wingSpan) / wingArea;
         flyCollider = GetComponentInChildren<PolygonCollider2D>();
         deathCollider = GetComponentInChildren<CapsuleCollider2D>();
@@ -112,12 +112,12 @@ public class Player : NetworkBehaviour
 
         if (moveState is MoveState.Stunned or MoveState.Dead)
         {
-            rb.drag = landed ? 3f : 0.3f;
+            rb.linearDamping = landed ? 3f : 0.3f;
         }
 
         HandleFlyFlip();
 
-        speed = rb.velocity.magnitude;
+        speed = rb.linearVelocity.magnitude;
     }
     
     private void UpdateReviveTime()
@@ -130,9 +130,9 @@ public class Player : NetworkBehaviour
 
     public void Revive(bool teleportBack = true)
     {
-        rb.velocity = new Vector2(0, 0);
-        rb.drag = Mathf.Epsilon;
-        rb.angularDrag = 2.5f;
+        rb.linearVelocity = new Vector2(0, 0);
+        rb.linearDamping = Mathf.Epsilon;
+        rb.angularDamping = 2.5f;
         rb.angularVelocity = 0f;
         
         var localTransform = transform;
@@ -158,13 +158,13 @@ public class Player : NetworkBehaviour
 
         rb.gravityScale = 0f;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        rb.velocity = new Vector2(0, 0);
+        rb.linearVelocity = new Vector2(0, 0);
     }
 
     public void Pause()
     {
         saveState = moveState;
-        saveDirection = rb.velocity;
+        saveDirection = rb.linearVelocity;
 
         moveState = MoveState.Paused;
         animatorController.speed = 0;
@@ -203,7 +203,7 @@ public class Player : NetworkBehaviour
         var friction = (landed) ? -0.3f : 0f;
         if (moveState == MoveState.Idle) friction = -rb.mass;
 
-        var velocity = rb.velocity;
+        var velocity = rb.linearVelocity;
         var drag = 0.021f * velocity.sqrMagnitude;
         var dragDirection = -velocity.normalized;
 
@@ -227,7 +227,7 @@ public class Player : NetworkBehaviour
 
     private void FlyPhysics()
     {
-        var velocity = rb.velocity;
+        var velocity = rb.linearVelocity;
         var localVelocity = transform.InverseTransformDirection(velocity);
         angleOfAttack = Mathf.Atan2(localVelocity.y, localVelocity.x);
 
@@ -247,7 +247,7 @@ public class Player : NetworkBehaviour
     private void HandleFlyFlip()
     {
         var localTransform = transform;
-        var scaleY = rb.velocity.x switch
+        var scaleY = rb.linearVelocity.x switch
         {
             > 0.0001f => 1,
             < -0.0001f => -1,
@@ -279,7 +279,7 @@ public class Player : NetworkBehaviour
         flyCollider.enabled = false;
         animatorController.Play("Dead");
         rb.gravityScale = 1f;
-        rb.angularDrag = 0.3f;
+        rb.angularDamping = 0.3f;
             
         if (speed >= CrushSpeed)
         {

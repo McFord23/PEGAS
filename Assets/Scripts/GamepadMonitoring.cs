@@ -113,7 +113,7 @@ public class GamepadMonitoring : NetworkBehaviour
         CheckChangeStatus(gamepad1Status, gamepad2Status);
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void ChangeStatusServerRpc(bool isClient, bool gamepadStatus)
     {
         if (isClient) gamepad2.Value = gamepadStatus;

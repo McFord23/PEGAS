@@ -27,7 +27,8 @@ public class Windigo : MonoBehaviour
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.drag = Mathf.Epsilon;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.linearDamping = Mathf.Epsilon;
         aspectRatio = (wingSpan * wingSpan) / wingArea;
     }
 
@@ -43,7 +44,7 @@ public class Windigo : MonoBehaviour
     public void Pause()
     {
         saveState = moveState;
-        saveDirection = rb.velocity;
+        saveDirection = rb.linearVelocity;
         moveState = MoveState.Paused;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
@@ -63,7 +64,7 @@ public class Windigo : MonoBehaviour
 
     private void FlyPhysics()
     {
-        var velocity = rb.velocity;
+        var velocity = rb.linearVelocity;
         var localVelocity = transform.InverseTransformDirection(velocity);
         var angleOfAttack = Mathf.Atan2(localVelocity.y, localVelocity.x);
 

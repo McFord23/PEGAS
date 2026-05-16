@@ -34,7 +34,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestPickUpServerRpc(FixedString64Bytes path)
     {
         characterPath.Value = path;
@@ -64,7 +64,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestResetServerRpc()
     {
         RequestResetClientRpc();
@@ -92,7 +92,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestDropServerRpc()
     {
         RequestDropClientRpc();

@@ -28,7 +28,7 @@ public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
         WindigoSpawner.Instance.Spawn();
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestResetServerRpc()
     {
         Reset();

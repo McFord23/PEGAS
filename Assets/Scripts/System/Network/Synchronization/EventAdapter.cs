@@ -41,7 +41,7 @@ public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestExecuteServerRpc(EventKey eventKey)
     {
         RequestExecuteClientRpc(eventKey);

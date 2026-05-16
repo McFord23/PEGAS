@@ -8,7 +8,7 @@ public class NetworkManagerDuplicateFix : MonoBehaviour
 {
     private void Awake()
     {
-        var managersCount = FindObjectsOfType<NetworkManager>().Length;
+        var managersCount = FindObjectsByType<NetworkManager>().Length;
         if (managersCount > 1)
         {
             Destroy(gameObject);

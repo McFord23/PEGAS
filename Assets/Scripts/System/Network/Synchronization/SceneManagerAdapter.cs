@@ -41,7 +41,7 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestLoadSceneServerRpc(FixedString32Bytes sceneName)
     {
         RequestLoadSceneClientRpc(sceneName);

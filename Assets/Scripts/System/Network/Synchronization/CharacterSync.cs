@@ -70,7 +70,7 @@ public class CharacterSync : NetworkBehaviour
         playersMenu.ChangeClientCharacter(characterClient.Value);
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestChangeCharacterServerRpc(Character host, Character client)
     {
         characterHost.Value = host;

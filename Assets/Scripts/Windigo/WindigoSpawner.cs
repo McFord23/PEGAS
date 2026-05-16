@@ -58,7 +58,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     private void RequestSpawnWindigoServerRpc()
     {
         Windigo windigo;
