@@ -40,7 +40,7 @@ public class MenuNavigation : MonoBehaviour
     {
         if (selectNone)
         {
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            if (Controls.Move != Vector2.zero)
             {
                 buttons[index].Select();
                 selectNone = false;

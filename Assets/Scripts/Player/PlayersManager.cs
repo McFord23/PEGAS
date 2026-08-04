@@ -32,7 +32,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton5))
+        if (Controls.Retry)
         {
             if (players[0].moveState == MoveState.Paused)
             {
@@ -47,7 +47,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
             if (players[0].moveState is MoveState.Paused or MoveState.Winner) return;
             if (players[1].moveState is MoveState.Paused or MoveState.Winner) return;
             if (players[0].moveState == MoveState.Dead && players[1].moveState == MoveState.Dead) return;
-            if (Input.GetButtonDown("Cancel"))
+            if (Controls.Pause)
             {
                 EventAdapter.Instance.Execute(EventKey.Pause);
             }
@@ -57,7 +57,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
             if (players[0].moveState is MoveState.Paused or MoveState.Dead or MoveState.Winner) 
                 return;
             
-            if (Input.GetButtonDown("Cancel"))
+            if (Controls.Pause)
             {
                 EventAdapter.Instance.Execute(EventKey.Pause);
             }

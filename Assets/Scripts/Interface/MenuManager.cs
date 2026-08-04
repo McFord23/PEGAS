@@ -119,16 +119,18 @@ public class MenuManager : SingletonMonoBehaviour<MenuManager>
 
     private void Update()
     {
-        if ((bool)mainMenu)
-        {
-            if (mainMenu.activeSelf) menuTransform.anchoredPosition = Vector2.Lerp(menuTransform.anchoredPosition, monoPageTarget, Time.deltaTime * speed);
-            else menuTransform.anchoredPosition = Vector2.Lerp(menuTransform.anchoredPosition, dualPageTarget, Time.deltaTime * speed);
+        if (!mainMenu) return;
 
-            if (isSelectedState) return;
-            if (Input.GetButtonDown("Cancel"))
-            {
-                Back();
-            }
+        menuTransform.anchoredPosition = Vector2.Lerp(
+            menuTransform.anchoredPosition, 
+            mainMenu.activeSelf ? monoPageTarget : dualPageTarget, 
+            Time.deltaTime * speed
+            );
+
+        if (isSelectedState) return;
+        if (Controls.Pause)
+        {
+            Back();
         }
     }
 

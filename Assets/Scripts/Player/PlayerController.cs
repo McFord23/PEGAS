@@ -50,6 +50,11 @@ public class PlayerController : NetworkBehaviour
             if (!IsOwner) return;
         }
 
+        if (Controls.Paste)
+        {
+            print("Ctrl+V was pressed");
+        }
+        
         if (player.moveState == MoveState.Run)
         {
             if (gasInput == 0)
@@ -79,47 +84,9 @@ public class PlayerController : NetworkBehaviour
 
         var input = Global.players[id].controlLayout;
         
-        switch (input)
-        {
-            case ControlLayout.Mouse:
-                gas = Input.GetKey(KeyCode.Mouse0) ? 1f : 0f;
-                rotate = Global.Sensitivity.mouse * Input.GetAxis("Rotate-Mouse");
-                shoot = Input.GetKey(KeyCode.Mouse1) ? 1f : 0f;
-                break;
-           
-            case ControlLayout.WASD:
-                gas = Input.GetKey(KeyCode.LeftShift) ? 1f : 0f;
-                rotate = Global.Sensitivity.keyboard * Input.GetAxis("Rotate-WASD");
-                shoot = Input.GetKey(KeyCode.LeftControl) ? 1f : 0f;
-                break;
-            
-            case ControlLayout.IJKL:
-                gas = Input.GetKey(KeyCode.RightShift) ? 1f : 0f;
-                rotate = Global.Sensitivity.keyboard * Input.GetAxis("Rotate-IJKL");
-                shoot = Input.GetKey(KeyCode.RightControl) ? 1f : 0f;
-                break;
-           
-            case ControlLayout.Arrow:
-                gas = Input.GetKey(KeyCode.RightShift) ? 1f : 0f;
-                rotate = Global.Sensitivity.keyboard * Input.GetAxis("Rotate-Arrow");
-                shoot = Input.GetKey(KeyCode.RightControl) ? 1f : 0f;
-                break;
-           
-            case ControlLayout.Numpad:
-                gas = Input.GetKey(KeyCode.Space) ? 1f : 0f;
-                rotate = Global.Sensitivity.keyboard * Input.GetAxis("Rotate-Numpad");
-                shoot = Input.GetKey(KeyCode.CapsLock) ? 1f : 0f;
-                break;
-        }
-
-        int gamepad = Global.players[id].gamepad;
-        bool gamepadActive = (gamepad == 1) ? Gamepad.gamepad1 : Gamepad.gamepad2;
-        if (gamepadActive)
-        {
-            gas = Mathf.Clamp01(gas + Input.GetAxis("Gas-Gamepad " + gamepad));
-            rotate += Global.Sensitivity.gamepad * Input.GetAxis("Rotate-Gamepad " + gamepad);
-            shoot = Mathf.Clamp01(shoot + Input.GetAxis("Shoot-Gamepad " + gamepad));
-        }
+        gas = Controls.MainAction;
+        rotate = Global.players[id].sensitivity * (Controls.Move.x + Controls.Move.y);
+        shoot = Controls.AdditionalAction;
 
         SetInput(gas, rotate, shoot);
     }
@@ -134,10 +101,5 @@ public class PlayerController : NetworkBehaviour
     public float GetShootInput()
     {
         return shootInput;
-    }
-
-    private void OnGUI()
-    {
-        GUILayout.Label("Rotate: " + rotateInput);
     }
 }

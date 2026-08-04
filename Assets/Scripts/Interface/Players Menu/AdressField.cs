@@ -28,7 +28,8 @@ public class AdressField : MonoBehaviour
     private void Update()
     {
         if (!inputField.isFocused) return;
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKey(KeyCode.V))
+        
+        if (Controls.Paste)
         {
             if (timer >= cooldown)
             {

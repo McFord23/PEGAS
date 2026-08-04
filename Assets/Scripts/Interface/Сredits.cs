@@ -4,30 +4,29 @@ using UnityEngine.UI;
 public class Сredits : MonoBehaviour
 {
     public float speed = 0.05f;
-    public GameObject skip;
+    public Button skip;
 
-    void Start()
+    private void Start()
     {
-        skip.SetActive(false);
+        skip.gameObject.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (transform.position.y < 30) transform.position += new Vector3(0f, speed * Time.deltaTime, 0f);
         else Exit();
 
-        if (skip.activeSelf)
+        if (Controls.Apply || Controls.Pause)
         {
-            if (Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel"))
+            if (skip.gameObject.activeSelf)
             {
                 Exit();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel"))
-        {
-            skip.SetActive(true);
-            skip.GetComponent<Button>().Select();
+            else
+            {
+                skip.gameObject.SetActive(true);
+                skip.Select();
+            }
         }
     }
 

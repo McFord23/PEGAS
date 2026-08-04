@@ -24,17 +24,17 @@ public class OutlineLayout : MonoBehaviour
     {
         if (isSetSelected)
         {
-            if (Input.GetButtonDown("Cancel"))
+            if (Controls.Pause)
             {
                 button.Select();
                 isSetSelected = false;
             }
 
-            if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") > 0)
+            if (Controls.Move.x > 0)
             {
                 nextLayout.onClick.Invoke();
             }
-            else if (Input.GetButtonDown("Horizontal") && Input.GetAxis("Horizontal") < 0)
+            else if (Controls.Move.x < 0)
             {
                 perviousLayout.onClick.Invoke();
             }

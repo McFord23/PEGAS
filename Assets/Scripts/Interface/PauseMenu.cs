@@ -4,7 +4,7 @@ public class PauseMenu : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Controls.Pause)
         {
             ExecuteResume();
         }

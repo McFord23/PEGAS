@@ -3,25 +3,23 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    private Slider mouseSlider;
-    private Slider keyboardSlider;
+    public Slider player1SensitivitySlider;
+    public Slider player2SensitivitySlider;
 
     private void Start()
     {
-        mouseSlider = transform.Find("Mouse Slider").gameObject.GetComponent<Slider>();
-        keyboardSlider = transform.Find("Keyboard Slider").gameObject.GetComponent<Slider>();
-
-        mouseSlider.value = Global.Sensitivity.mouse;
-        keyboardSlider.value = Global.Sensitivity.keyboard;
+        print($"sens: {Global.players[0].sensitivity}");
+        player1SensitivitySlider.value = Global.players[0].sensitivity;
+        player2SensitivitySlider.value = Global.players[1].sensitivity;
     }
 
-    public void SetMouseSensitivity(float value)
+    public void SetPlayer1Sensitivity(float value)
     {
-        Global.Sensitivity.mouse = value;
+        Global.players[0].sensitivity = value;
     }
 
-    public void SetKeyboardSensitivity(float value)
+    public void SetPlayer2Sensitivity(float value)
     {
-        Global.Sensitivity.keyboard = value;
+        Global.players[1].sensitivity = value;
     }
 }

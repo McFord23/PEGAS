@@ -20,7 +20,7 @@ public class OutlineSlider : MonoBehaviour
     {
         if (isSliderSelected)
         {
-            if (Input.GetButtonDown("Cancel"))
+            if (Controls.Pause)
             {
                 button.Select();
                 menu.SelectedState(false);

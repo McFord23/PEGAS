@@ -1,34 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CursorController : MonoBehaviour
 {
-    private bool isMenuActive = false;
-    private Vector3 oldMousePos;
+    private bool isMenuActive;
+    private Vector2 oldMousePos;
 
     private void Start()
     {
-        oldMousePos = Input.mousePosition;
+        oldMousePos = Mouse.current.position.ReadValue();
     }
 
     private void Update()
     {
-        if (isMenuActive)
+        if (!isMenuActive) return;
+        
+        if (Controls.Navigation != Vector2.zero)
         {
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-
-            if (Input.mousePosition != oldMousePos && Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
-
-            oldMousePos = Input.mousePosition;
+            Cursor.lockState = CursorLockMode.Locked;
         }
+
+        if (Mouse.current.position.ReadValue() != oldMousePos && Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        oldMousePos = Mouse.current.position.ReadValue();
     }
 
     public void StartMonitoring()

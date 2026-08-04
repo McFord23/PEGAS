@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Audio;
+﻿using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,8 +30,8 @@ public class AudioController : MonoBehaviour
         else mixer.audioMixer.SetFloat("MusicVolume", -80); //dB
     }
 
-    public void ChangeVolume(Slider volume)
+    public void ChangeVolume(float value)
     {
-        AudioListener.volume = volume.value;
+        AudioListener.volume = value;
     }
 }

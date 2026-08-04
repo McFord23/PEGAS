@@ -9,16 +9,18 @@ public static class Global
     {
         public Character character;
         public ControlLayout controlLayout;
+        public float sensitivity;
         public int gamepad;
         public bool live;
     }
 
-    public static Player[] players =
+    public static readonly Player[] players =
     {
         new()
         {
             character = Character.Celestia, 
             controlLayout = ControlLayout.Mouse,
+            sensitivity = 0.5f,
             gamepad = 1,
             live = true
         },
@@ -27,17 +29,11 @@ public static class Global
         {
             character = Character.Luna,
             controlLayout = ControlLayout.Numpad,
+            sensitivity = 0.5f,
             gamepad = 2,
             live = true
         }
     };
-    
-    public struct Sensitivity
-    {
-        public static float mouse = 2f;
-        public static float keyboard = 6f;
-        public static float gamepad = 6f;
-    }
     
     public static bool sound = true;
     public static bool music = true;
