@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Enums;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
     
     public void Reset()
     {
-        if (Global.gameMode == GameMode.Client)
+        if (Settings.GameMode == GameMode.Client)
         {
             RequestResetServerRpc();
             return;

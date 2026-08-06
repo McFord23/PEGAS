@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Enums;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,7 +26,7 @@ public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>
 
     public void Execute(EventKey eventKey)
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:

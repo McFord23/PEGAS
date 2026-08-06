@@ -1,5 +1,4 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
@@ -90,7 +89,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public float GetSpeed()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.Host when HaveBothPlayers:
@@ -142,19 +141,13 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     {
         if (HaveOtherPlayer)
         {
-            if (players[0].moveState == MoveState.Dead && players[1].moveState != MoveState.Dead)
+            if (!players[0].Live && !players[1].Live)
             {
-                Global.players[0].live = false;
+                DeadEvent.Invoke();
             }
-            else if (players[0].moveState != MoveState.Dead && players[1].moveState == MoveState.Dead)
-            {
-                Global.players[1].live = false;
-            }
-            else DeadEvent.Invoke();
         }
         else
         {
-            Global.players[0].live = false;
             DeadEvent.Invoke();
         }
     }
@@ -162,11 +155,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     public void Reset()
     {
         players[0]?.Revive();
-        Global.players[0].live = true;
-
         players[1]?.Revive();
-        Global.players[1].live = true;
-
         ResetEvent.Invoke();
     }
 

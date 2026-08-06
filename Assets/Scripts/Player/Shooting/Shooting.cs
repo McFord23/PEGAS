@@ -1,5 +1,4 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 
 public class Shooting : NetworkBehaviour
@@ -22,7 +21,7 @@ public class Shooting : NetworkBehaviour
 
         if (controller.GetShootInput() > 0)
         {
-            if (Global.gameMode is GameMode.Single or GameMode.LocalCoop) SpawnFireball();
+            if (Settings.GameMode is GameMode.Single or GameMode.LocalCoop) SpawnFireball();
             else RequestSpawnFireballServerRpc();
         }
     }
@@ -51,7 +50,7 @@ public class Shooting : NetworkBehaviour
     {
         //print("Rotation: " + player.transform.rotation.z);
         
-        if (Global.gameMode != GameMode.Client) return;
+        if (Settings.GameMode != GameMode.Client) return;
         
         Rigidbody2D fireball = GameObject.Find("Fireball(Clone)").GetComponent<Rigidbody2D>();
         fireball.AddForce(player.transform.right * (speed + player.speed), ForceMode2D.Impulse);

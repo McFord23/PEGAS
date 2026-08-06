@@ -1,4 +1,3 @@
-using Enums;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
@@ -6,41 +5,31 @@ using System.Collections;
 
 public class NetworkSubmenu : NetworkBehaviour
 {
-    private AddressFieldManager ipFieldManager;
+    [SerializeField] private AddressFieldManager ipFieldManager;
     private PlayersMenu playersMenu;
 
-    private Text status;
+    [SerializeField] private Text status;
     private Color brown;
-    private Color red;
+    private readonly Color red = new (0.45f, 0.2f, 0.15f);
     private IEnumerator hideErrorConnection;
 
-    private Button createButton;
-    private Button connectButton;
-    private GameObject shutdownButton;
-    private GameObject cancelButton;
+    [SerializeField] private Button createButton;
+    [SerializeField] private Button connectButton;
+    [SerializeField] private GameObject shutdownButton;
+    [SerializeField] private GameObject cancelButton;
 
     private HostMonitoring hostMonitoring;
     private ClientMonitoring clientMonitoring;
 
-    public void Initialize()
+    public void Initialize(PlayersMenu menu)
     {
-        ipFieldManager = GetComponentInChildren<AddressFieldManager>();
-        playersMenu = GetComponentInParent<PlayersMenu>(true);
-
-        status = transform.Find("Status").GetComponent<Text>();
+        playersMenu = menu;
         brown = status.color;
-        red = new Color(0.45f, 0.2f, 0.15f);
         hideErrorConnection = HideErrorConnection();
-
-        createButton = transform.Find("Create").GetComponent<Button>();
-        connectButton = transform.Find("Connect").GetComponent<Button>();
-        shutdownButton = transform.Find("Shutdown").gameObject;
-        cancelButton = transform.Find("Cancel").gameObject;
-
         hostMonitoring = HostMonitoring.Instance;
         clientMonitoring = ClientMonitoring.Instance;
 
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Client:
                 playersMenu.UpdateBackButtons(true);
@@ -48,7 +37,7 @@ public class NetworkSubmenu : NetworkBehaviour
                 break;
 
             case GameMode.Host:
-                if (Global.fullParty)
+                if (Settings.FullParty)
                 {
                     playersMenu.UpdateBackButtons(true);
                     OnClientConnected();
@@ -167,7 +156,7 @@ public class NetworkSubmenu : NetworkBehaviour
 
     private void OnClientDisconnected()
     {
-        if (Global.gameMode == GameMode.Host)
+        if (Settings.GameMode == GameMode.Host)
         {
             ShowStatus("no player");
         }

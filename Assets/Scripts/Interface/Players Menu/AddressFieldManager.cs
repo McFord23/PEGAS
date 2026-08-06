@@ -12,7 +12,7 @@ public class AddressFieldManager : NetworkBehaviour
 
     private void Start()
     {
-        transport = NetworkManager.GetComponent<UnityTransport>();
+        transport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UnityTransport;
 
         for (int i = 0; i < transform.childCount; i++)
         {

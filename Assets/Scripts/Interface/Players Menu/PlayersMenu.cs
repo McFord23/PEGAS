@@ -1,60 +1,41 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayersMenu : MonoBehaviour
 {
-    private MenuManager menu;
-    private GameObject coopSubmenu;
-    private GameObject networkSubmenu;
-
-    private PlayerSubmenu player1Submenu;
-    private Text p1;
+    [SerializeField] private RectTransform backMain;
+    [SerializeField] private Text modeTitle;
     
-    private RectTransform backMain;
-    private GameObject backCoop;
+    [Header("Player 1")]
+    [SerializeField] private PlayerSubmenu player1Submenu;
+    [SerializeField] private Text p1;
+    [SerializeField] private Image player1GamepadImage;
 
-    private PlayerSubmenu player2Submenu;
-    private Text p2;
-    private Text player2Title;
+    [Header("Player 2")]
+    [SerializeField] private PlayerSubmenu player2Submenu;
+    [SerializeField] private Text p2;
+    [SerializeField] private Image player2GamepadImage;
     
-    private GameObject localBannishButton;
-    private GameObject networkBannishButton;
-    private GameObject quitButton;
-
+    [Header("Local Coop")]
+    [SerializeField] private GameObject coopSubmenu;
+    [SerializeField] private GameObject localBannishButton;
+    [SerializeField] private GameObject backCoop;
+    
+    [Header("Network Coop")]
+    [SerializeField] private GameObject networkSubmenu;
+    [SerializeField] private GameObject networkBannishButton;
+    [SerializeField] private GameObject quitButton;
+    
+    [Header("Controls")]
     public Sprite[] controlLayoutSprites;
     public Sprite[] gamepadSprites;
-    private Image player1GamepadImage;
-    private Image player2GamepadImage;
 
     public void Initialize()
     {
-        menu = GetComponentInParent<MenuManager>();
-
-        player1Submenu = transform.Find("Player #1").GetComponent<PlayerSubmenu>();
-        p1 = player1Submenu.transform.Find("P1Text").GetComponent<Text>();
+        player1Submenu.Initialize(controlLayoutSprites);
+        player2Submenu.Initialize(controlLayoutSprites);
         
-        backMain = player1Submenu.transform.Find("Back Main").GetComponent<RectTransform>();
-        backCoop = player1Submenu.transform.Find("Back Coop").gameObject;
-
-        player2Submenu = transform.Find("Player #2").GetComponent<PlayerSubmenu>();
-        player2Title = player2Submenu.transform.Find("Title").GetComponent<Text>();
-        p2 = player2Submenu.transform.Find("P2Text").GetComponent<Text>();
-        
-        localBannishButton = player2Submenu.transform.Find("Local Bannish").gameObject;
-        networkBannishButton = player2Submenu.transform.Find("Network Bannish").gameObject;
-        quitButton = player2Submenu.transform.Find("Quit").gameObject;
-
-        player1GamepadImage = transform.Find("Player #1/Gamepad").GetComponent<Image>();
-        player2GamepadImage = transform.Find("Player #2/Gamepad").GetComponent<Image>();
-
-        player1Submenu.Initialize();
-        player2Submenu.Initialize();
-        
-        coopSubmenu = transform.Find("Coop Submenu").gameObject;
-        networkSubmenu = transform.Find("Network Submenu").gameObject;
-        
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {            
             case GameMode.LocalCoop:
                 LocalCoop();
@@ -66,10 +47,10 @@ public class PlayersMenu : MonoBehaviour
                 break;
         }
 
-        networkSubmenu.GetComponent<NetworkSubmenu>().Initialize();
+        networkSubmenu.GetComponent<NetworkSubmenu>().Initialize(this);
 
-        player1Submenu.ChangeCharacter(Global.players[0].character);
-        player2Submenu.ChangeCharacter(Global.players[1].character);
+        player1Submenu.ChangeCharacter(PlayersSettings.Player1.Character);
+        player2Submenu.ChangeCharacter(PlayersSettings.Player2.Character);
         
         UpdatePlayersLayout();
         UpdateGamepadStatus();
@@ -77,10 +58,10 @@ public class PlayersMenu : MonoBehaviour
 
     public void LocalCoop()
     {
-        Global.gameMode = GameMode.LocalCoop;
+        Settings.GameMode = GameMode.LocalCoop;
         coopSubmenu.SetActive(false);
 
-        if (Global.players[0].controlLayout == Global.players[1].controlLayout)
+        if (PlayersSettings.Player1.ControlLayout == PlayersSettings.Player2.ControlLayout)
         {
             player2Submenu.NextLayout();
         }
@@ -93,14 +74,14 @@ public class PlayersMenu : MonoBehaviour
     {
         coopSubmenu.SetActive(false);
         networkSubmenu.SetActive(true);
-        player2Title.text = "Network Coop";
+        modeTitle.text = "Network Coop";
 
         UpdateBackButtons(false);
     }
 
     public void LocalBannish()
     {
-        Global.gameMode = GameMode.Single;
+        Settings.GameMode = GameMode.Single;
         coopSubmenu.SetActive(true);
         HidePlayer2Submenu();
     }
@@ -129,7 +110,7 @@ public class PlayersMenu : MonoBehaviour
 
     private void UpdateKickButton()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.LocalCoop:
                 quitButton.SetActive(false);
@@ -153,10 +134,10 @@ public class PlayersMenu : MonoBehaviour
 
     public void ShowPlayer2Submenu()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.LocalCoop:
-                player2Title.text = "Local Coop";
+                modeTitle.text = "Local Coop";
                 p1.text = "Player 1";
                 p2.text = "Player 2";
 
@@ -165,7 +146,7 @@ public class PlayersMenu : MonoBehaviour
                 break;
 
             case GameMode.Host:
-                player2Title.text = "Network Coop";
+                modeTitle.text = "Network Coop";
                 p1.text = "You";
                 p2.text = "Sister";
 
@@ -174,7 +155,7 @@ public class PlayersMenu : MonoBehaviour
                 break;
 
             case GameMode.Client:
-                player2Title.text = "Network Coop";
+                modeTitle.text = "Network Coop";
                 p1.text = "Sister";
                 p2.text = "You";
 
@@ -187,93 +168,64 @@ public class PlayersMenu : MonoBehaviour
 
         UpdateKickButton();
         UpdateGamepadStatus();
-        menu.UpdatePlayersIcon(true);
+        MenuManager.Instance.UpdatePlayersIcon(true);
     }
 
     public void HidePlayer2Submenu()
     {
-        player2Title.text = "";
+        modeTitle.text = "";
         p1.text = "Player 1";
         p2.text = "Player 2";
 
         player1Submenu.ShowButton(true);
         player2Submenu.gameObject.SetActive(false);
-        menu.UpdatePlayersIcon(false);
+        UpdateGamepadStatus();
+        MenuManager.Instance.UpdatePlayersIcon(false);
     }
 
     public void ChangeCharacter()
     {
-        if (Global.players[0].character == Character.Celestia)
-        {
-            Global.players[0].character = Character.Luna;
-            Global.players[1].character = Character.Celestia;
-
-            player1Submenu.ChangeCharacter(Character.Luna);
-            player2Submenu.ChangeCharacter(Character.Celestia);
-        }
-        else
-        {
-            Global.players[0].character = Character.Celestia;
-            Global.players[1].character = Character.Luna;
-
-            player1Submenu.ChangeCharacter(Character.Celestia);
-            player2Submenu.ChangeCharacter(Character.Luna);
-        }
-    }
-
-    public void ChangeHostCharacter(Character player)
-    {
-        player1Submenu.ChangeCharacter(player);
-    }
-
-    public void ChangeClientCharacter(Character player)
-    {
-        player2Submenu.ChangeCharacter(player);
+        PlayersSettings.SwapCharacters();
+        player1Submenu.ChangeCharacter(PlayersSettings.Player1.Character);
+        player2Submenu.ChangeCharacter(PlayersSettings.Player2.Character);
     }
     
     public void UpdateGamepadStatus()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
-                if (Gamepad.gamepad1) player1GamepadImage.sprite = gamepadSprites[0];
-                else player1GamepadImage.sprite = gamepadSprites[3];
+                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad ? gamepadSprites[0] : gamepadSprites[3];
                 break;
 
             case GameMode.LocalCoop:
-                if (Gamepad.gamepad1) player1GamepadImage.sprite = gamepadSprites[1];
-                else player1GamepadImage.sprite = gamepadSprites[3];
-
-                if (Gamepad.gamepad2) player2GamepadImage.sprite = gamepadSprites[2];
-                else player2GamepadImage.sprite = gamepadSprites[3];
+                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad ? gamepadSprites[1] : gamepadSprites[3];
+                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad ? gamepadSprites[2] : gamepadSprites[3];
                 break;
 
             case GameMode.Host:
             case GameMode.Client:
-                if (Gamepad.gamepad1) player1GamepadImage.sprite = gamepadSprites[0];
-                else player1GamepadImage.sprite = gamepadSprites[3];
-
-                if (Gamepad.gamepad2) player2GamepadImage.sprite = gamepadSprites[0];
-                else player2GamepadImage.sprite = gamepadSprites[3];
+                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad ? gamepadSprites[0] : gamepadSprites[3];
+                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad ? gamepadSprites[0] : gamepadSprites[3];
                 break;
         }
     }
 
     public void ChangePlayer1Layout()
     {
-        Global.players[0].controlLayout = player1Submenu.layout;
-        player2Submenu.Block(player1Submenu.layout);
+        PlayersSettings.Player1.ControlLayout = player1Submenu.Layout;
+        player2Submenu.Block(player1Submenu.Layout);
     }
 
     public void ChangePlayer2Layout()
     {
-        Global.players[1].controlLayout = player2Submenu.layout;
-        player1Submenu.Block(player2Submenu.layout);
+        PlayersSettings.Player2.ControlLayout = player2Submenu.Layout;
+        player1Submenu.Block(player2Submenu.Layout);
     }
 
     public void UpdatePlayersLayout()
     {
-        player1Submenu.SetLayout(Global.players[0].controlLayout);
-        player2Submenu.SetLayout(Global.players[1].controlLayout);
+        player1Submenu.SetLayout(PlayersSettings.Player1.ControlLayout);
+        player2Submenu.SetLayout(PlayersSettings.Player2.ControlLayout);
     }
 }

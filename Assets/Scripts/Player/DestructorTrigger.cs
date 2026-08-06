@@ -1,11 +1,10 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DestructorTrigger : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (Global.gameMode is not (GameMode.Host or GameMode.Client)) return;
+        if (Settings.GameMode is not (GameMode.Host or GameMode.Client)) return;
         
         if (collider.gameObject.CompareTag("Windigo"))
         {

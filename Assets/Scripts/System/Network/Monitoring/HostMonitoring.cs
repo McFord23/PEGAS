@@ -1,4 +1,3 @@
-using Enums;
 using UnityEngine;
 
 public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
@@ -46,7 +45,7 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
     {
         if (!NetworkManager.IsHost) return;
 
-        Global.gameMode = GameMode.Host;
+        Settings.GameMode = GameMode.Host;
         Application.logMessageReceived -= CheckCreatingFailure;
         NetworkManager.OnClientConnectedCallback += OnClientConnect;
         NetworkManager.OnClientDisconnectCallback += OnClientDisconnect;
@@ -58,7 +57,7 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
         if (id != NetworkManager.LocalClientId)
         {
             clientID = id;
-            Global.fullParty = true;
+            Settings.FullParty = true;
             OnClientConnectedEvent?.Invoke();
         }
     }
@@ -71,7 +70,7 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
 
     private void OnClientDisconnect(ulong id = 1)
     {
-        Global.fullParty = false;
+        Settings.FullParty = false;
         OnClientDisconnectedEvent?.Invoke();
     }
 
@@ -82,8 +81,8 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
         NetworkManager.OnClientDisconnectCallback -= OnClientDisconnect;
         NetworkManager.Shutdown();
 
-        Global.gameMode = GameMode.Single;
-        Global.fullParty = false;
+        Settings.GameMode = GameMode.Single;
+        Settings.FullParty = false;
         OnShutdownEvent?.Invoke();
     }
 }

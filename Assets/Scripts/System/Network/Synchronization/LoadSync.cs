@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,9 +10,9 @@ public class LoadSync : NetworkBehaviour
 
     private void Awake()
     {
-        if (Global.gameMode == GameMode.Host || Global.gameMode == GameMode.Client)
+        if (Settings.GameMode == GameMode.Host || Settings.GameMode == GameMode.Client)
         {
-            if (Global.fullParty && loadFromStart)
+            if (Settings.FullParty && loadFromStart)
             {
                 loadScreen.SetActive(true);
                 NetworkManager.SceneManager.OnLoadEventCompleted += LoadCompleted;

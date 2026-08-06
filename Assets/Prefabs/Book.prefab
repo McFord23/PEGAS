@@ -3131,8 +3131,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7038055525419924561}
-  - component: {fileID: 7038055525419924560}
   - component: {fileID: 7038055525419924562}
+  - component: {fileID: 7038055525419924560}
   m_Layer: 0
   m_Name: Gamepad
   m_TagString: Untagged
@@ -3155,6 +3155,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8825258293389494982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7038055525419924562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7038055525419924575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3214960078
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7038055525419924560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3168,8 +3194,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  newConnection: 0000
-  oldConnection: 0000
   ChangeConnectionEvent:
     m_PersistentCalls:
       m_Calls:
@@ -3185,32 +3209,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7038055525419924562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7038055525419924575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1399904777
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  m_InScenePlaced: 0
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!1 &7038055525440041828
 GameObject:
   m_ObjectHideFlags: 0
@@ -3687,6 +3685,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  ipFieldManager: {fileID: 7038055525801788390}
+  status: {fileID: 7038055525646346233}
+  createButton: {fileID: 7038055526027886996}
+  connectButton: {fileID: 7038055525626153122}
+  shutdownButton: {fileID: 7038055526435194914}
+  cancelButton: {fileID: 7038055526498028788}
 --- !u!114 &7038055525529011597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3699,7 +3703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2149309438
+  GlobalObjectIdHash: 4139185530
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -7589,6 +7593,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb048dab4e51034789a29e693fe69c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backMain: {fileID: 7038055526034933886}
+  modeTitle: {fileID: 7038055526442123460}
+  player1Submenu: {fileID: 7038055526501792550}
+  p1: {fileID: 7038055527242821438}
+  player1GamepadImage: {fileID: 7038055525957524733}
+  player2Submenu: {fileID: 7038055526841958252}
+  p2: {fileID: 7038055527204239883}
+  player2GamepadImage: {fileID: 7038055525440041830}
+  coopSubmenu: {fileID: 7038055526154587925}
+  localBannishButton: {fileID: 7038055525333406335}
+  backCoop: {fileID: 7038055526191249668}
+  networkSubmenu: {fileID: 7038055525529011594}
+  networkBannishButton: {fileID: 7038055525353463597}
+  quitButton: {fileID: 7038055526899763141}
   controlLayoutSprites:
   - {fileID: -8346291274449466048, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
   - {fileID: -6595680761151332689, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
@@ -10686,6 +10704,10 @@ MonoBehaviour:
   celestia: {fileID: 7038055527213056325}
   luna: {fileID: 7038055526084061404}
   text: {fileID: 7038055526853229442}
+  characterButton: {fileID: 7038055525775135739}
+  nextControlButton: {fileID: 7038055525884868250}
+  previousControlButton: {fileID: 7038055526757885148}
+  layoutSprite: {fileID: 7038055525555424129}
 --- !u!1 &7038055526542227154
 GameObject:
   m_ObjectHideFlags: 0
@@ -12103,6 +12125,10 @@ MonoBehaviour:
   celestia: {fileID: 7038055525708194269}
   luna: {fileID: 7038055526615877803}
   text: {fileID: 7038055525361557520}
+  characterButton: {fileID: 7038055526233607004}
+  nextControlButton: {fileID: 7038055525594204559}
+  previousControlButton: {fileID: 7038055527172527818}
+  layoutSprite: {fileID: 7038055526449054929}
 --- !u!1 &7038055526853229441
 GameObject:
   m_ObjectHideFlags: 0
@@ -14734,7 +14760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4163869950
+  GlobalObjectIdHash: 4258262933
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

@@ -59,8 +59,6 @@ public class MenuManager : SingletonMonoBehaviour<MenuManager>
 
     private void Start()
     {
-        base.Awake();
-        
         menuTransform = GetComponent<RectTransform>();
 
         background = transform.Find("Background").GetComponent<Image>();

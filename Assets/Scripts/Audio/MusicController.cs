@@ -1,5 +1,4 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MusicController : MonoBehaviour
@@ -34,7 +33,7 @@ public class MusicController : MonoBehaviour
                 celestiaMenuLoop = transform.Find("Celestia Menu (loop)").GetComponentInChildren<AudioSource>();
                 lunaMenu = transform.Find("Luna Menu").GetComponentInChildren<AudioSource>();
 
-                switch (Global.players[0].character)
+                switch (PlayersSettings.Player1.Character)
                 {
                     case Character.Luna:
                         menuMusic = lunaMenu;
@@ -56,7 +55,7 @@ public class MusicController : MonoBehaviour
                 celestiaPause = transform.Find("Celestia Pause").GetComponentInChildren<AudioSource>();
                 victoryMusic = transform.Find("Victory").GetComponentInChildren<AudioSource>();
 
-                switch (Global.players[0].character)
+                switch (PlayersSettings.Player1.Character)
                 {
                     case Character.Luna:
                         flyingMusic = lunaFlying;
@@ -83,7 +82,7 @@ public class MusicController : MonoBehaviour
         switch (scene)
         {
             case "Main Menu":
-                if (Global.players[0].character == Character.Celestia && !menuMusic.isPlaying)
+                if (PlayersSettings.Player1.Character == Character.Celestia && !menuMusic.isPlaying)
                 {
                     menuMusic.Stop();
                     menuMusic = celestiaMenuLoop;
@@ -92,7 +91,7 @@ public class MusicController : MonoBehaviour
                 break;
 
             case "Game":
-                if (Global.players[0].character == Character.Celestia && !(flyingMusic.loop) && (flyingMusic.time >= 116.5f))
+                if (PlayersSettings.Player1.Character == Character.Celestia && !(flyingMusic.loop) && (flyingMusic.time >= 116.5f))
                 {
                     flyingMusic.Stop();
                     flyingMusic = celestiaFlyingLoop;

@@ -12,21 +12,21 @@ public class AudioController : MonoBehaviour
     void Start()
     {
         volume.value = AudioListener.volume;
-        soundToggle.isOn = Global.sound;
-        musicToggle.isOn = Global.music;
+        soundToggle.isOn = Settings.Sound;
+        musicToggle.isOn = Settings.Music;
     }
 
     public void EnableSound(bool value)
     {
-        Global.sound = value;
-        if (Global.sound) mixer.audioMixer.SetFloat("SoundVolume", 0); //dB
+        Settings.Sound = value;
+        if (Settings.Sound) mixer.audioMixer.SetFloat("SoundVolume", 0); //dB
         else mixer.audioMixer.SetFloat("SoundVolume", -80); //dB
     }
 
     public void EnableMusic(bool value)
     {
-        Global.music = value;
-        if (Global.music) mixer.audioMixer.SetFloat("MusicVolume", -6); //dB
+        Settings.Music = value;
+        if (Settings.Music) mixer.audioMixer.SetFloat("MusicVolume", -6); //dB
         else mixer.audioMixer.SetFloat("MusicVolume", -80); //dB
     }
 

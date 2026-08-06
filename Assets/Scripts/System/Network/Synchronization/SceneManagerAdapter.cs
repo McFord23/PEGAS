@@ -1,5 +1,4 @@
-﻿using Enums;
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,7 +25,7 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
     
     public void LoadScene(string sceneName)
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -52,7 +51,7 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
     {
         if (loadScreen) loadScreen.SetActive(true);
 
-        if (Global.gameMode == GameMode.Host)
+        if (Settings.GameMode == GameMode.Host)
         {
             NetworkManager.SceneManager.LoadScene(sceneName.ToString(), LoadSceneMode.Single);
         }

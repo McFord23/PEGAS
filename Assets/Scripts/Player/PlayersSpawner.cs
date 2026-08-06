@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Enums;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,7 +14,7 @@ public class PlayersSpawner : NetworkBehaviour
     
     private void Awake()
     {
-        if (Global.gameMode == GameMode.Single)
+        if (Settings.GameMode == GameMode.Single)
         {
             SpawnSinglePlayer();
             return;
@@ -41,7 +40,7 @@ public class PlayersSpawner : NetworkBehaviour
 
     private void SpawnSinglePlayer()
     {
-        var objectToSpawn = GetObjectToSpawn(Global.players[0].character);
+        var objectToSpawn = GetObjectToSpawn(PlayersSettings.Player1.Character);
         var selfTransform = transform;
         Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
     }
@@ -50,7 +49,9 @@ public class PlayersSpawner : NetworkBehaviour
     {
         if (!IsHost) return;
 
-        var objectToSpawn = GetObjectToSpawn(Global.players[playerNum].character);
+        var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
+
+        var objectToSpawn = GetObjectToSpawn(player.Character);
         var selfTransform = transform;
         var instanceTransform = Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
 

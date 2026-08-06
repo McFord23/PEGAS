@@ -1,5 +1,4 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class Fireball : MonoBehaviour
 
     private void DestroyFireball()
     {
-        if (Global.gameMode != GameMode.Client)
+        if (Settings.GameMode != GameMode.Client)
         {
             if (fireball) Destroy(fireball);
         }

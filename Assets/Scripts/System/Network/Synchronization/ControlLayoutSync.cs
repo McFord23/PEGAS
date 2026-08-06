@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
@@ -54,16 +53,15 @@ public class ControlLayoutSync : NetworkBehaviour
 
     private void OnHostUp()
     {
-        layoutHost.Value = Global.players[0].controlLayout;
-        Global.players[1].controlLayout = layoutClient.Value;
-
+        layoutHost.Value = PlayersSettings.Player1.ControlLayout;
+        PlayersSettings.Player2.ControlLayout = layoutClient.Value;
         playersMenu.UpdatePlayersLayout();
     }
 
     private void OnClientConnected()
     {
-        Global.players[0].controlLayout = layoutHost.Value;
-        RequestChangeLayoutServerRpc(Global.players[1].controlLayout);
+        PlayersSettings.Player1.ControlLayout = layoutHost.Value;
+        RequestChangeLayoutServerRpc(PlayersSettings.Player2.ControlLayout);
 
         playersMenu.UpdatePlayersLayout();
     }
@@ -76,14 +74,14 @@ public class ControlLayoutSync : NetworkBehaviour
 
     private void LayoutChangeSync()
     {
-        if (Global.gameMode == GameMode.Host) layoutHost.Value = Global.players[0].controlLayout;
-        else if (Global.gameMode == GameMode.Client) RequestChangeLayoutServerRpc(Global.players[1].controlLayout);
+        if (Settings.GameMode == GameMode.Host) layoutHost.Value = PlayersSettings.Player1.ControlLayout;
+        else if (Settings.GameMode == GameMode.Client) RequestChangeLayoutServerRpc(PlayersSettings.Player2.ControlLayout);
     }
 
     private void OnLayoutChange(ControlLayout oldLayout = 0, ControlLayout newLayout = 0)
     {
-        Global.players[0].controlLayout = layoutHost.Value;
-        Global.players[1].controlLayout = layoutClient.Value;
+        PlayersSettings.Player1.ControlLayout = layoutHost.Value;
+        PlayersSettings.Player2.ControlLayout = layoutClient.Value;
         playersMenu.UpdatePlayersLayout();
     }
 }

@@ -1,5 +1,4 @@
-﻿using Enums;
-using Unity.Netcode;
+﻿using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
@@ -18,7 +17,7 @@ public class PlayerController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (Global.gameMode is GameMode.Host or GameMode.Client)
+        if (Settings.GameMode is GameMode.Host or GameMode.Client)
         {
             if (!IsOwner) return;
         }
@@ -45,14 +44,9 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        if (Global.gameMode is GameMode.Host or GameMode.Client)
+        if (Settings.GameMode is GameMode.Host or GameMode.Client)
         {
             if (!IsOwner) return;
-        }
-
-        if (Controls.Paste)
-        {
-            print("Ctrl+V was pressed");
         }
         
         if (player.moveState == MoveState.Run)
@@ -80,12 +74,12 @@ public class PlayerController : NetworkBehaviour
         var rotate = 0f;
         var shoot = 0f;
 
-        int id = Global.gameMode == GameMode.Client ? 1 : 0; 
+        var playerSettings = Settings.GameMode == GameMode.Client ? PlayersSettings.Player2 : PlayersSettings.Player1; 
 
-        var input = Global.players[id].controlLayout;
+        var input = playerSettings.ControlLayout;
         
         gas = Controls.MainAction;
-        rotate = Global.players[id].sensitivity * (Controls.Move.x + Controls.Move.y);
+        rotate = playerSettings.Sensitivity * (Controls.Move.x + Controls.Move.y);
         shoot = Controls.AdditionalAction;
 
         SetInput(gas, rotate, shoot);

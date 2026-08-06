@@ -1,6 +1,3 @@
-using System;
-using System.Globalization;
-using Enums;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -26,6 +23,8 @@ public class Player : NetworkBehaviour
     private const float ReviveTime = 3f;
 
     [SerializeField] private GameObject crushEffectPrefab;
+
+    public bool Live { get; private set; } = true;
     
     public float speed { private set; get; }
     private float angleOfAttack;
@@ -77,7 +76,7 @@ public class Player : NetworkBehaviour
 
     private void Update()
     {
-        if (Global.gameMode is GameMode.Host or GameMode.Client)
+        if (Settings.GameMode is GameMode.Host or GameMode.Client)
         {
             if (!IsOwner) return;
         }
@@ -90,7 +89,7 @@ public class Player : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (Global.gameMode is GameMode.Host or GameMode.Client)
+        if (Settings.GameMode is GameMode.Host or GameMode.Client)
         {
             if (!IsOwner) return;
         }
@@ -149,6 +148,8 @@ public class Player : NetworkBehaviour
             item.ExecuteDrop();
             item = null;
         }
+        
+        Live = true;
     }
 
     public void Victory()
@@ -283,6 +284,7 @@ public class Player : NetworkBehaviour
             
         if (speed >= CrushSpeed)
         {
+            Live = false;
             Instantiate(crushEffectPrefab, transform.position, Quaternion.identity);
             moveState = MoveState.Dead;
             playersManager.Dead();

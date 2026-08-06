@@ -3,23 +3,22 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public Slider player1SensitivitySlider;
-    public Slider player2SensitivitySlider;
+    [SerializeField] private Slider player1SensitivitySlider;
+    [SerializeField] private Slider player2SensitivitySlider;
 
     private void Start()
     {
-        print($"sens: {Global.players[0].sensitivity}");
-        player1SensitivitySlider.value = Global.players[0].sensitivity;
-        player2SensitivitySlider.value = Global.players[1].sensitivity;
+        player1SensitivitySlider.value = PlayersSettings.Player1.Sensitivity;
+        player2SensitivitySlider.value = PlayersSettings.Player2.Sensitivity;
     }
 
     public void SetPlayer1Sensitivity(float value)
     {
-        Global.players[0].sensitivity = value;
+        PlayersSettings.Player1.Sensitivity = value;
     }
 
     public void SetPlayer2Sensitivity(float value)
     {
-        Global.players[1].sensitivity = value;
+        PlayersSettings.Player2.Sensitivity = value;
     }
 }

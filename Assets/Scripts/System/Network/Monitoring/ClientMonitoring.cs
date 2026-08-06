@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections;
 using UnityEngine;
 
@@ -45,8 +44,8 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
         StopCoroutine(waitingConnection);
         NetworkManager.OnClientDisconnectCallback += StopClient;
 
-        Global.gameMode = GameMode.Client;
-        Global.fullParty = true;
+        Settings.GameMode = GameMode.Client;
+        Settings.FullParty = true;
         OnConnectedEvent?.Invoke();
     }
 
@@ -57,15 +56,15 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
 
     private void StopClient(ulong id = 1)
     {
-        if (Global.gameMode != GameMode.Client) return;
+        if (Settings.GameMode != GameMode.Client) return;
 
         NetworkManager.OnClientConnectedCallback -= OnConnected;
         NetworkManager.OnClientDisconnectCallback -= StopClient;
         StopCoroutine(waitingConnection);
         NetworkManager.Shutdown();
 
-        Global.gameMode = GameMode.Single;
-        Global.fullParty = false;
+        Settings.GameMode = GameMode.Single;
+        Settings.FullParty = false;
         OnDisconnectedEvent?.Invoke();
     }
     

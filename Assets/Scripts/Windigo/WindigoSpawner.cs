@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,7 +18,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
     {
         base.Awake();
         
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -34,7 +33,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
 
     private void OnLoadEventComplate(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
     {
-        if ((Global.fullParty && clientscompleted.Count > 1) || !Global.fullParty)
+        if ((Settings.FullParty && clientscompleted.Count > 1) || !Settings.FullParty)
         {
             Spawn();
             NetworkManager.SceneManager.OnLoadEventCompleted -= OnLoadEventComplate;
@@ -43,7 +42,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
 
     public void Spawn()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -75,7 +74,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
     [ClientRpc]
     private void RequestSpawnWindigoClientRpc()
     {
-        if (Global.gameMode != GameMode.Client) return;
+        if (Settings.GameMode != GameMode.Client) return;
         
         Windigo windigo;
         windigo = GameObject.Find("Windigo(Clone)").GetComponent<Windigo>();
