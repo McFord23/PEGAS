@@ -1,14 +1,9 @@
-using UnityEngine;
-
 public static class PlayersSettings
 {
-    public const float SENSITIVITY_MIN = 0.1f;
-    public const float SENSITIVITY_MAX = 1f;
-    
     public class PlayerSettings
     {
         public Character Character;
-        public ControlLayout ControlLayout;
+        public ControlScheme ControlScheme;
         public float Sensitivity;
         public bool Gamepad;
     }
@@ -16,7 +11,7 @@ public static class PlayersSettings
     public static PlayerSettings Player1 { get; } = new()
     {
         Character = Character.Celestia,
-        ControlLayout = ControlLayout.Mouse,
+        ControlScheme = ControlScheme.Mouse,
         Sensitivity = 0.5f,
         Gamepad = false
     };
@@ -24,7 +19,7 @@ public static class PlayersSettings
     public static PlayerSettings Player2 { get; } = new()
     {
         Character = Character.Luna,
-        ControlLayout = ControlLayout.Numpad,
+        ControlScheme = ControlScheme.WASD,
         Sensitivity = 0.5f,
         Gamepad = false
     };
@@ -41,11 +36,11 @@ public enum Character
     Luna
 }
     
-public enum ControlLayout
+public enum ControlScheme
 {
     Mouse,
-    Numpad,
     WASD,
-    IJKL,
-    Arrow
+    Arrows,
+    Numpad,
+    Gamepad
 }

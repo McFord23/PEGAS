@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerSubmenu : MonoBehaviour
@@ -10,62 +11,62 @@ public class PlayerSubmenu : MonoBehaviour
     [SerializeField] private GameObject characterButton;
     
     [Header("Controls")]
-    public ControlLayout Layout { private set; get; }
-    [SerializeField] private GameObject nextControlButton;
-    [SerializeField] private GameObject previousControlButton;
-    [SerializeField] private Image layoutSprite;
-    private Sprite[] layoutSprites;
+    public ControlScheme Scheme { private set; get; }
+    [FormerlySerializedAs("nextControlButton")] [SerializeField] private GameObject nextSchemeButton;
+    [FormerlySerializedAs("previousControlButton")] [SerializeField] private GameObject previousSchemeButton;
+    [FormerlySerializedAs("layoutSprite")] [SerializeField] private Image schemeSprite;
+    private Sprite[] schemesSprites;
     private int indexBlocked;
     private int index;
 
     public void Initialize(Sprite[] initialLayoutSprites)
     {
-        layoutSprites = initialLayoutSprites;
-        index = (int)Layout;
-        layoutSprite.sprite = layoutSprites[index];
+        schemesSprites = initialLayoutSprites;
+        index = (int)Scheme;
+        schemeSprite.sprite = schemesSprites[index];
     }
 
-    public void SetLayout(ControlLayout controlLayout)
+    public void SetScheme(ControlScheme controlScheme)
     {
-        Layout = controlLayout;
-        index = (int)controlLayout;
-        layoutSprite.sprite = layoutSprites[index];
+        Scheme = controlScheme;
+        index = (int)controlScheme;
+        schemeSprite.sprite = schemesSprites[index];
     }
 
-    public void Block(ControlLayout indexAnotherPlayer)
+    public void Block(ControlScheme indexAnotherPlayer)
     {
         indexBlocked = (int)indexAnotherPlayer;
     }
 
-    public void NextLayout()
+    public void NextScheme()
     {
-        if (index < layoutSprites.Length - 1) index++;
+        if (index < schemesSprites.Length - 1) index++;
         else index = 0;
 
         if (Settings.GameMode == GameMode.LocalCoop)
         {
-            if (index == indexBlocked && indexBlocked == layoutSprites.Length - 1) index = 0;
+            if (index == indexBlocked && indexBlocked == schemesSprites.Length - 1) index = 0;
             else if (index == indexBlocked) index++;
         }
         
-        layoutSprite.sprite = layoutSprites[index];
-        Layout = (ControlLayout)index;
+        schemeSprite.sprite = schemesSprites[index];
+        Scheme = (ControlScheme)index;
 
     }
 
-    public void PerviousLayout()
+    public void PreviousScheme()
     {
         if (index > 0) index--;
-        else index = layoutSprites.Length - 1;
+        else index = schemesSprites.Length - 1;
 
         if (Settings.GameMode == GameMode.LocalCoop)
         {
-            if (index == indexBlocked && indexBlocked == 0) index = layoutSprites.Length - 1;
+            if (index == indexBlocked && indexBlocked == 0) index = schemesSprites.Length - 1;
             else if (index == indexBlocked) index--;
         }
 
-        layoutSprite.sprite = layoutSprites[index];
-        Layout = (ControlLayout)index;
+        schemeSprite.sprite = schemesSprites[index];
+        Scheme = (ControlScheme)index;
     }
 
     public void ChangeCharacter(Character character)
@@ -89,7 +90,7 @@ public class PlayerSubmenu : MonoBehaviour
     public void ShowButton(bool value)
     {
         characterButton.SetActive(value);
-        nextControlButton.SetActive(value);
-        previousControlButton.SetActive(value);
+        nextSchemeButton.SetActive(value);
+        previousSchemeButton.SetActive(value);
     }
 }

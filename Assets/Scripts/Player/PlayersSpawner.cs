@@ -4,58 +4,55 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/**
- * Спавнит игроков в режиме мультиплеера и одного игрока в одиночном режиме
- */
 public class PlayersSpawner : NetworkBehaviour
 {
+    [Header("Celestia")]
     [SerializeField] private GameObject celestiaPrefab;
+    [SerializeField] private Transform celestiaSpawnPoint;
+    
+    [Header("Luna")]
     [SerializeField] private GameObject lunaPrefab;
+    [SerializeField] private Transform lunaSpawnPoint;
     
     private void Awake()
     {
-        if (Settings.GameMode == GameMode.Single)
+        switch (Settings.GameMode)
         {
-            SpawnSinglePlayer();
-            return;
-        }
-
-        if (NetworkManager.IsHost)
-        {
-            NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnOnLoadEventCompleted;
+            case GameMode.Single:
+                SpawnPlayer(PlayersSettings.Player1.Character);
+                break;
+            
+            case GameMode.LocalCoop:
+                SpawnPlayer(PlayersSettings.Player1.Character);
+                SpawnPlayer(PlayersSettings.Player2.Character);
+                break;
+            
+            case GameMode.Host:
+                NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnOnLoadEventCompleted;
+                break;
         }
     }
 
     private void SceneManagerOnOnLoadEventCompleted(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
     {
+        if (!IsHost) return;
+        
         var playerNum = 0;
         foreach (ulong clientId in clientscompleted)
         {
-            SpawnCharacter(playerNum, clientId);
+            var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
+            SpawnPlayer(player.Character).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
             playerNum++;
         }
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManagerOnOnLoadEventCompleted;
     }
-
-    private void SpawnSinglePlayer()
-    {
-        var objectToSpawn = GetObjectToSpawn(PlayersSettings.Player1.Character);
-        var selfTransform = transform;
-        Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
-    }
     
-    private void SpawnCharacter(int playerNum, ulong clientId)
+    private GameObject SpawnPlayer(Character character)
     {
-        if (!IsHost) return;
-
-        var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
-
-        var objectToSpawn = GetObjectToSpawn(player.Character);
-        var selfTransform = transform;
-        var instanceTransform = Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
-
-        instanceTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+        var objectToSpawn = GetObjectToSpawn(character);
+        var spawnPosition = GetSpawnPosition(character);
+        return Instantiate(objectToSpawn, spawnPosition, transform.rotation);
     }
     
     private GameObject GetObjectToSpawn(Character character)
@@ -64,6 +61,16 @@ public class PlayersSpawner : NetworkBehaviour
         {
             Character.Celestia => celestiaPrefab,
             Character.Luna => lunaPrefab,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    private Vector2 GetSpawnPosition(Character character)
+    {
+        return character switch
+        {
+            Character.Celestia => celestiaSpawnPoint.position,
+            Character.Luna => lunaSpawnPoint.position,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

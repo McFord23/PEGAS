@@ -2,11 +2,6 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour
 {
-    // Gameplay
-    public static Vector2 Move => inputData.Gameplay.Move.ReadValue<Vector2>();
-    public static float MainAction => inputData.Gameplay.MainAction.ReadValue<float>();
-    public static float AdditionalAction => inputData.Gameplay.AdditionalAction.ReadValue<float>();
-
     // UI
     public static bool Retry => inputData.UI.Retry.triggered;
     public static bool Pause => inputData.UI.Pause.triggered;
@@ -19,7 +14,7 @@ public class Controls : MonoBehaviour
     
     private static InputData inputData;
     
-    private void Awake()
+    private void OnEnable()
     {
         inputData = new InputData();
         inputData.Enable();

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class OutlineLayout : MonoBehaviour
@@ -30,11 +28,11 @@ public class OutlineLayout : MonoBehaviour
                 isSetSelected = false;
             }
 
-            if (Controls.Move.x > 0)
+            if (Controls.Navigation.x > 0)
             {
                 nextLayout.onClick.Invoke();
             }
-            else if (Controls.Move.x < 0)
+            else if (Controls.Navigation.x < 0)
             {
                 perviousLayout.onClick.Invoke();
             }

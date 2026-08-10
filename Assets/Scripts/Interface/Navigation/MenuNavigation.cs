@@ -39,7 +39,7 @@ public class MenuNavigation : MonoBehaviour
     {
         if (selectNone)
         {
-            if (Controls.Move != Vector2.zero)
+            if (Controls.Navigation != Vector2.zero)
             {
                 buttons[index].Select();
                 selectNone = false;

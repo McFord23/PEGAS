@@ -44,7 +44,7 @@
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "ScaleVector2(x=-8,y=-8)",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -55,7 +55,7 @@
                     "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Mouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -198,7 +198,7 @@
                     "path": "<Keyboard>/numpad5",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Arrows",
+                    "groups": "NumPad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -209,7 +209,7 @@
                     "path": "<Keyboard>/numpad4",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Arrows",
+                    "groups": ";NumPad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -220,7 +220,7 @@
                     "path": "<Keyboard>/numpad6",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Arrows",
+                    "groups": ";NumPad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true

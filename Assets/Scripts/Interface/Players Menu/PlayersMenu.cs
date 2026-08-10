@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayersMenu : MonoBehaviour
@@ -26,14 +27,14 @@ public class PlayersMenu : MonoBehaviour
     [SerializeField] private GameObject networkBannishButton;
     [SerializeField] private GameObject quitButton;
     
-    [Header("Controls")]
-    public Sprite[] controlLayoutSprites;
+    [FormerlySerializedAs("controlLayoutSprites")] [Header("Controls")]
+    public Sprite[] controlSchemeSprites;
     public Sprite[] gamepadSprites;
 
     public void Initialize()
     {
-        player1Submenu.Initialize(controlLayoutSprites);
-        player2Submenu.Initialize(controlLayoutSprites);
+        player1Submenu.Initialize(controlSchemeSprites);
+        player2Submenu.Initialize(controlSchemeSprites);
         
         switch (Settings.GameMode)
         {            
@@ -52,7 +53,7 @@ public class PlayersMenu : MonoBehaviour
         player1Submenu.ChangeCharacter(PlayersSettings.Player1.Character);
         player2Submenu.ChangeCharacter(PlayersSettings.Player2.Character);
         
-        UpdatePlayersLayout();
+        UpdatePlayersSchemes();
         UpdateGamepadStatus();
     }
 
@@ -61,9 +62,9 @@ public class PlayersMenu : MonoBehaviour
         Settings.GameMode = GameMode.LocalCoop;
         coopSubmenu.SetActive(false);
 
-        if (PlayersSettings.Player1.ControlLayout == PlayersSettings.Player2.ControlLayout)
+        if (PlayersSettings.Player1.ControlScheme == PlayersSettings.Player2.ControlScheme)
         {
-            player2Submenu.NextLayout();
+            player2Submenu.NextScheme();
         }
 
         UpdateBackButtons(true);
@@ -211,21 +212,21 @@ public class PlayersMenu : MonoBehaviour
         }
     }
 
-    public void ChangePlayer1Layout()
+    public void ChangePlayer1Scheme()
     {
-        PlayersSettings.Player1.ControlLayout = player1Submenu.Layout;
-        player2Submenu.Block(player1Submenu.Layout);
+        PlayersSettings.Player1.ControlScheme = player1Submenu.Scheme;
+        player2Submenu.Block(player1Submenu.Scheme);
     }
 
-    public void ChangePlayer2Layout()
+    public void ChangePlayer2Scheme()
     {
-        PlayersSettings.Player2.ControlLayout = player2Submenu.Layout;
-        player1Submenu.Block(player2Submenu.Layout);
+        PlayersSettings.Player2.ControlScheme = player2Submenu.Scheme;
+        player1Submenu.Block(player2Submenu.Scheme);
     }
 
-    public void UpdatePlayersLayout()
+    public void UpdatePlayersSchemes()
     {
-        player1Submenu.SetLayout(PlayersSettings.Player1.ControlLayout);
-        player2Submenu.SetLayout(PlayersSettings.Player2.ControlLayout);
+        player1Submenu.SetScheme(PlayersSettings.Player1.ControlScheme);
+        player2Submenu.SetScheme(PlayersSettings.Player2.ControlScheme);
     }
 }

@@ -3,10 +3,9 @@ using UnityEngine.Events;
 
 public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 {
-    private Player[] players = new Player[2];
-    private PlayerController[] playerControllers = new PlayerController[2];
+    private PlayerBase[] players = new PlayerBase[2];
 
-    public bool HaveBothPlayers => (bool)players[0] && HaveOtherPlayer;
+    private bool HaveBothPlayers => (bool)players[0] && HaveOtherPlayer;
     private bool HaveOtherPlayer => (bool)players[1];
 
     public UnityEvent PauseEvent;
@@ -15,25 +14,26 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     public UnityEvent ResetEvent;
     public UnityEvent VictoryEvent;
     
-    public void LoadPlayer(Player newPlayer)
+    public void LoadPlayer(PlayerBase newPlayer)
     {
-        newPlayer.transform.position = transform.position;
-        
         var spawnPlayerNum = 0;
+        
         if (players[0] != null)
         {
             spawnPlayerNum = 1;
         }
 
         players[spawnPlayerNum] = newPlayer;
-        playerControllers[spawnPlayerNum] = newPlayer.GetComponent<PlayerController>();
+        
+        SwitchPlayer1ControlScheme();
+        if (HaveOtherPlayer) SwitchPlayer2ControlScheme();
     }
 
     private void Update()
     {
         if (Controls.Retry)
         {
-            if (players[0].moveState == MoveState.Paused)
+            if (Global.IsPause)
             {
                 EventAdapter.Instance.Execute(EventKey.Resume);
             }
@@ -43,9 +43,8 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
         if (HaveOtherPlayer)
         {
-            if (players[0].moveState is MoveState.Paused or MoveState.Winner) return;
-            if (players[1].moveState is MoveState.Paused or MoveState.Winner) return;
-            if (players[0].moveState == MoveState.Dead && players[1].moveState == MoveState.Dead) return;
+            if (Global.IsPause) return;
+            if (!players[0].Live && !players[1].Live) return;
             if (Controls.Pause)
             {
                 EventAdapter.Instance.Execute(EventKey.Pause);
@@ -53,8 +52,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         }
         else if (players[0])
         {
-            if (players[0].moveState is MoveState.Paused or MoveState.Dead or MoveState.Winner) 
-                return;
+            if (Global.IsPause) return;
             
             if (Controls.Pause)
             {
@@ -92,14 +90,14 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         switch (Settings.GameMode)
         {
             case GameMode.Single:
-            case GameMode.Host when HaveBothPlayers:
-                return players[0].speed;
+            case GameMode.Host:
+                return players[0].Speed;
 
             case GameMode.Client when HaveBothPlayers:
-                return players[1].speed;
+                return players[1].Speed;
             
             case GameMode.LocalCoop when HaveBothPlayers:
-                return (players[1].speed + players[0].speed) / 2;
+                return (players[1].Speed + players[0].Speed) / 2;
             
             default:
                 return 0;
@@ -108,18 +106,28 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public float GetDirection()
     {
-        var playerNum = GetCurrentPlayerNum();
-        
-        if ((bool)players[playerNum] && players[playerNum].moveState != MoveState.Dead)
+        switch (Settings.GameMode)
         {
-            return players[playerNum].transform.localScale.y;
+            case GameMode.Single:
+                return players[0].transform.localScale.y;
         }
         
         return 0;
     }
 
+    public void SwitchPlayer1ControlScheme()
+    {
+        players[0].SwitchControlScheme(PlayersSettings.Player1.ControlScheme);
+    }
+    
+    public void SwitchPlayer2ControlScheme()
+    {
+        players[1].SwitchControlScheme(PlayersSettings.Player2.ControlScheme);
+    }
+    
     public void Pause()
     {
+        Global.IsPause = true;
         players[0]?.Pause();
         players[1]?.Pause();
         PauseEvent.Invoke();
@@ -127,6 +135,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public void Resume()
     {
+        Global.IsPause = false;
         players[0]?.Resume();
         players[1]?.Resume();
         ResumeEvent.Invoke();
@@ -164,6 +173,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         players[0]?.Victory();
         players[1]?.Victory();
         
+        Global.IsPause = true;
         VictoryEvent.Invoke();
     }
 }

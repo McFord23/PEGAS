@@ -3968,7 +3968,7 @@ GameObject:
   - component: {fileID: 7038055525555424130}
   - component: {fileID: 7038055525555424129}
   m_Layer: 5
-  m_Name: Control Layout
+  m_Name: Control Scheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4259,7 +4259,7 @@ GameObject:
   - component: {fileID: 7038055525594204544}
   - component: {fileID: 7038055525594204546}
   m_Layer: 5
-  m_Name: Next Layout
+  m_Name: Next Scheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4368,7 +4368,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7038055526841958252}
         m_TargetAssemblyTypeName: PlayerMenu, Assembly-CSharp
-        m_MethodName: NextLayout
+        m_MethodName: NextScheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4380,7 +4380,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 7038055526061320868}
         m_TargetAssemblyTypeName: PlayersMenu, Assembly-CSharp
-        m_MethodName: ChangePlayer2Layout
+        m_MethodName: ChangePlayer2Scheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6216,7 +6216,7 @@ GameObject:
   - component: {fileID: 7038055525884868251}
   - component: {fileID: 7038055525884868253}
   m_Layer: 5
-  m_Name: Next Layout
+  m_Name: Next Scheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6325,7 +6325,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7038055526501792550}
         m_TargetAssemblyTypeName: PlayerMenu, Assembly-CSharp
-        m_MethodName: NextLayout
+        m_MethodName: NextScheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6337,7 +6337,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 7038055526061320868}
         m_TargetAssemblyTypeName: PlayersMenu, Assembly-CSharp
-        m_MethodName: ChangePlayer1Layout
+        m_MethodName: ChangePlayer1Scheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7607,12 +7607,11 @@ MonoBehaviour:
   networkSubmenu: {fileID: 7038055525529011594}
   networkBannishButton: {fileID: 7038055525353463597}
   quitButton: {fileID: 7038055526899763141}
-  controlLayoutSprites:
+  controlSchemeSprites:
   - {fileID: -8346291274449466048, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
-  - {fileID: -6595680761151332689, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
   - {fileID: 9094600903545770030, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
-  - {fileID: 8391660652416901024, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
   - {fileID: -273060469431498887, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
+  - {fileID: -6595680761151332689, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
   gamepadSprites:
   - {fileID: 228940821244427079, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
   - {fileID: -4532114073746202998, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
@@ -9849,7 +9848,7 @@ GameObject:
   - component: {fileID: 7038055526449054930}
   - component: {fileID: 7038055526449054929}
   m_Layer: 5
-  m_Name: Control Layout
+  m_Name: Control Scheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10705,9 +10704,9 @@ MonoBehaviour:
   luna: {fileID: 7038055526084061404}
   text: {fileID: 7038055526853229442}
   characterButton: {fileID: 7038055525775135739}
-  nextControlButton: {fileID: 7038055525884868250}
-  previousControlButton: {fileID: 7038055526757885148}
-  layoutSprite: {fileID: 7038055525555424129}
+  nextSchemeButton: {fileID: 7038055525884868250}
+  previousSchemeButton: {fileID: 7038055526757885148}
+  schemeSprite: {fileID: 7038055525555424129}
 --- !u!1 &7038055526542227154
 GameObject:
   m_ObjectHideFlags: 0
@@ -11434,7 +11433,7 @@ GameObject:
   - component: {fileID: 7038055526757885149}
   - component: {fileID: 7038055526757885136}
   m_Layer: 5
-  m_Name: Pervious Layout
+  m_Name: Pervious Scheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11543,7 +11542,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7038055526501792550}
         m_TargetAssemblyTypeName: PlayerMenu, Assembly-CSharp
-        m_MethodName: PerviousLayout
+        m_MethodName: PreviousScheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11555,7 +11554,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 7038055526061320868}
         m_TargetAssemblyTypeName: PlayersMenu, Assembly-CSharp
-        m_MethodName: ChangePlayer1Layout
+        m_MethodName: ChangePlayer1Scheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12126,9 +12125,9 @@ MonoBehaviour:
   luna: {fileID: 7038055526615877803}
   text: {fileID: 7038055525361557520}
   characterButton: {fileID: 7038055526233607004}
-  nextControlButton: {fileID: 7038055525594204559}
-  previousControlButton: {fileID: 7038055527172527818}
-  layoutSprite: {fileID: 7038055526449054929}
+  nextSchemeButton: {fileID: 7038055525594204559}
+  previousSchemeButton: {fileID: 7038055527172527818}
+  schemeSprite: {fileID: 7038055526449054929}
 --- !u!1 &7038055526853229441
 GameObject:
   m_ObjectHideFlags: 0
@@ -14231,7 +14230,7 @@ GameObject:
   - component: {fileID: 7038055527172527821}
   - component: {fileID: 7038055527172527820}
   m_Layer: 5
-  m_Name: Pervious Layout
+  m_Name: Pervious Scheme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14340,7 +14339,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7038055526841958252}
         m_TargetAssemblyTypeName: PlayerMenu, Assembly-CSharp
-        m_MethodName: PerviousLayout
+        m_MethodName: PreviousScheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14352,7 +14351,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 7038055526061320868}
         m_TargetAssemblyTypeName: PlayersMenu, Assembly-CSharp
-        m_MethodName: ChangePlayer2Layout
+        m_MethodName: ChangePlayer2Scheme
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
