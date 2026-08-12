@@ -13,18 +13,26 @@ public class PlayersSpawner : NetworkBehaviour
     [Header("Luna")]
     [SerializeField] private GameObject lunaPrefab;
     [SerializeField] private Transform lunaSpawnPoint;
+
+    private PlayersManager playersManager;
     
     private void Awake()
+    {
+        playersManager = GetComponent<PlayersManager>();
+        Spawn();
+    }
+    
+    public void Spawn()
     {
         switch (Settings.GameMode)
         {
             case GameMode.Single:
-                SpawnPlayer(PlayersSettings.Player1);
+                if (playersManager.players[0] == null) SpawnPlayer(PlayersSettings.Player1);
                 break;
             
             case GameMode.LocalCoop:
-                SpawnPlayer(PlayersSettings.Player1);
-                SpawnPlayer(PlayersSettings.Player2);
+                if (playersManager.players[0] == null) SpawnPlayer(PlayersSettings.Player1);
+                if (playersManager.players[1] == null) SpawnPlayer(PlayersSettings.Player2);
                 break;
             
             case GameMode.Host:
@@ -41,7 +49,12 @@ public class PlayersSpawner : NetworkBehaviour
         foreach (ulong clientId in clientscompleted)
         {
             var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
-            SpawnPlayer(player).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+            
+            if (playersManager.players[playerNum] == null)
+            {
+                SpawnPlayer(player).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+            }
+            
             playerNum++;
         }
 

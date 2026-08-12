@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 {
-    private readonly PlayerBase[] players = new PlayerBase[2];
+    public PlayerBase[] players { get; private set; } = new PlayerBase[2];
     
     public bool HaveSecondPlayer => (bool)players[1];
 
@@ -99,6 +99,15 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         }
     }
 
+    public void DestroySecondPlayer()
+    {
+        if (players[1] != null)
+        {
+            Destroy(players[1].gameObject);
+            players[1] = null;
+        }
+    }
+    
     public Vector3 GetPosition(int i) => players[i].transform.position;
 
     public float GetSpeed()

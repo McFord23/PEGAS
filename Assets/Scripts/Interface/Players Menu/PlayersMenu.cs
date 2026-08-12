@@ -18,12 +18,12 @@ public class PlayersMenu : MonoBehaviour
     
     [Header("Local Coop")]
     [SerializeField] private GameObject coopSubmenu;
-    [SerializeField] private GameObject localBannishButton;
+    [SerializeField] private GameObject localKickButton;
     [SerializeField] private GameObject backCoop;
     
     [Header("Network Coop")]
     [SerializeField] private GameObject networkSubmenu;
-    [SerializeField] private GameObject networkBannishButton;
+    [SerializeField] private GameObject networkKickButton;
     [SerializeField] private GameObject quitButton;
     
     [Header("Controls Schemes")]
@@ -79,7 +79,7 @@ public class PlayersMenu : MonoBehaviour
         UpdateBackButtons(false);
     }
 
-    public void LocalBannish()
+    public void LocalKick()
     {
         Settings.GameMode = GameMode.Single;
         coopSubmenu.SetActive(true);
@@ -114,19 +114,19 @@ public class PlayersMenu : MonoBehaviour
         {
             case GameMode.LocalCoop:
                 quitButton.SetActive(false);
-                networkBannishButton.SetActive(false);
-                localBannishButton.SetActive(true);
+                networkKickButton.SetActive(false);
+                localKickButton.SetActive(true);
                 break;
 
             case GameMode.Host:
                 quitButton.SetActive(false);
-                localBannishButton.SetActive(false);
-                networkBannishButton.SetActive(true);
+                localKickButton.SetActive(false);
+                networkKickButton.SetActive(true);
                 break;
                 
             case GameMode.Client:
-                localBannishButton.SetActive(false);
-                networkBannishButton.SetActive(false);
+                localKickButton.SetActive(false);
+                networkKickButton.SetActive(false);
                 quitButton.SetActive(true);
                 break;
         }

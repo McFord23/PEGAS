@@ -2082,7 +2082,7 @@ GameObject:
   - component: {fileID: 7038055525333406322}
   - component: {fileID: 7038055525333406321}
   m_Layer: 5
-  m_Name: Local Bannish
+  m_Name: Local Kick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2148,7 +2148,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BANNISH
+  m_Text: KICK
 --- !u!114 &7038055525333406321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2195,7 +2195,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7038055526061320868}
         m_TargetAssemblyTypeName: PlayersMenu, Assembly-CSharp
-        m_MethodName: LocalBannish
+        m_MethodName: LocalKick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2624,7 +2624,7 @@ GameObject:
   - component: {fileID: 7038055525353463584}
   - component: {fileID: 7038055525353463599}
   m_Layer: 5
-  m_Name: Network Bannish
+  m_Name: Network Kick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2690,7 +2690,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BANNISH
+  m_Text: KICK
 --- !u!114 &7038055525353463599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3167,7 +3167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3214960078
+  GlobalObjectIdHash: 1399904777
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -3703,7 +3703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4139185530
+  GlobalObjectIdHash: 2149309438
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -7602,10 +7602,10 @@ MonoBehaviour:
   p2: {fileID: 7038055527204239883}
   player2GamepadImage: {fileID: 7038055525440041830}
   coopSubmenu: {fileID: 7038055526154587925}
-  localBannishButton: {fileID: 7038055525333406335}
+  localKickButton: {fileID: 7038055525333406335}
   backCoop: {fileID: 7038055526191249668}
   networkSubmenu: {fileID: 7038055525529011594}
-  networkBannishButton: {fileID: 7038055525353463597}
+  networkKickButton: {fileID: 7038055525353463597}
   quitButton: {fileID: 7038055526899763141}
   controlSchemeSprites:
   - {fileID: -8346291274449466048, guid: 6428dcbfcbd19bd41973ca693ed1a2fe, type: 3}
@@ -14758,7 +14758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4258262933
+  GlobalObjectIdHash: 4163869950
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
