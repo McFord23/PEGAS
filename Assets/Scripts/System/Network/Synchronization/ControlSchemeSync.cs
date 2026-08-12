@@ -90,8 +90,7 @@ public class ControlSchemeSync : NetworkBehaviour
     {
         PlayersSettings.Player1.ControlScheme = hostScheme.Value;
         PlayersSettings.Player2.ControlScheme = clientScheme.Value;
-        PlayersManager.Instance.SwitchPlayer1ControlScheme();
-        PlayersManager.Instance.SwitchPlayer2ControlScheme();
+        PlayersManager.Instance.UpdatePlayersControlScheme();
         playersMenu.UpdatePlayersSchemes();
     }
 }

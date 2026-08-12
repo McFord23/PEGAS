@@ -19,12 +19,12 @@ public class PlayersSpawner : NetworkBehaviour
         switch (Settings.GameMode)
         {
             case GameMode.Single:
-                SpawnPlayer(PlayersSettings.Player1.Character);
+                SpawnPlayer(PlayersSettings.Player1);
                 break;
             
             case GameMode.LocalCoop:
-                SpawnPlayer(PlayersSettings.Player1.Character);
-                SpawnPlayer(PlayersSettings.Player2.Character);
+                SpawnPlayer(PlayersSettings.Player1);
+                SpawnPlayer(PlayersSettings.Player2);
                 break;
             
             case GameMode.Host:
@@ -41,18 +41,20 @@ public class PlayersSpawner : NetworkBehaviour
         foreach (ulong clientId in clientscompleted)
         {
             var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
-            SpawnPlayer(player.Character).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+            SpawnPlayer(player).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
             playerNum++;
         }
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManagerOnOnLoadEventCompleted;
     }
     
-    private GameObject SpawnPlayer(Character character)
+    private GameObject SpawnPlayer(PlayersSettings.Player player)
     {
-        var objectToSpawn = GetObjectToSpawn(character);
-        var spawnPosition = GetSpawnPosition(character);
-        return Instantiate(objectToSpawn, spawnPosition, transform.rotation);
+        var objectToSpawn = GetObjectToSpawn(player.Character);
+        var spawnPosition = GetSpawnPosition(player.Character);
+        var playerObject = Instantiate(objectToSpawn, spawnPosition, transform.rotation);
+        playerObject.GetComponent<PlayerBase>().Initialize(player);
+        return playerObject;
     }
     
     private GameObject GetObjectToSpawn(Character character)

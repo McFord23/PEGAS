@@ -4,9 +4,13 @@ using Unity.Netcode;
 
 public class PlayerBase : NetworkBehaviour
 {
-    public Vector2 MoveInput { get; private set; }
-    public float MainActionInput { get; private set; }
-    public float AdditionalActionInput { get; private set; }
+    public Vector2 MoveInput => moveByKeyboardAndMouse
+                                + Controls.MoveByGamepad(playerSettings.Gamepad);
+    public float MainActionInput => mainActionByKeyboardAndMouse 
+                                    + Controls.MainActionByGamepad(playerSettings.Gamepad);
+
+    public float AdditionalActionInput => additionalActionByKeyboardAndMouse 
+                                          + Controls.AdditionalActionByGamepad(playerSettings.Gamepad);
     
     public bool Live { get; protected set; } = true;
     public float Speed { get; private set; }
@@ -15,13 +19,19 @@ public class PlayerBase : NetworkBehaviour
     protected Animator animatorController;
     protected SoundController soundController;
     protected PlayersManager playersManager;
-
     private PlayerInput input;
+    private PlayersSettings.Player playerSettings;
+
+    private Vector2 moveByKeyboardAndMouse;
+    private float mainActionByKeyboardAndMouse;
+    private float additionalActionByKeyboardAndMouse;
+    
     private Vector2 spawnPosition;
     private Vector2 savedDirection;
     
-    protected virtual void Start()
+    public virtual void Initialize(PlayersSettings.Player player)
     {
+        playerSettings = player;
         spawnPosition = transform.position;
         rigidbody = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
@@ -29,6 +39,8 @@ public class PlayerBase : NetworkBehaviour
         soundController = SoundController.Instance;
         playersManager = PlayersManager.Instance;
         playersManager.LoadPlayer(this);
+        
+        UpdateControlScheme();
     }
 
     protected virtual void FixedUpdate()
@@ -76,9 +88,9 @@ public class PlayerBase : NetworkBehaviour
         rigidbody.linearVelocity = new Vector2(0, 0);
     }
     
-    public void SwitchControlScheme(ControlScheme controlScheme)
+    public void UpdateControlScheme()
     {
-        input.SwitchCurrentControlScheme(controlScheme.ToString(), InputSystem.devices.ToArray());
+        input.SwitchCurrentControlScheme(playerSettings.ControlScheme.ToString(), InputSystem.devices.ToArray());
     }
     
     public bool IsInputAvailable()
@@ -96,16 +108,16 @@ public class PlayerBase : NetworkBehaviour
 
     private void OnMove(InputValue value)
     {
-        MoveInput = value.Get<Vector2>();
+        moveByKeyboardAndMouse = value.Get<Vector2>();
     }
 
     private void OnMainAction(InputValue value)
     {
-        MainActionInput = value.Get<float>();
+        mainActionByKeyboardAndMouse = value.Get<float>();
     }
 
     private void OnAdditionalAction(InputValue value)
     {
-        AdditionalActionInput = value.Get<float>();
+        additionalActionByKeyboardAndMouse = value.Get<float>();
     }
 }

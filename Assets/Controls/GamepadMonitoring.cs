@@ -1,23 +1,22 @@
-﻿using System.Linq;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 
 public class GamepadMonitoring : NetworkBehaviour
 {
     public UnityEvent ChangeConnectionEvent;
-
-    private InputDevice gamepad1;
-    private InputDevice gamepad2;
     
     private readonly NetworkVariable<bool> gamepadHost = new (false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private readonly NetworkVariable<bool> gamepadClient = new (false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void OnEnable()
     {
-        foreach (var device in InputSystem.devices.Where(device => device is Gamepad))
+        foreach (var device in InputSystem.devices)
         {
-            TryAddGamepad(device);
+            if (device is Gamepad gamepad)
+            {
+                TryAddGamepad(gamepad);
+            }
         }
         
         InputSystem.onDeviceChange += OnDeviceChange;
@@ -48,142 +47,131 @@ public class GamepadMonitoring : NetworkBehaviour
                 gamepadHost.OnValueChanged -= OnGamepadHostChange;
                 break;
         }
-
-        gamepad1 = null;
-        gamepad2 = null;
         
-        PlayersSettings.Player1.Gamepad = false;
-        PlayersSettings.Player2.Gamepad = false;
+        PlayersSettings.Player1.Gamepad = null;
+        PlayersSettings.Player2.Gamepad = null;
         
         ChangeConnectionEvent.Invoke();
     }
 
     private void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
-        if (device is not Gamepad) return;
+        if (device is not Gamepad gamepad) return;
         
         switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
-                LocalMonitoring(device, change);
+                LocalMonitoring(gamepad, change);
                 break;
 
             case GameMode.Host:
-                HostMonitoring(device, change);
+                HostMonitoring(gamepad, change);
                 break;
 
             case GameMode.Client:
-                ClientMonitoring(device, change);
+                ClientMonitoring(gamepad, change);
                 break;
         }
     }
 
-    private void LocalMonitoring(InputDevice device, InputDeviceChange change)
+    private void LocalMonitoring(Gamepad gamepad, InputDeviceChange change)
     {
         switch (change)
         {
             case InputDeviceChange.Added:
-                TryAddGamepad(device);
+                TryAddGamepad(gamepad);
                 break;
             
             case InputDeviceChange.Removed:
             case InputDeviceChange.Disconnected:
-                if (gamepad1 == device)
+                if (PlayersSettings.Player1.Gamepad == gamepad)
                 {
-                    gamepad1 = null;
-                    PlayersSettings.Player1.Gamepad = false;
+                    PlayersSettings.Player1.Gamepad = null;
                     ChangeConnectionEvent.Invoke();
                 }
-                else if (gamepad2 == device)
+                else if (PlayersSettings.Player2.Gamepad == gamepad)
                 {
-                    gamepad2 = null;
-                    PlayersSettings.Player2.Gamepad = false;
+                    PlayersSettings.Player2.Gamepad = null;
                     ChangeConnectionEvent.Invoke();
                 }
                 break;
         }
     }
 
-    private void HostMonitoring(InputDevice device, InputDeviceChange change)
+    private void HostMonitoring(Gamepad gamepad, InputDeviceChange change)
     {
         switch (change)
         {
             case InputDeviceChange.Added:
-                if (gamepad1 == null)
+                if (PlayersSettings.Player1.Gamepad == null)
                 {
-                    gamepad1 = device;
                     gamepadHost.Value = true;
-                    PlayersSettings.Player1.Gamepad = true;
+                    PlayersSettings.Player1.Gamepad = gamepad;
                     ChangeConnectionEvent.Invoke();
                 }
                 break;
             
             case InputDeviceChange.Removed:
             case InputDeviceChange.Disconnected:
-                if (gamepad1 == device)
+                if (PlayersSettings.Player1.Gamepad == gamepad)
                 {
-                    gamepad1 = null;
                     gamepadHost.Value = false;
-                    PlayersSettings.Player1.Gamepad = false;
+                    PlayersSettings.Player1.Gamepad = null;
                     ChangeConnectionEvent.Invoke();
                 }
                 break;
         }
     }
 
-    private void ClientMonitoring(InputDevice device, InputDeviceChange change)
+    private void ClientMonitoring(Gamepad gamepad, InputDeviceChange change)
     {
         switch (change)
         {
             case InputDeviceChange.Added:
-                if (gamepad1 == null)
+                if (PlayersSettings.Player2.Gamepad == null)
                 {
-                    gamepad1 = device;
                     gamepadClient.Value = true;
-                    PlayersSettings.Player1.Gamepad = false;
+                    PlayersSettings.Player2.Gamepad = gamepad;
                     ChangeConnectionEvent.Invoke();
                 }
                 break;
             
             case InputDeviceChange.Removed:
             case InputDeviceChange.Disconnected:
-                if (gamepad1 == device)
+                if (PlayersSettings.Player2.Gamepad == gamepad)
                 {
-                    gamepad1 = null;
                     gamepadClient.Value = false;
-                    PlayersSettings.Player2.Gamepad = false;
+                    PlayersSettings.Player2.Gamepad = null;
                     ChangeConnectionEvent.Invoke();
                 }
                 break;
         }
     }
 
-    private void TryAddGamepad(InputDevice device)
+    private void TryAddGamepad(Gamepad gamepad)
     {
-        if (gamepad1 == null)
+        if (PlayersSettings.Player1.Gamepad == null)
         {
-            gamepad1 = device;
-            PlayersSettings.Player1.Gamepad = true;
+            PlayersSettings.Player1.Gamepad = gamepad;
             ChangeConnectionEvent.Invoke();
         }
-        else if (gamepad2 == null)
+        else if (PlayersSettings.Player2.Gamepad == null)
         {
-            gamepad2 = device;
-            PlayersSettings.Player2.Gamepad = true;
+            PlayersSettings.Player2.Gamepad = gamepad;
             ChangeConnectionEvent.Invoke();
         }
     }
 
     private void OnGamepadHostChange(bool oldValue, bool newValue)
     {
-        PlayersSettings.Player1.Gamepad = newValue;
+        PlayersSettings.Player1.NetworkGamepad = newValue;
         ChangeConnectionEvent.Invoke();
     }
     
     private void OnGamepadClientChange(bool oldValue, bool newValue)
     {
-        PlayersSettings.Player2.Gamepad = newValue;
+        PlayersSettings.Player2.NetworkGamepad = newValue;
         ChangeConnectionEvent.Invoke();
     }
 }

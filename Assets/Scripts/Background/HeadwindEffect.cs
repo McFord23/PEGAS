@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
-// ReSharper disable All
 
 public class HeadwindEffect : MonoBehaviour
 {
-    [FormerlySerializedAs("playersController")] 
-    public PlayersManager playersManager;
+    private PlayersManager playersManager;
     private Transform view;
     
     private float ratio;
@@ -17,6 +15,7 @@ public class HeadwindEffect : MonoBehaviour
 
     private void Start()
     {
+        playersManager = PlayersManager.Instance;
         view = Camera.main.transform;
         headwind = GetComponent<ParticleSystem>();
 

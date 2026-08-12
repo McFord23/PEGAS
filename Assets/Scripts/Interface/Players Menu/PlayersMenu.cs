@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayersMenu : MonoBehaviour
@@ -27,7 +26,7 @@ public class PlayersMenu : MonoBehaviour
     [SerializeField] private GameObject networkBannishButton;
     [SerializeField] private GameObject quitButton;
     
-    [FormerlySerializedAs("controlLayoutSprites")] [Header("Controls")]
+    [Header("Controls Schemes")]
     public Sprite[] controlSchemeSprites;
     public Sprite[] gamepadSprites;
 
@@ -196,18 +195,23 @@ public class PlayersMenu : MonoBehaviour
         switch (Settings.GameMode)
         {
             case GameMode.Single:
-                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad ? gamepadSprites[0] : gamepadSprites[3];
+                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad != null ? gamepadSprites[0] : gamepadSprites[3];
                 break;
 
             case GameMode.LocalCoop:
-                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad ? gamepadSprites[1] : gamepadSprites[3];
-                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad ? gamepadSprites[2] : gamepadSprites[3];
+                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad != null ? gamepadSprites[1] : gamepadSprites[3];
+                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad != null ? gamepadSprites[2] : gamepadSprites[3];
                 break;
 
             case GameMode.Host:
             case GameMode.Client:
-                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad ? gamepadSprites[0] : gamepadSprites[3];
-                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad ? gamepadSprites[0] : gamepadSprites[3];
+                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad != null || PlayersSettings.Player1.NetworkGamepad 
+                    ? gamepadSprites[0] 
+                    : gamepadSprites[3];
+                
+                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad != null || PlayersSettings.Player2.NetworkGamepad 
+                    ? gamepadSprites[0] 
+                    : gamepadSprites[3];
                 break;
         }
     }

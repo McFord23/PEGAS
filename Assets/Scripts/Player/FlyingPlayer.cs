@@ -39,9 +39,9 @@ public class FlyingPlayer : PlayerBase
         Stunned
     }
 
-    protected override void Start()
+    public override void Initialize(PlayersSettings.Player player)
     {
-        base.Start();
+        base.Initialize(player);
         
         rigidbody.linearDamping = Mathf.Epsilon;
         aspectRatio = (wingSpan * wingSpan) / wingArea;

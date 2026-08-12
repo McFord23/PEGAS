@@ -12226,7 +12226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4895b9a5d333fdc478492bc367f22235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: {fileID: 797751174}
+  radius: 250
 --- !u!1 &776396953
 GameObject:
   m_ObjectHideFlags: 0
@@ -12476,7 +12476,7 @@ Transform:
   m_GameObject: {fileID: 797751172}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: 20, z: -1.5}
+  m_LocalPosition: {x: 9, y: 19.5, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18697,7 +18697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8537977c96d2e7428ec57a7b74c3e11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playersManager: {fileID: 797751174}
 --- !u!1 &1045794314
 GameObject:
   m_ObjectHideFlags: 0
@@ -21700,6 +21699,58 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 797751174}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 797751174}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: UpdatePlayer1ControlScheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: UpdatePlayer2ControlScheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayersManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: PlayersManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7038055525419924562, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_InScenePlaced
       value: 1
@@ -21746,7 +21797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525594204544, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SwitchPlayer2ControlScheme
+      value: UpdatePlayersControlScheme
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525594204544, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -21774,7 +21825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525884868251, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SwitchPlayer1ControlScheme
+      value: UpdatePlayersControlScheme
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525884868251, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -21842,7 +21893,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7038055526757885149, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SwitchPlayer1ControlScheme
+      value: UpdatePlayersControlScheme
       objectReference: {fileID: 0}
     - target: {fileID: 7038055526757885149, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -21894,7 +21945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7038055527172527821, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: SwitchPlayer2ControlScheme
+      value: UpdatePlayersControlScheme
       objectReference: {fileID: 0}
     - target: {fileID: 7038055527172527821, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName

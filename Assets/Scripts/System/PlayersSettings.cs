@@ -1,27 +1,32 @@
+using UnityEngine.InputSystem;
+
 public static class PlayersSettings
 {
-    public class PlayerSettings
+    public class Player
     {
         public Character Character;
         public ControlScheme ControlScheme;
         public float Sensitivity;
-        public bool Gamepad;
+        public Gamepad Gamepad;
+        public bool NetworkGamepad;
     }
 
-    public static PlayerSettings Player1 { get; } = new()
+    public static Player Player1 { get; } = new()
     {
         Character = Character.Celestia,
         ControlScheme = ControlScheme.Mouse,
         Sensitivity = 0.5f,
-        Gamepad = false
+        Gamepad = null,
+        NetworkGamepad = false
     };
     
-    public static PlayerSettings Player2 { get; } = new()
+    public static Player Player2 { get; } = new()
     {
         Character = Character.Luna,
         ControlScheme = ControlScheme.WASD,
         Sensitivity = 0.5f,
-        Gamepad = false
+        Gamepad = null,
+        NetworkGamepad = false
     };
 
     public static void SwapCharacters()
@@ -41,6 +46,5 @@ public enum ControlScheme
     Mouse,
     WASD,
     Arrows,
-    Numpad,
-    Gamepad
+    Numpad
 }
