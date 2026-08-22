@@ -15,8 +15,7 @@ public class NetworkSubmenu : NetworkBehaviour
 
     [SerializeField] private Button createButton;
     [SerializeField] private Button connectButton;
-    [SerializeField] private GameObject shutdownButton;
-    [SerializeField] private GameObject cancelButton;
+    [SerializeField] private CloseCoopButton closeCoopButton;
 
     private HostMonitoring hostMonitoring;
     private ClientMonitoring clientMonitoring;
@@ -32,14 +31,12 @@ public class NetworkSubmenu : NetworkBehaviour
         switch (Settings.GameMode)
         {
             case GameMode.Client:
-                playersMenu.UpdateBackButtons(true);
                 OnClientConnected();
                 break;
 
             case GameMode.Host:
-                if (Settings.FullParty)
+                if (Global.IsNetworkPlayerConnected)
                 {
-                    playersMenu.UpdateBackButtons(true);
                     OnClientConnected();
                 }
                 else OnHostCreated();
@@ -57,13 +54,14 @@ public class NetworkSubmenu : NetworkBehaviour
         hostMonitoring.OnShutdownEvent += OnHostShutdown;
     }
 
-    public void OnHostStartCreating()
+    private void OnHostStartCreating()
     {
         ShowStatus("creating...");
         ipFieldManager.Block(true);
 
         createButton.interactable = false;
         connectButton.interactable = false;
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.ShutDown);
     }
 
     private void OnHostCreatingFailure(string log)
@@ -73,6 +71,7 @@ public class NetworkSubmenu : NetworkBehaviour
         connectButton.interactable = true;
 
         HostUnsubscribe();
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.Back);
     }
 
     private void OnHostCreated()
@@ -83,9 +82,6 @@ public class NetworkSubmenu : NetworkBehaviour
         connectButton.interactable = true;
         createButton.gameObject.SetActive(false);
         connectButton.gameObject.SetActive(false);
-
-        shutdownButton.SetActive(true);
-        playersMenu.UpdateBackButtons(true);
     }
 
     private void OnHostShutdown()
@@ -94,13 +90,10 @@ public class NetworkSubmenu : NetworkBehaviour
         status.gameObject.SetActive(false);
 
         ipFieldManager.Block(false);
-
-        shutdownButton.SetActive(false);
-        cancelButton.SetActive(false);
+        
         createButton.gameObject.SetActive(true);
         connectButton.gameObject.SetActive(true);
-
-        playersMenu.UpdateBackButtons(false);
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.Back);
     }
 
     private void HostUnsubscribe()
@@ -121,7 +114,7 @@ public class NetworkSubmenu : NetworkBehaviour
         clientMonitoring.OnDisconnectedEvent += OnClientDisconnected;
     }
 
-    public void OnClientStartConnecting()
+    private void OnClientStartConnecting()
     {
         ShowStatus("connecting...");
 
@@ -129,9 +122,7 @@ public class NetworkSubmenu : NetworkBehaviour
 
         createButton.gameObject.SetActive(false);
         connectButton.gameObject.SetActive(false);
-        cancelButton.SetActive(true);
-
-        playersMenu.UpdateBackButtons(true);
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.Cancel);
     }
 
     private void OnClientFailureConnecting()
@@ -139,10 +130,10 @@ public class NetworkSubmenu : NetworkBehaviour
         ShowError("connection error");
 
         ipFieldManager.Block(false);
-
-        cancelButton.SetActive(false);
+        
         createButton.gameObject.SetActive(true);
         connectButton.gameObject.SetActive(true);
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.Back);
 
         ClientUnsubscribe();
     }
@@ -166,11 +157,9 @@ public class NetworkSubmenu : NetworkBehaviour
 
             ipFieldManager.Block(false);
 
-            cancelButton.SetActive(false);
+            closeCoopButton.ChangeMode(CloseCoopButton.Mode.Back);
             createButton.gameObject.SetActive(true);
             connectButton.gameObject.SetActive(true);
-
-            playersMenu.UpdateBackButtons(false);
 
             ClientUnsubscribe();
         }
@@ -195,8 +184,8 @@ public class NetworkSubmenu : NetworkBehaviour
         status.color = brown;
         status.gameObject.SetActive(true);
     }
-    
-    public void ShowError(string error)
+
+    private void ShowError(string error)
     {
         StopCoroutine(hideErrorConnection);
 
@@ -235,7 +224,7 @@ public class NetworkSubmenu : NetworkBehaviour
 
     private IEnumerator HideErrorConnection()
     {
-        Color color = status.color;
+        var color = status.color;
 
         yield return new WaitForSeconds(3);
 

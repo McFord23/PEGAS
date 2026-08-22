@@ -1,54 +1,47 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class SoundController : SingletonMonoBehaviour<SoundController>
 {
-    Transform flap;
-    AudioSource flapSound;
-    AudioSource[] flapSounds;
+    private Transform flap;
+    private AudioSource flapSound;
+    private AudioSource[] flapSounds;
 
     public AudioSource cannonScratchSound;
     public AudioSource cannonShootSound;
 
-    Transform hit;
-    AudioSource hitSound;
-    AudioSource[] hitSounds;
+    private Transform hit;
+    private AudioSource hitSound;
+    private AudioSource[] hitSounds;
 
-    AudioSource headwindSound;
-    AudioSource turnPageSound;
-
-    [FormerlySerializedAs("playersController")] 
-    public PlayersManager playersManager;
-    string scene;
+    private AudioSource headwindSound;
+    private AudioSource turnPageSound;
+    
+    [SerializeField] private PlayersManager playersManager;
 
     protected override void Awake()
     {
         base.Awake();
-        scene = SceneManager.GetActiveScene().name;
 
-        switch (scene)
+        if (SceneManagerAdapter.GetActiveScene() is Level.SantaSisters)
         {
-            case "Game":
-                flap = transform.Find("Flap");
-                flapSounds = new AudioSource[flap.transform.childCount];
-                for (int i = 0; i < flap.transform.childCount; i++)
-                {
-                    flapSounds[i] = flap.transform.GetChild(i).gameObject.GetComponent<AudioSource>();
-                }
+            flap = transform.Find("Flap");
+            flapSounds = new AudioSource[flap.transform.childCount];
+            for (int i = 0; i < flap.transform.childCount; i++)
+            {
+                flapSounds[i] = flap.transform.GetChild(i).gameObject.GetComponent<AudioSource>();
+            }
 
-                cannonScratchSound = transform.Find("Cannon Scratch").gameObject.GetComponent<AudioSource>();
-                cannonShootSound = transform.Find("Cannon Shoot").gameObject.GetComponent<AudioSource>();
+            cannonScratchSound = transform.Find("Cannon Scratch").gameObject.GetComponent<AudioSource>();
+            cannonShootSound = transform.Find("Cannon Shoot").gameObject.GetComponent<AudioSource>();
 
-                hit = transform.Find("Hit");
-                hitSounds = new AudioSource[hit.transform.childCount];
-                for (int k = 0; k < hit.transform.childCount; k++)
-                {
-                    hitSounds[k] = hit.transform.GetChild(k).gameObject.GetComponent<AudioSource>();
-                }
+            hit = transform.Find("Hit");
+            hitSounds = new AudioSource[hit.transform.childCount];
+            for (int k = 0; k < hit.transform.childCount; k++)
+            {
+                hitSounds[k] = hit.transform.GetChild(k).gameObject.GetComponent<AudioSource>();
+            }
 
-                headwindSound = transform.Find("Headwind").gameObject.GetComponent<AudioSource>();
-                break;
+            headwindSound = transform.Find("Headwind").gameObject.GetComponent<AudioSource>();
         }
 
         turnPageSound = transform.Find("Turn Page").gameObject.GetComponent<AudioSource>();
@@ -56,11 +49,9 @@ public class SoundController : SingletonMonoBehaviour<SoundController>
 
     private void Update()
     {
-        switch (scene)
+        if (SceneManagerAdapter.GetActiveScene() is Level.SantaSisters)
         {
-            case "Game":
-                HeadwindVolume();
-                break;
+            HeadwindVolume();
         }
     }
 
@@ -76,7 +67,7 @@ public class SoundController : SingletonMonoBehaviour<SoundController>
         hitSound.Play();
     }
 
-    void HeadwindVolume()
+    private void HeadwindVolume()
     {
         headwindSound.volume = Mathf.Pow(playersManager.GetSpeed(), 2) / 4000f;
     }

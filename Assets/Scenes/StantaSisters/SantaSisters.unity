@@ -7345,17 +7345,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &456349325 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7038055526077436863, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-  m_PrefabInstance: {fileID: 1923240992}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4431d027b87e0f4faf48413bfa1946e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &478590564
 GameObject:
   m_ObjectHideFlags: 0
@@ -7397,10 +7386,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
-  - component: {fileID: 519420031}
-  - component: {fileID: 519420029}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420029}
+  - component: {fileID: 519420031}
+  - component: {fileID: 519420030}
   - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
@@ -12457,8 +12446,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 797751173}
-  - component: {fileID: 797751174}
   - component: {fileID: 797751175}
+  - component: {fileID: 797751174}
   - component: {fileID: 797751176}
   m_Layer: 0
   m_Name: Players Manager
@@ -12500,6 +12489,18 @@ MonoBehaviour:
   PauseEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1923240995}
+        m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
+        m_MethodName: Pause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 519420030}
         m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
         m_MethodName: FocusOnPlayer
@@ -12513,7 +12514,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1999732767}
-        m_TargetAssemblyTypeName: CupcakeRain, Assembly-CSharp
+        m_TargetAssemblyTypeName: Snowfall, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:
@@ -12527,18 +12528,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1923240993}
         m_TargetAssemblyTypeName: MusicController, Assembly-CSharp
         m_MethodName: PauseFlyMusic
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1923240997}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: Pause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12563,6 +12552,18 @@ MonoBehaviour:
   ResumeEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1923240995}
+        m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
+        m_MethodName: Resume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 519420030}
         m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
         m_MethodName: FocusOnFly
@@ -12576,7 +12577,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1999732767}
-        m_TargetAssemblyTypeName: CupcakeRain, Assembly-CSharp
+        m_TargetAssemblyTypeName: Snowfall, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -12614,6 +12615,18 @@ MonoBehaviour:
   DeadEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1923240995}
+        m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
+        m_MethodName: Lose
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 519420030}
         m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
         m_MethodName: FocusOnPlayer
@@ -12626,24 +12639,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1923240997}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: Dead
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   ResetEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 519420030}
-        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
-        m_MethodName: FocusOnFly
+      - m_Target: {fileID: 1923240995}
+        m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
+        m_MethodName: Retry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12653,9 +12654,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 456349325}
-        m_TargetAssemblyTypeName: DeadMenu, Assembly-CSharp
-        m_MethodName: Retry
+      - m_Target: {fileID: 519420030}
+        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+        m_MethodName: FocusOnFly
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12692,9 +12693,9 @@ MonoBehaviour:
   VictoryEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 519420030}
-        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
-        m_MethodName: FocusOnPlayer
+      - m_Target: {fileID: 1923240995}
+        m_TargetAssemblyTypeName: GameMenu, Assembly-CSharp
+        m_MethodName: Victory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12704,9 +12705,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1923240997}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
-        m_MethodName: Victory
+      - m_Target: {fileID: 519420030}
+        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+        m_MethodName: FocusOnPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19319,8 +19320,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1159873808}
-  - component: {fileID: 1159873809}
   - component: {fileID: 1159873810}
+  - component: {fileID: 1159873809}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -19390,7 +19391,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 10
+  m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -21604,19 +21605,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 797751174}
     - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: values.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 797751174}
+    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: values.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 797751174}
     - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
@@ -21626,47 +21619,11 @@ PrefabInstance:
     - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 797751174}
     - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Pause
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Victory
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Drop
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayersManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayersManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CollectingItem, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 1272325997430529336, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: values.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
+      propertyPath: values.Array.data[4].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 797751174}
     - target: {fileID: 1725493179951147122, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: playersManager
       value: 
@@ -21681,7 +21638,7 @@ PrefabInstance:
       objectReference: {fileID: 797751174}
     - target: {fileID: 3983950964085924234, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_Name
-      value: Basis
+      value: Book
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525278550873, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -21947,6 +21904,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7038055526614920472, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 7038055526747861530, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -22161,22 +22122,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2318319481047450418, guid: 5c42a939415746547992b73eacf219e7, type: 3}
   m_PrefabInstance: {fileID: 1923240992}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1923240996 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6134905401604859998, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-  m_PrefabInstance: {fileID: 1923240992}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1923240997 stripped
+--- !u!114 &1923240995 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7038055526084562051, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6742138302071424760, guid: 5c42a939415746547992b73eacf219e7, type: 3}
   m_PrefabInstance: {fileID: 1923240992}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d578637920f61c4eb6a050fc2fd5984, type: 3}
+  m_Script: {fileID: 11500000, guid: 642043deffee46b285671e8aac20ba5f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameMenu
+--- !u!4 &1923240996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6134905401604859998, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+  m_PrefabInstance: {fileID: 1923240992}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1960991340
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,8 +7,9 @@ public enum EventKey
 {
     Pause,
     Resume,
-    Victory,
-    CollectingItemDrop
+    Lose,
+    Retry,
+    Victory
 }
 
 public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>

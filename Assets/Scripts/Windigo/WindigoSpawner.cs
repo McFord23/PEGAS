@@ -26,17 +26,17 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
                 break;
             
             case GameMode.Host:
-                NetworkManager.SceneManager.OnLoadEventCompleted += OnLoadEventComplate;
+                NetworkManager.SceneManager.OnLoadEventCompleted += OnLoadEventCompleted;
                 break;
         }
     }
 
-    private void OnLoadEventComplate(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
+    private void OnLoadEventCompleted(string sceneName, LoadSceneMode loadsceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        if ((Settings.FullParty && clientscompleted.Count > 1) || !Settings.FullParty)
+        if ((Global.IsNetworkPlayerConnected && clientsCompleted.Count > 1) || !Global.IsNetworkPlayerConnected)
         {
             Spawn();
-            NetworkManager.SceneManager.OnLoadEventCompleted -= OnLoadEventComplate;
+            NetworkManager.SceneManager.OnLoadEventCompleted -= OnLoadEventCompleted;
         }
     }
 

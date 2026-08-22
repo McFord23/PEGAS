@@ -5,11 +5,9 @@ using UnityEngine.UI;
 
 public class ControlSchemeSync : NetworkBehaviour
 {
-    [SerializeField]
-    private PlayersMenu playersMenu;
+    [SerializeField] private PlayersMenu playersMenu;
 
-    [SerializeField]
-    private List<Button> buttons = new ();
+    [SerializeField] private List<Button> buttons = new ();
 
     private HostMonitoring host;
     private ClientMonitoring client;
@@ -90,7 +88,7 @@ public class ControlSchemeSync : NetworkBehaviour
     {
         PlayersSettings.Player1.ControlScheme = hostScheme.Value;
         PlayersSettings.Player2.ControlScheme = clientScheme.Value;
-        PlayersManager.Instance.UpdatePlayersControlScheme();
+        if (SceneManagerAdapter.IsGameScene()) PlayersManager.Instance.UpdatePlayersControlScheme();
         playersMenu.UpdatePlayersSchemes();
     }
 }

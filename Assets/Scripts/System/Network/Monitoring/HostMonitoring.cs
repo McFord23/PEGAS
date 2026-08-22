@@ -57,20 +57,23 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
         if (id != NetworkManager.LocalClientId)
         {
             clientID = id;
-            Settings.FullParty = true;
+            Global.IsNetworkPlayerConnected = true;
             OnClientConnectedEvent?.Invoke();
         }
     }
     
     public void DisconnectClient()
     {
-        NetworkManager.DisconnectClient(clientID);
-        OnClientDisconnect();
+        if (clientID != NetworkManager.LocalClientId)
+        {
+            NetworkManager.DisconnectClient(clientID);
+            OnClientDisconnect();
+        }
     }
 
     private void OnClientDisconnect(ulong id = 1)
     {
-        Settings.FullParty = false;
+        Global.IsNetworkPlayerConnected = false;
         OnClientDisconnectedEvent?.Invoke();
     }
 
@@ -82,7 +85,7 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
         NetworkManager.Shutdown();
 
         Settings.GameMode = GameMode.Single;
-        Settings.FullParty = false;
+        Global.IsNetworkPlayerConnected = false;
         OnShutdownEvent?.Invoke();
     }
 }

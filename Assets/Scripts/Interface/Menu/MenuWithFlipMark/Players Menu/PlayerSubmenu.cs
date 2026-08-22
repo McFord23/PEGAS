@@ -69,17 +69,17 @@ public class PlayerSubmenu : MonoBehaviour
         Scheme = (ControlScheme)index;
     }
 
-    public void ChangeCharacter(Character character)
+    public void ChangeCharacter(PlayerCharacter playerCharacter)
     {
-        switch (character)
+        switch (playerCharacter)
         {
-            case Character.Celestia:
+            case PlayerCharacter.Celestia:
                 luna.SetActive(false);
                 celestia.SetActive(true);
                 text.text = "Celestia";
                 break;
             
-            case Character.Luna:
+            case PlayerCharacter.Luna:
                 celestia.SetActive(false);
                 luna.SetActive(true);
                 text.text = "Luna";

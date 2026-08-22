@@ -70,22 +70,22 @@ public class PlayersSpawner : NetworkBehaviour
         return playerObject;
     }
     
-    private GameObject GetObjectToSpawn(Character character)
+    private GameObject GetObjectToSpawn(PlayerCharacter character)
     {
         return character switch
         {
-            Character.Celestia => celestiaPrefab,
-            Character.Luna => lunaPrefab,
+            PlayerCharacter.Celestia => celestiaPrefab,
+            PlayerCharacter.Luna => lunaPrefab,
             _ => throw new ArgumentOutOfRangeException()
         };
     }
     
-    private Vector2 GetSpawnPosition(Character character)
+    private Vector2 GetSpawnPosition(PlayerCharacter character)
     {
         return character switch
         {
-            Character.Celestia => celestiaSpawnPoint.position,
-            Character.Luna => lunaSpawnPoint.position,
+            PlayerCharacter.Celestia => celestiaSpawnPoint.position,
+            PlayerCharacter.Luna => lunaSpawnPoint.position,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

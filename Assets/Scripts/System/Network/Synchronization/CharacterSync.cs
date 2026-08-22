@@ -5,16 +5,14 @@ using UnityEngine.UI;
 
 public class CharacterSync : NetworkBehaviour
 {
-    [SerializeField]
-    private PlayersMenu playersMenu;
+    [SerializeField] private PlayersMenu playersMenu;
 
-    [SerializeField]
-    private List<Button> buttons = new List<Button>();
+    [SerializeField] private List<Button> buttons = new List<Button>();
 
     private HostMonitoring host;
     private ClientMonitoring client;
 
-    private NetworkVariable<Character> characterHost = new (Character.Celestia, 
+    private NetworkVariable<PlayerCharacter> characterHost = new (PlayerCharacter.Celestia, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
@@ -60,7 +58,7 @@ public class CharacterSync : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void RequestChangeCharacterServerRpc(Character host)
+    private void RequestChangeCharacterServerRpc(PlayerCharacter host)
     {
         characterHost.Value = host;
     }
@@ -77,7 +75,7 @@ public class CharacterSync : NetworkBehaviour
         }
     }
 
-    private void OnCharacterChange(Character oldCharacter, Character newCharacter)
+    private void OnCharacterChange(PlayerCharacter oldCharacter, PlayerCharacter newCharacter)
     {
         playersMenu.ChangeCharacter();
     }

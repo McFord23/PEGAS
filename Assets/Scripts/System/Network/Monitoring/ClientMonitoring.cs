@@ -45,7 +45,7 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
         NetworkManager.OnClientDisconnectCallback += StopClient;
 
         Settings.GameMode = GameMode.Client;
-        Settings.FullParty = true;
+        Global.IsNetworkPlayerConnected = true;
         OnConnectedEvent?.Invoke();
     }
 
@@ -64,7 +64,7 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
         NetworkManager.Shutdown();
 
         Settings.GameMode = GameMode.Single;
-        Settings.FullParty = false;
+        Global.IsNetworkPlayerConnected = false;
         OnDisconnectedEvent?.Invoke();
     }
     

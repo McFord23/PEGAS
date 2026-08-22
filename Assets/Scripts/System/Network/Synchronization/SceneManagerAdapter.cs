@@ -1,10 +1,11 @@
-﻿using Unity.Collections;
+﻿using System;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /**
- * Абстрагирует мультиплеерный и одиночный переход между сценами 
+ * Абстрагирует локальный и сетевой переход между сценами 
  */
 public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter>
 {
@@ -22,9 +23,33 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
             if (loadScreen) loadScreen.SetActive(true);
         }
     }*/
-    
-    public void LoadScene(string sceneName)
+
+    public static bool IsMenuScene()
     {
+        return SceneManager.GetActiveScene().name == Level.MainMenu.ToString();
+    }
+    
+    public static bool IsGameScene()
+    {
+        return !IsMenuScene() && SceneManager.GetActiveScene().name != Level.Credits.ToString();
+    }
+    
+    public static Level GetActiveScene()
+    {
+        return SceneManager.GetActiveScene().name switch
+        {
+            "MainMenu" => Level.MainMenu,
+            "Credits" => Level.Credits,
+            "DisciplinaryCleanup" => Level.DisciplinaryCleanup,
+            "SantaSisters" => Level.SantaSisters,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    public void LoadScene(Level level)
+    {
+        Global.IsPause = false;
+        var sceneName = level.ToString();
         switch (Settings.GameMode)
         {
             case GameMode.Single:

@@ -297,7 +297,7 @@ public class FlyingPlayer : PlayerBase
         {
             Live = false;
             crushEffect.StartExplode();
-            playersManager.Dead();
+            playersManager.ExecuteDeath();
         }
         else
         {

@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayersMenu : MonoBehaviour
+public class PlayersMenu : MenuBaseWithFlipMark
 {
     [SerializeField] private RectTransform backMain;
     [SerializeField] private Text modeTitle;
+    
+    [Header("Icon")]
+    [SerializeField] private Image playersMarkIcon;
+    [SerializeField] private Sprite soloIcon;
+    [SerializeField] private Sprite coopIcon;
     
     [Header("Player 1")]
     [SerializeField] private PlayerSubmenu player1Submenu;
@@ -15,23 +20,20 @@ public class PlayersMenu : MonoBehaviour
     [SerializeField] private PlayerSubmenu player2Submenu;
     [SerializeField] private Text p2;
     [SerializeField] private Image player2GamepadImage;
-    
-    [Header("Local Coop")]
+
+    [Header("Coop")] 
     [SerializeField] private GameObject coopSubmenu;
-    [SerializeField] private GameObject localKickButton;
-    [SerializeField] private GameObject backCoop;
-    
-    [Header("Network Coop")]
     [SerializeField] private GameObject networkSubmenu;
-    [SerializeField] private GameObject networkKickButton;
-    [SerializeField] private GameObject quitButton;
+    [SerializeField] private CloseCoopButton closeCoopButton;
     
     [Header("Controls Schemes")]
     public Sprite[] controlSchemeSprites;
     public Sprite[] gamepadSprites;
-
-    public void Initialize()
+    
+    public override void Initialize(MenuManager manager, MenuBackground background)
     {
+        base.Initialize(manager, background);
+        
         player1Submenu.Initialize(controlSchemeSprites);
         player2Submenu.Initialize(controlSchemeSprites);
         
@@ -59,77 +61,36 @@ public class PlayersMenu : MonoBehaviour
     public void LocalCoop()
     {
         Settings.GameMode = GameMode.LocalCoop;
-        coopSubmenu.SetActive(false);
+        SetActiveCoopSubmenu(false);
 
         if (PlayersSettings.Player1.ControlScheme == PlayersSettings.Player2.ControlScheme)
         {
             player2Submenu.NextScheme();
         }
-
-        UpdateBackButtons(true);
+        
         ShowPlayer2Submenu();
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.LocalKick);
     }
 
     public void NetworkCoop()
     {
-        coopSubmenu.SetActive(false);
+        SetActiveCoopSubmenu(false);
         networkSubmenu.SetActive(true);
         modeTitle.text = "Network Coop";
-
-        UpdateBackButtons(false);
+        closeCoopButton.ChangeMode(CloseCoopButton.Mode.Back);
     }
 
     public void LocalKick()
     {
         Settings.GameMode = GameMode.Single;
-        coopSubmenu.SetActive(true);
+        SetActiveCoopSubmenu(true);
         HidePlayer2Submenu();
     }
 
     public void BackCoop()
     {
         networkSubmenu.SetActive(false);
-        coopSubmenu.SetActive(true);
-
-        UpdateBackButtons(true);
-    }
-
-    public void UpdateBackButtons(bool toOne)
-    {
-        if (toOne)
-        {
-            backMain.anchoredPosition = new Vector2(0, -311);
-            backCoop.SetActive(false);
-        }
-        else
-        {
-            backMain.anchoredPosition = new Vector2(0, -287);
-            backCoop.SetActive(true);
-        }
-    }
-
-    private void UpdateKickButton()
-    {
-        switch (Settings.GameMode)
-        {
-            case GameMode.LocalCoop:
-                quitButton.SetActive(false);
-                networkKickButton.SetActive(false);
-                localKickButton.SetActive(true);
-                break;
-
-            case GameMode.Host:
-                quitButton.SetActive(false);
-                localKickButton.SetActive(false);
-                networkKickButton.SetActive(true);
-                break;
-                
-            case GameMode.Client:
-                localKickButton.SetActive(false);
-                networkKickButton.SetActive(false);
-                quitButton.SetActive(true);
-                break;
-        }
+        SetActiveCoopSubmenu(true);
     }
 
     public void ShowPlayer2Submenu()
@@ -166,9 +127,9 @@ public class PlayersMenu : MonoBehaviour
 
         player2Submenu.gameObject.SetActive(true);
 
-        UpdateKickButton();
+        UpdateCloseButton();
         UpdateGamepadStatus();
-        MenuManager.Instance.UpdatePlayersIcon(true);
+        UpdatePlayersIcon();
     }
 
     public void HidePlayer2Submenu()
@@ -180,7 +141,7 @@ public class PlayersMenu : MonoBehaviour
         player1Submenu.ShowButton(true);
         player2Submenu.gameObject.SetActive(false);
         UpdateGamepadStatus();
-        MenuManager.Instance.UpdatePlayersIcon(false);
+        UpdatePlayersIcon();
     }
 
     public void ChangeCharacter()
@@ -232,5 +193,36 @@ public class PlayersMenu : MonoBehaviour
     {
         player1Submenu.SetScheme(PlayersSettings.Player1.ControlScheme);
         player2Submenu.SetScheme(PlayersSettings.Player2.ControlScheme);
+    }
+    
+    private void UpdatePlayersIcon()
+    {
+        playersMarkIcon.sprite = Settings.GameMode is GameMode.Single 
+            ? soloIcon 
+            : coopIcon;
+    }
+    
+    private void UpdateCloseButton()
+    {
+        switch (Settings.GameMode)
+        {
+            case GameMode.LocalCoop:
+                closeCoopButton.ChangeMode(CloseCoopButton.Mode.LocalKick);
+                break;
+
+            case GameMode.Host:
+                closeCoopButton.ChangeMode(CloseCoopButton.Mode.ShutDown);
+                break;
+                
+            case GameMode.Client:
+                closeCoopButton.ChangeMode(CloseCoopButton.Mode.Quick);
+                break;
+        }
+    }
+
+    private void SetActiveCoopSubmenu(bool value)
+    {
+        coopSubmenu.SetActive(value);
+        closeCoopButton.gameObject.SetActive(!value);
     }
 }

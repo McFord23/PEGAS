@@ -3,9 +3,10 @@ using UnityEngine.Events;
 
 public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 {
-    public PlayerBase[] players { get; private set; } = new PlayerBase[2];
+    public PlayerBase[] players { get; } = new PlayerBase[2];
     
     public bool HaveSecondPlayer => (bool)players[1];
+    private bool isRetryEnable = true;
 
     private float midPosition;
     private float midDirection;
@@ -35,14 +36,9 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     private void RetryInput()
     {
-        if (Controls.Retry)
+        if (isRetryEnable && Controls.Retry)
         {
-            if (Global.IsPause)
-            {
-                EventAdapter.Instance.Execute(EventKey.Resume);
-            }
-            
-            Reset();
+            EventAdapter.Instance.Execute(EventKey.Retry);
         }
     }
     
@@ -50,32 +46,24 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     {
         if (HaveSecondPlayer)
         {
-            if (Global.IsPause) return;
             if (!players[0].Live && !players[1].Live) return;
-            
-            if (Controls.Pause)
-            {
-                EventAdapter.Instance.Execute(EventKey.Pause);
-            }
         }
         else
         {
-            if (Global.IsPause) return;
-            
-            if (Controls.Pause)
-            {
-                EventAdapter.Instance.Execute(EventKey.Pause);
-            }
+            if (!players[0].Live) return;
+        }
+        
+        if (!Global.IsPause && Controls.Pause)
+        {
+            EventAdapter.Instance.Execute(EventKey.Pause);
         }
     }
 
     private void UpdateMidDirection()
     {
         var newMidPosition = GetPosition().x;
-            
-        if (newMidPosition > midPosition) midDirection = 1;
-        else if (newMidPosition < midPosition) midDirection = -1;
-        else midDirection = 0;
+        if (newMidPosition > midPosition + 0.1f) midDirection = 1;
+        else if (newMidPosition < midPosition - 0.1f) midDirection = -1;
 
         midPosition = newMidPosition;
     }
@@ -175,7 +163,12 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         players[i]?.Kill();
     }
 
-    public void Dead()
+    public void ExecuteDeath()
+    {
+        EventAdapter.Instance.Execute(EventKey.Lose);
+    }
+
+    public void Death()
     {
         if (HaveSecondPlayer)
         {
@@ -201,7 +194,8 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     {
         players[0]?.Victory();
         players[1]?.Victory();
-        
+
+        isRetryEnable = false;
         Global.IsPause = true;
         VictoryEvent.Invoke();
     }
