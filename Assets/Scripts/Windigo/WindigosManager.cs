@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.Events;
 using Unity.Netcode;
-using UnityEngine;
 
 public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
 {
-    private List<Windigo> windigoList = new List<Windigo>();
+    public UnityEvent windigoDeathEvent;
+    private List<Windigo> windigoList = new();
 
     public void AddWindigo(Windigo windigo)
     {
         windigoList.Add(windigo);
+        windigo.deathEvent.AddListener(OnWindigoDeath);
     }
     
     public void Reset()
@@ -27,7 +29,7 @@ public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
         WindigoSpawner.Instance.Spawn();
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestResetServerRpc()
     {
         Reset();
@@ -35,7 +37,7 @@ public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
 
     public void Pause()
     {
-        foreach (Windigo windigo in windigoList)
+        foreach (var windigo in windigoList)
         {
             windigo.Pause();
         }
@@ -43,7 +45,7 @@ public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
 
     public void Resume()
     {
-        foreach (Windigo windigo in windigoList)
+        foreach (var windigo in windigoList)
         {
             windigo.Resume();
         }
@@ -52,5 +54,10 @@ public class WindigosManager : SingletonNetworkBehaviour<WindigosManager>
     public void Remove(Windigo windigo)
     {
         windigoList.Remove(windigo);
+    }
+
+    private void OnWindigoDeath()
+    {
+        windigoDeathEvent?.Invoke();
     }
 }

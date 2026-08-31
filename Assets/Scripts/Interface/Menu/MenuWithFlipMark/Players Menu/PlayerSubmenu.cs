@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerSubmenu : MonoBehaviour
@@ -7,14 +6,14 @@ public class PlayerSubmenu : MonoBehaviour
     [Header("Character")]
     public GameObject celestia;
     public GameObject luna;
-    public Text text;
+    public LocalizationBase text;
     [SerializeField] private GameObject characterButton;
     
     [Header("Controls")]
     public ControlScheme Scheme { private set; get; }
-    [FormerlySerializedAs("nextControlButton")] [SerializeField] private GameObject nextSchemeButton;
-    [FormerlySerializedAs("previousControlButton")] [SerializeField] private GameObject previousSchemeButton;
-    [FormerlySerializedAs("layoutSprite")] [SerializeField] private Image schemeSprite;
+    [SerializeField] private GameObject nextSchemeButton;
+    [SerializeField] private GameObject previousSchemeButton;
+    [SerializeField] private Image schemeSprite;
     private Sprite[] schemesSprites;
     private int indexBlocked;
     private int index;
@@ -76,13 +75,13 @@ public class PlayerSubmenu : MonoBehaviour
             case PlayerCharacter.Celestia:
                 luna.SetActive(false);
                 celestia.SetActive(true);
-                text.text = "Celestia";
+                text.UpdatePhrase("Interface", "celestia");
                 break;
             
             case PlayerCharacter.Luna:
                 celestia.SetActive(false);
                 luna.SetActive(true);
-                text.text = "Luna";
+                text.UpdatePhrase("Interface", "luna");
                 break;
         }
     }

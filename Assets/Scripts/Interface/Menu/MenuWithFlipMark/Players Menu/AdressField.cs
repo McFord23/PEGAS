@@ -5,21 +5,17 @@ public class AdressField : MonoBehaviour
 {
     private TMP_InputField inputField;
     private TMP_Text text;
-    private Color brown;
-    private Color red;
 
     private AddressFieldManager manager;
     private NetworkSubmenu networkSubmenu;
 
-    private float cooldown = 1f;
+    private const float COOLDOWN = 1f;
     private float timer = 1f;
 
     public void Initialize()
     {
         inputField = GetComponent<TMP_InputField>();
         text = inputField.transform.GetChild(0).Find("Text").GetComponent<TMP_Text>();
-        brown = text.color;
-        red = red = new Color(0.45f, 0.2f, 0.15f);
 
         manager = transform.GetComponentInParent<AddressFieldManager>();
         networkSubmenu = manager.GetComponentInParent<NetworkSubmenu>();
@@ -31,14 +27,14 @@ public class AdressField : MonoBehaviour
         
         if (Controls.Paste)
         {
-            if (timer >= cooldown)
+            if (timer >= COOLDOWN)
             {
                 manager.Paste();
                 timer = 0;
             }
         }
 
-        if (timer < cooldown) timer += Time.deltaTime;
+        if (timer < COOLDOWN) timer += Time.deltaTime;
     }
 
     public void OnInput()
@@ -57,17 +53,15 @@ public class AdressField : MonoBehaviour
 
         if (ipPart > 255)
         {
-            text.color = red;
-
-            string error = "invalid ip";
-            networkSubmenu.ShowError(error, true);
+            text.color = Settings.Red;
+            networkSubmenu.InvalidIP();
         }
         else
         {
-            text.color = brown;
+            text.color = Settings.Brown;
             manager.ChangeIP();
             manager.Save();
-            networkSubmenu.HideStatus();
+            networkSubmenu.ValidIP();
         }
     }
 }

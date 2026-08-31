@@ -57,7 +57,7 @@ public class CharacterSync : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestChangeCharacterServerRpc(PlayerCharacter host)
     {
         characterHost.Value = host;

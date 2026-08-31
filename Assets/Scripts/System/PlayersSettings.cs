@@ -28,9 +28,13 @@ public static class PlayersSettings
         Gamepad = null,
         NetworkGamepad = false
     };
+    
+    public delegate void SwapCharactersEvent();
+    public static event SwapCharactersEvent OnSwapCharactersEvent;
 
     public static void SwapCharacters()
     {
         (Player1.Character, Player2.Character) = (Player2.Character, Player1.Character);
+        OnSwapCharactersEvent?.Invoke();
     }
 }

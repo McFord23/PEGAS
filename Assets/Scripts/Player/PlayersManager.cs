@@ -3,9 +3,9 @@ using UnityEngine.Events;
 
 public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 {
-    public PlayerBase[] players { get; } = new PlayerBase[2];
+    public PlayerBase[] Players { get; } = new PlayerBase[2];
     
-    public bool HaveSecondPlayer => (bool)players[1];
+    public bool HaveSecondPlayer => (bool)Players[1];
     private bool isRetryEnable = true;
 
     private float midPosition;
@@ -15,12 +15,14 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     public UnityEvent ResumeEvent;
     public UnityEvent DeadEvent;
     public UnityEvent ResetEvent;
+    public UnityEvent PlayerTakeItemEvent;
+    public UnityEvent PlayerDropItemEvent;
     public UnityEvent VictoryEvent;
     
     public void LoadPlayer(PlayerBase newPlayer)
     {
-        var spawnPlayerNum = players[0] == null ? 0 : 1;
-        players[spawnPlayerNum] = newPlayer;
+        var spawnPlayerNum = Players[0] == null ? 0 : 1;
+        Players[spawnPlayerNum] = newPlayer;
     }
 
     private void Update()
@@ -46,11 +48,11 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     {
         if (HaveSecondPlayer)
         {
-            if (!players[0].Live && !players[1].Live) return;
+            if (!Players[0].Live && !Players[1].Live) return;
         }
         else
         {
-            if (!players[0].Live) return;
+            if (!Players[0].Live) return;
         }
         
         if (!Global.IsPause && Controls.Pause)
@@ -74,13 +76,13 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         {
             case GameMode.Single:
             case GameMode.Host:
-                return players[0].transform.position;
+                return Players[0].transform.position;
             
             case GameMode.Client:
-                return HaveSecondPlayer ? players[1].transform.position : players[0].transform.position;
+                return HaveSecondPlayer ? Players[1].transform.position : Players[0].transform.position;
             
             case GameMode.LocalCoop:
-                return (players[0].transform.position + players[1].transform.position) / 2;
+                return (Players[0].transform.position + Players[1].transform.position) / 2;
             
             default:
                 return Vector3.zero;
@@ -89,14 +91,14 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public void DestroySecondPlayer()
     {
-        if (players[1] != null)
+        if (Players[1] != null)
         {
-            Destroy(players[1].gameObject);
-            players[1] = null;
+            Destroy(Players[1].gameObject);
+            Players[1] = null;
         }
     }
     
-    public Vector3 GetPosition(int i) => players[i].transform.position;
+    public Vector3 GetPosition(int i) => Players[i].transform.position;
 
     public float GetSpeed()
     {
@@ -104,13 +106,13 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         {
             case GameMode.Single:
             case GameMode.Host:
-                return players[0].Speed;
+                return Players[0].Speed;
 
             case GameMode.Client:
-                return HaveSecondPlayer ? players[1].Speed : players[0].Speed;
+                return HaveSecondPlayer ? Players[1].Speed : Players[0].Speed;
             
             case GameMode.LocalCoop:
-                return (players[1].Speed + players[0].Speed) / 2;
+                return (Players[1].Speed + Players[0].Speed) / 2;
             
             default:
                 return 0;
@@ -123,10 +125,10 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
         {
             case GameMode.Single:
             case GameMode.Host:
-                return players[0].transform.localScale.y;
+                return Players[0].transform.localScale.y;
             
             case GameMode.Client:
-                return HaveSecondPlayer ? players[1].transform.localScale.y : players[0].transform.localScale.y;
+                return HaveSecondPlayer ? Players[1].transform.localScale.y : Players[0].transform.localScale.y;
             
             case GameMode.LocalCoop:
                 return midDirection;
@@ -138,29 +140,29 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public void UpdatePlayersControlScheme()
     {
-        players[0]?.UpdateControlScheme();
-        players[1]?.UpdateControlScheme();
+        Players[0]?.UpdateControlScheme();
+        Players[1]?.UpdateControlScheme();
     }
     
     public void Pause()
     {
         Global.IsPause = true;
-        players[0]?.Pause();
-        players[1]?.Pause();
+        Players[0]?.Pause();
+        Players[1]?.Pause();
         PauseEvent.Invoke();
     }
 
     public void Resume()
     {
         Global.IsPause = false;
-        players[0]?.Resume();
-        players[1]?.Resume();
+        Players[0]?.Resume();
+        Players[1]?.Resume();
         ResumeEvent.Invoke();
     }
 
     public void KillPlayer(int i)
     {
-        players[i]?.Kill();
+        Players[i]?.Kill();
     }
 
     public void ExecuteDeath()
@@ -172,7 +174,7 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     {
         if (HaveSecondPlayer)
         {
-            if (!players[0].Live && !players[1].Live)
+            if (!Players[0].Live && !Players[1].Live)
             {
                 DeadEvent.Invoke();
             }
@@ -185,15 +187,15 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public void Reset()
     {
-        players[0]?.Revive();
-        players[1]?.Revive();
+        Players[0]?.Revive();
+        Players[1]?.Revive();
         ResetEvent.Invoke();
     }
 
     public void Victory()
     {
-        players[0]?.Victory();
-        players[1]?.Victory();
+        Players[0]?.Victory();
+        Players[1]?.Victory();
 
         isRetryEnable = false;
         Global.IsPause = true;

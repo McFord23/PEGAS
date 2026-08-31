@@ -13,7 +13,7 @@ public class LevelsSubmenu : MonoBehaviour
     }
     
     [SerializeField] private Image levelPreview;
-    [SerializeField] private GameObject levelInfo;
+    [SerializeField] private LevelInfo levelInfo;
     [SerializeField] private LevelButton[] levelButtons;
     [SerializeField] private LevelDTO[] levels;
     private Level selectedLevel;
@@ -35,9 +35,12 @@ public class LevelsSubmenu : MonoBehaviour
     {
         selectedLevel = level;
         hasSelectedLevel = true;
+        
         levelPreview.sprite = levels[(int)level - 2].preview;
         levelPreview.gameObject.SetActive(true);
-        levelInfo.SetActive(true);
+        
+        levelInfo.Show(level);
+        
         gameMenu.SetInfoPageVisible(true);
     }
 
@@ -45,7 +48,7 @@ public class LevelsSubmenu : MonoBehaviour
     {
         hasSelectedLevel = false;
         levelPreview.gameObject.SetActive(false);
-        levelInfo.SetActive(false);
+        levelInfo.Hide();
         gameMenu.SetInfoPageVisible(false);
     }
     

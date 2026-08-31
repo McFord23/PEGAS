@@ -40,8 +40,8 @@ public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>
                 break;
         }
     }
-
-    [ServerRpc]
+    
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestExecuteServerRpc(EventKey eventKey)
     {
         RequestExecuteClientRpc(eventKey);

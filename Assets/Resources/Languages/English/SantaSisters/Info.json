@@ -1,0 +1,11 @@
+{
+    "title": "Santa Sisters",
+    
+    "description": "Once upon a time, in the freezing land of Equestria... \nRoyal Sisters deliver gifts to homes to lift the spirits of the ponies who power the Warming Heart. Suddenly, the Windigos broke through the thermal dome and stole the Hearth. Royal Sisters must catch up to them and retrieve the stolen Hearth before it is snatched away.",
+    "failedDescription": "Ouch! That was too painful collision...",
+    "passedDescription": "The Warming Hearth was safely returned to Canterlot Castle, where it was transformed into the Crystal Heart. The ponies held a festival, charged the Heart, and never had to worry about the cold again.",
+    
+    "move": "Rotate",
+    "mainAction": "Acceleration",
+    "additionalAction": "Gift"
+}

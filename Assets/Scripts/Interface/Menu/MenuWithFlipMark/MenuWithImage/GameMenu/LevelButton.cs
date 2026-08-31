@@ -52,6 +52,6 @@ public class LevelButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPoi
         if (!isSelected) return;
 
         isSelected = false;
-        levelsSubmenu.Deselect(/*level*/);
+        levelsSubmenu.Deselect();
     }
 }

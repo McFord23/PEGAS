@@ -64,7 +64,7 @@ public class ControlSchemeSync : NetworkBehaviour
         playersMenu.UpdatePlayersSchemes();
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestChangeSchemeServerRpc(ControlScheme scheme)
     {
         clientScheme.Value = scheme;

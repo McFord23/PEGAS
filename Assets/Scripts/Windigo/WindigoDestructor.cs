@@ -51,13 +51,13 @@ public class WindigoDestructor : SingletonNetworkBehaviour<WindigoDestructor>
         }
     }
     
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestUpdateClientSeeServerRpc(bool client)
     {
         clientDontSee.Value = client;
     }
     
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestDestroyServerRpc(FixedString64Bytes path)
     {
         RequestRemoveClientRpc(path);

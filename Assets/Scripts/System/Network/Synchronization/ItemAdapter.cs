@@ -33,7 +33,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestPickUpServerRpc(FixedString64Bytes path)
     {
         characterPath.Value = path;
@@ -63,7 +63,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
     
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestResetServerRpc()
     {
         RequestResetClientRpc();
@@ -91,7 +91,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
     
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestDropServerRpc()
     {
         RequestDropClientRpc();

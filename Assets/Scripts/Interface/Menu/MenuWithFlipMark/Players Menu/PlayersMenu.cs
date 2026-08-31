@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PlayersMenu : MenuBaseWithFlipMark
 {
     [SerializeField] private RectTransform backMain;
-    [SerializeField] private Text modeTitle;
+    [SerializeField] private CoopStatus coopStatus;
     
     [Header("Icon")]
     [SerializeField] private Image playersMarkIcon;
@@ -13,12 +13,12 @@ public class PlayersMenu : MenuBaseWithFlipMark
     
     [Header("Player 1")]
     [SerializeField] private PlayerSubmenu player1Submenu;
-    [SerializeField] private Text p1;
+    [SerializeField] private LocalizationBase player1Label;
     [SerializeField] private Image player1GamepadImage;
 
     [Header("Player 2")]
     [SerializeField] private PlayerSubmenu player2Submenu;
-    [SerializeField] private Text p2;
+    [SerializeField] private LocalizationBase player2Label;
     [SerializeField] private Image player2GamepadImage;
 
     [Header("Coop")] 
@@ -60,7 +60,7 @@ public class PlayersMenu : MenuBaseWithFlipMark
 
     public void LocalCoop()
     {
-        Settings.GameMode = GameMode.LocalCoop;
+        Settings.ChangeGameMode(GameMode.LocalCoop);
         SetActiveCoopSubmenu(false);
 
         if (PlayersSettings.Player1.ControlScheme == PlayersSettings.Player2.ControlScheme)
@@ -76,13 +76,12 @@ public class PlayersMenu : MenuBaseWithFlipMark
     {
         SetActiveCoopSubmenu(false);
         networkSubmenu.SetActive(true);
-        modeTitle.text = "Network Coop";
         closeCoopButton.ChangeMode(CloseCoopButton.Mode.Back);
     }
 
     public void LocalKick()
     {
-        Settings.GameMode = GameMode.Single;
+        Settings.ChangeGameMode(GameMode.Single);
         SetActiveCoopSubmenu(true);
         HidePlayer2Submenu();
     }
@@ -98,27 +97,27 @@ public class PlayersMenu : MenuBaseWithFlipMark
         switch (Settings.GameMode)
         {
             case GameMode.LocalCoop:
-                modeTitle.text = "Local Coop";
-                p1.text = "Player 1";
-                p2.text = "Player 2";
+                coopStatus.SetMode(CoopStatus.Mode.Local);
+                player1Label.UpdatePhrase("Interface", "player1");
+                player2Label.UpdatePhrase("Interface", "player2");
 
                 player2Submenu.ShowButton(true);
                 player1Submenu.ShowButton(true);
                 break;
 
             case GameMode.Host:
-                modeTitle.text = "Network Coop";
-                p1.text = "You";
-                p2.text = "Sister";
+                coopStatus.SetMode(CoopStatus.Mode.Network);
+                player1Label.UpdatePhrase("Interface", "you");
+                player2Label.UpdatePhrase("Interface", "sister");
 
                 player2Submenu.ShowButton(false);
-                player1Submenu.ShowButton(true);;
+                player1Submenu.ShowButton(true);
                 break;
 
             case GameMode.Client:
-                modeTitle.text = "Network Coop";
-                p1.text = "Sister";
-                p2.text = "You";
+                coopStatus.SetMode(CoopStatus.Mode.Network);
+                player1Label.UpdatePhrase("Interface", "sister");
+                player2Label.UpdatePhrase("Interface", "you");
 
                 player2Submenu.ShowButton(true);
                 player1Submenu.ShowButton(false);
@@ -134,9 +133,8 @@ public class PlayersMenu : MenuBaseWithFlipMark
 
     public void HidePlayer2Submenu()
     {
-        modeTitle.text = "";
-        p1.text = "Player 1";
-        p2.text = "Player 2";
+        player1Label.UpdatePhrase("Interface", "player1");
+        player2Label.UpdatePhrase("Interface", "player2");
 
         player1Submenu.ShowButton(true);
         player2Submenu.gameObject.SetActive(false);
@@ -224,5 +222,6 @@ public class PlayersMenu : MenuBaseWithFlipMark
     {
         coopSubmenu.SetActive(value);
         closeCoopButton.gameObject.SetActive(!value);
+        if (value) coopStatus.SetMode(CoopStatus.Mode.None);
     }
 }

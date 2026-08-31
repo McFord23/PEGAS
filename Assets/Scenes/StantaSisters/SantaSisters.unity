@@ -7693,6 +7693,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &526724600 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4616049240770255281, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+  m_PrefabInstance: {fileID: 1923240992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251e5b12e3644ad6802ddd79a1d2f05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionSubmenu
 --- !u!1 &551176508
 GameObject:
   m_ObjectHideFlags: 0
@@ -11657,6 +11668,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  windigoDeathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 526724600}
+        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
+        m_MethodName: AddTaskCounter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &629757956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12690,6 +12716,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 526724600}
+        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
+        m_MethodName: OnReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  PlayerTakeItemEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 526724600}
+        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
+        m_MethodName: AddTaskCounter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  PlayerDropItemEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 526724600}
+        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
+        m_MethodName: SubtractTaskCounter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   VictoryEvent:
     m_PersistentCalls:
       m_Calls:
@@ -13275,9 +13343,9 @@ MonoBehaviour:
     PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists: []
-    TickRate: 30
-    ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    TickRate: 50
+    ClientConnectionBufferTimeout: 15
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -20448,7 +20516,7 @@ GameObject:
   - component: {fileID: 1499785875}
   - component: {fileID: 1499785876}
   m_Layer: 11
-  m_Name: Victory Trigger
+  m_Name: Warming Hearth Return Trigger
   m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20527,6 +20595,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37887f53b65d674419d844c8f1081d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemDeliveredEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 526724600}
+        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
+        m_MethodName: AddTaskCounter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &1499785877
 Rigidbody2D:
   serializedVersion: 5
@@ -21639,6 +21722,18 @@ PrefabInstance:
     - target: {fileID: 3983950964085924234, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_Name
       value: Book
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2641359660
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525278550873, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_AnchorMax.x

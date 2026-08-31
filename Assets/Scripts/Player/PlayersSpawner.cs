@@ -27,12 +27,12 @@ public class PlayersSpawner : NetworkBehaviour
         switch (Settings.GameMode)
         {
             case GameMode.Single:
-                if (playersManager.players[0] == null) SpawnPlayer(PlayersSettings.Player1);
+                if (playersManager.Players[0] == null) SpawnPlayer(PlayersSettings.Player1);
                 break;
             
             case GameMode.LocalCoop:
-                if (playersManager.players[0] == null) SpawnPlayer(PlayersSettings.Player1);
-                if (playersManager.players[1] == null) SpawnPlayer(PlayersSettings.Player2);
+                if (playersManager.Players[0] == null) SpawnPlayer(PlayersSettings.Player1);
+                if (playersManager.Players[1] == null) SpawnPlayer(PlayersSettings.Player2);
                 break;
             
             case GameMode.Host:
@@ -50,7 +50,7 @@ public class PlayersSpawner : NetworkBehaviour
         {
             var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
             
-            if (playersManager.players[playerNum] == null)
+            if (playersManager.Players[playerNum] == null)
             {
                 SpawnPlayer(player).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
             }

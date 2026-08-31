@@ -308,6 +308,7 @@ public class FlyingPlayer : PlayerBase
         {
             item.ExecuteDrop();
             item = null;
+            playersManager.PlayerDropItemEvent?.Invoke();
         }
     }
     
@@ -351,6 +352,7 @@ public class FlyingPlayer : PlayerBase
        {
            item = tempItem;
            item.ExecutePickUp(transform);
+           playersManager.PlayerTakeItemEvent?.Invoke();
        }
    }
 }

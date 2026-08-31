@@ -16,6 +16,11 @@ public static class Utilities
         return new FixedString64Bytes(path);
     }
 
+    public static string ToCamelCase(string key)
+    {
+        return char.ToLower(key[0]) + key[1..];
+    }
+    
     public static Vector2 Vector2Slerp(Vector2 firstPoint, Vector2 secondPoint, float interpolation)
     {
         var result = Vector3.Slerp(Vector2ToVector3(firstPoint), Vector2ToVector3(secondPoint), interpolation);

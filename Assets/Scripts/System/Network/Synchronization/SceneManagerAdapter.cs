@@ -59,13 +59,13 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
 
             case GameMode.Host:
             case GameMode.Client:
-                if (loadScreen) loadScreen.SetActive(true);
+                loadScreen.SetActive(true);
                 RequestLoadSceneServerRpc(new FixedString32Bytes(sceneName));
                 break;
         }
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestLoadSceneServerRpc(FixedString32Bytes sceneName)
     {
         RequestLoadSceneClientRpc(sceneName);

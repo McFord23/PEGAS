@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 98673855362152392}
   - component: {fileID: 98673855362152395}
   - component: {fileID: 98673855362152394}
-  - component: {fileID: 98673855362152397}
   - component: {fileID: 98673855362152398}
+  - component: {fileID: 98673855362152397}
   - component: {fileID: 98673855362152399}
   m_Layer: 10
   m_Name: Hearth Warming Heart
@@ -157,19 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
---- !u!114 &98673855362152397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98673855362152391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 363f386d20a33544bb778272bb242105, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &98673855362152398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +183,19 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &98673855362152397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98673855362152391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363f386d20a33544bb778272bb242105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &98673855362152399
 MonoBehaviour:
   m_ObjectHideFlags: 0

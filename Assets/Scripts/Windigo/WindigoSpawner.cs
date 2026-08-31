@@ -57,7 +57,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
         }
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestSpawnWindigoServerRpc()
     {
         Windigo windigo;

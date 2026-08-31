@@ -20,7 +20,7 @@ public class TransformSync : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestUpdateTransformServerRpc(ulong clientID, float posX, float posY, float rotZ, float scaleY)
     {
         RequestUpdateTransformClientRpc(clientID, posX, posY, rotZ, scaleY);

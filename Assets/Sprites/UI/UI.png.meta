@@ -246,7 +246,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 12
-        y: 376
+        y: 350
         width: 14
         height: 10
       alignment: 0
@@ -268,7 +268,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 45
-        y: 376
+        y: 350
         width: 14
         height: 10
       alignment: 0
@@ -290,7 +290,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 9
-        y: 390
+        y: 364
         width: 20
         height: 14
       alignment: 0
@@ -312,7 +312,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 39
-        y: 390
+        y: 364
         width: 20
         height: 14
       alignment: 0
@@ -400,7 +400,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 11
-        y: 356
+        y: 330
         width: 16
         height: 16
       alignment: 0
@@ -422,7 +422,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 356
+        y: 330
         width: 16
         height: 16
       alignment: 0
@@ -444,7 +444,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 40
-        y: 338
+        y: 312
         width: 16
         height: 16
       alignment: 0
@@ -466,7 +466,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 10
-        y: 338
+        y: 312
         width: 16
         height: 16
       alignment: 0
@@ -488,7 +488,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 4
-        y: 304
+        y: 278
         width: 29
         height: 31
       alignment: 0
@@ -510,7 +510,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 36
-        y: 304
+        y: 278
         width: 29
         height: 31
       alignment: 0
@@ -531,8 +531,8 @@ TextureImporter:
       name: Swap
       rect:
         serializedVersion: 2
-        x: 41
-        y: 282
+        x: 48
+        y: 256
         width: 17
         height: 18
       alignment: 0
@@ -858,7 +858,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 6 Outline
+      name: Long Outline
       rect:
         serializedVersion: 2
         x: 128
@@ -1213,8 +1213,8 @@ TextureImporter:
       name: Stick
       rect:
         serializedVersion: 2
-        x: 10
-        y: 285
+        x: 27
+        y: 259
         width: 17
         height: 12
       alignment: 0
@@ -1253,6 +1253,138 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Apply
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 383
+        width: 26
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ea19b92bd3b44a4688277ac409698b1
+      internalID: 1615479723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Apply Selected
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 383
+        width: 26
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ea3aea898e0c8747bd2e6a06d911ccf
+      internalID: 90844844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Done
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 257
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fb3f088ab1a8f14aa335b06028a79c2
+      internalID: 1539648257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Password Hide
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 228
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1745e1a2a28676c4c8d181904d1161c5
+      internalID: 689168047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Password Select
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 228
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c35bcaddf57970c4287bab207469be4f
+      internalID: 1989249654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Password Show
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 228
+        width: 22
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c8f74638d1a22d40babf97c19f83935
+      internalID: 1165689395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1267,7 +1399,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      6 Outline: 1652299931923453484
+      Apply: 1615479723
+      Apply Selected: 90844844
       Arrow Scheme: -273060469431498887
       Background: -4814514297299439395
       Big Outline: 6620621745411573659
@@ -1276,6 +1409,7 @@ TextureImporter:
       Control Layout Outline: 238177201661318622
       Coop: -6180191441002391703
       Deco: 82707731993968007
+      Done: 1539648257
       Fill Area: -824557042417737680
       Game Off: 3560920895182511107
       Game On: 2421033810969775829
@@ -1296,6 +1430,7 @@ TextureImporter:
       Lock Left Open: -1655900825
       Lock Right Open: -380576448
       Lock Right Opening: 1071628393
+      Long Outline: 1652299931923453484
       Mark x32: -9136572144232859775
       Mark x32 Open: 1080825480604336155
       Mark x42: 8586885197115800619
@@ -1304,6 +1439,9 @@ TextureImporter:
       Music Off: 2893844524057394724
       Music On: -2343514708694829045
       Numpad Layout: -6595680761151332689
+      Password Hide: 689168047
+      Password Select: 1989249654
+      Password Show: 1165689395
       Right Arrow: 7448113381798972013
       Settings On: -5583131565456696208
       Settings off: -1734547207228286997

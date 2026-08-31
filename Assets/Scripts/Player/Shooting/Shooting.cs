@@ -29,7 +29,7 @@ public class Shooting : NetworkBehaviour
         newFireball.GetComponent<Rigidbody2D>().AddForce(player.transform.right * (speed + player.Speed), ForceMode2D.Impulse);
     }
     
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestSpawnFireballServerRpc()
     {
         var selfTransform = transform;

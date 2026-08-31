@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Сredits : MonoBehaviour
 {
     [SerializeField] private float creditsSpeed = 0.85f;
     [SerializeField] private float skipSpeed = 0.01f;
-    [SerializeField] private Text skip;
+    [SerializeField] private TextMeshProUGUI skip;
 
     private AudioSource music;
     

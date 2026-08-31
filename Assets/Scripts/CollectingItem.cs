@@ -14,10 +14,9 @@ public class CollectingItem : MonoBehaviour
     {
         trigger = GetComponent<BoxCollider2D>();
         adapter = GetComponent<ItemAdapter>();
-
-        var tempTransform = transform;
-        spawnPos = tempTransform.position;
-        spawnRot = tempTransform.rotation;
+        
+        spawnPos = transform.position;
+        spawnRot = transform.rotation;
         
         PlayersManager.Instance.ResetEvent.AddListener(ExecuteReset);
     }
@@ -28,7 +27,7 @@ public class CollectingItem : MonoBehaviour
         transform.position = owner.position;
     }
 
-    public void ExecuteReset()
+    private void ExecuteReset()
     {
         adapter.Reset();
     }

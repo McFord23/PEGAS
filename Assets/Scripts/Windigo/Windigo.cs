@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Windigo : MonoBehaviour
 {
+    public UnityEvent deathEvent;
     public float speed;
 
     // Fly Physics
@@ -93,6 +96,8 @@ public class Windigo : MonoBehaviour
             item.ExecuteDrop();
             item = null;
         }
+        
+        deathEvent?.Invoke();
     }
 
     public void Destroy(bool ignoreDeath = false)
