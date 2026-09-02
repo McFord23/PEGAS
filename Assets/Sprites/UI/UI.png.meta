@@ -1385,6 +1385,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Gamepad Shared
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 231
+        width: 122
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d4a0191e6f29f4c8902e7d3fe99a01
+      internalID: -2140546194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1419,6 +1441,7 @@ TextureImporter:
       Gamepad On: 228940821244427079
       Gamepad Player Scheme: 1898596194
       Gamepad Players Scheme: -460153310
+      Gamepad Shared: -2140546194
       Handle: -5055451889963847731
       Handle Right Selected: -4464969597253999955
       Handler Selected: -5481780447360278658

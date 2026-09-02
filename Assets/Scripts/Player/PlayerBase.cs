@@ -5,12 +5,12 @@ using Unity.Netcode;
 public class PlayerBase : NetworkBehaviour
 {
     public Vector2 MoveInput => moveByKeyboardAndMouse
-                                + Controls.MoveByGamepad(playerSettings.Gamepad);
+                                + Controls.MoveByGamepad(playerSettings);
     public float MainActionInput => mainActionByKeyboardAndMouse 
-                                    + Controls.MainActionByGamepad(playerSettings.Gamepad);
+                                    + Controls.MainActionByGamepad(playerSettings);
 
     public float AdditionalActionInput => additionalActionByKeyboardAndMouse 
-                                          + Controls.AdditionalActionByGamepad(playerSettings.Gamepad);
+                                          + Controls.AdditionalActionByGamepad(playerSettings);
     
     public bool Live { get; protected set; } = true;
     public float Speed { get; private set; }

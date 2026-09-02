@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Controls : MonoBehaviour
 {
@@ -28,24 +27,66 @@ public class Controls : MonoBehaviour
         inputData.Disable();
     }
     
-    public static Vector2 MoveByGamepad(Gamepad gamepad)
+    public static Vector2 MoveByGamepad(PlayersSettings.Player player)
     {
-        return gamepad != null 
-            ? gamepad.leftStick.ReadValue() * GAMEPAD_SENSITIVITY 
+        if (PlayersSettings.IsSharedGamepad)
+        {
+            if (player == PlayersSettings.Player1)
+            {
+                return player.Gamepad != null 
+                    ? player.Gamepad.leftStick.ReadValue() * GAMEPAD_SENSITIVITY 
+                    : Vector2.zero;
+            }
+            
+            return player.Gamepad != null 
+                ? player.Gamepad.rightStick.ReadValue() * GAMEPAD_SENSITIVITY 
+                : Vector2.zero;
+        }
+        
+        return player.Gamepad != null 
+            ? player.Gamepad.leftStick.ReadValue() * GAMEPAD_SENSITIVITY 
             : Vector2.zero;
     }
 
-    public static float MainActionByGamepad(Gamepad gamepad)
+    public static float MainActionByGamepad(PlayersSettings.Player player)
     {
-        return gamepad != null  
-            ? gamepad.leftTrigger.ReadValue() 
+        if (PlayersSettings.IsSharedGamepad)
+        {
+            if (player == PlayersSettings.Player1)
+            {
+                return player.Gamepad != null 
+                    ? player.Gamepad.leftTrigger.ReadValue()  
+                    : 0;
+            }
+            
+            return player.Gamepad != null 
+                ? player.Gamepad.rightTrigger.ReadValue()  
+                : 0;
+        }
+        
+        return player.Gamepad != null 
+            ? player.Gamepad.leftTrigger.ReadValue()  
             : 0;
     }
     
-    public static float AdditionalActionByGamepad(Gamepad gamepad)
+    public static float AdditionalActionByGamepad(PlayersSettings.Player player)
     {
-        return gamepad != null
-            ? gamepad.rightTrigger.ReadValue()
+        if (PlayersSettings.IsSharedGamepad)
+        {
+            if (player == PlayersSettings.Player1)
+            {
+                return player.Gamepad != null 
+                    ? player.Gamepad.leftShoulder.ReadValue()  
+                    : 0;
+            }
+            
+            return player.Gamepad != null 
+                ? player.Gamepad.rightShoulder.ReadValue()  
+                : 0;
+        }
+        
+        return player.Gamepad != null 
+            ? player.Gamepad.rightTrigger.ReadValue()  
             : 0;
     }
 }

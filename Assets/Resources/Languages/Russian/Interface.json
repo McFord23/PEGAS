@@ -17,9 +17,10 @@
     "celestia": "Селестия",
     "luna": "Луна",
 
+    "gamepadScheme": "Схема управления с геймпада",
     "move": "Движение",
-    "mainAction": "Основное действие",
-    "additionalAction": "Дополнительное действие",
+    "mainAction": "Осн. действие",
+    "additionalAction": "Доп. действие",
 
     "none": "",
     "local": "Локальный",

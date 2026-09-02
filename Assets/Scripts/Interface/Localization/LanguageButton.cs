@@ -11,11 +11,6 @@ public class LanguageButton : MonoBehaviour
         LocalizationManager.Instance.LanguageChangeEvent.AddListener(OnLanguageChange);
     }
 
-    //private void OnDestroy()
-    //{
-    //    LocalizationManager.LanguageChange -= OnLanguageChange;
-    //}
-
     private void OnLanguageChange()
     {
         outline.SetActive(language == LocalizationManager.CurrentLanguage);

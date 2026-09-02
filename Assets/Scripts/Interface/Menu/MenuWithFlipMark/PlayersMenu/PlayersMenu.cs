@@ -14,21 +14,18 @@ public class PlayersMenu : MenuBaseWithFlipMark
     [Header("Player 1")]
     [SerializeField] private PlayerSubmenu player1Submenu;
     [SerializeField] private LocalizationBase player1Label;
-    [SerializeField] private Image player1GamepadImage;
 
     [Header("Player 2")]
     [SerializeField] private PlayerSubmenu player2Submenu;
     [SerializeField] private LocalizationBase player2Label;
-    [SerializeField] private Image player2GamepadImage;
 
     [Header("Coop")] 
     [SerializeField] private GameObject coopSubmenu;
     [SerializeField] private GameObject networkSubmenu;
     [SerializeField] private CloseCoopButton closeCoopButton;
     
-    [Header("Controls Schemes")]
-    public Sprite[] controlSchemeSprites;
-    public Sprite[] gamepadSprites;
+    [Header("Controls")]
+    [SerializeField] private Sprite[] controlSchemeSprites;
     
     public override void Initialize(MenuManager manager, MenuBackground background)
     {
@@ -55,7 +52,6 @@ public class PlayersMenu : MenuBaseWithFlipMark
         player2Submenu.ChangeCharacter(PlayersSettings.Player2.Character);
         
         UpdatePlayersSchemes();
-        UpdateGamepadStatus();
     }
 
     public void LocalCoop()
@@ -127,7 +123,6 @@ public class PlayersMenu : MenuBaseWithFlipMark
         player2Submenu.gameObject.SetActive(true);
 
         UpdateCloseButton();
-        UpdateGamepadStatus();
         UpdatePlayersIcon();
     }
 
@@ -138,7 +133,6 @@ public class PlayersMenu : MenuBaseWithFlipMark
 
         player1Submenu.ShowButton(true);
         player2Submenu.gameObject.SetActive(false);
-        UpdateGamepadStatus();
         UpdatePlayersIcon();
     }
 
@@ -147,32 +141,6 @@ public class PlayersMenu : MenuBaseWithFlipMark
         PlayersSettings.SwapCharacters();
         player1Submenu.ChangeCharacter(PlayersSettings.Player1.Character);
         player2Submenu.ChangeCharacter(PlayersSettings.Player2.Character);
-    }
-    
-    public void UpdateGamepadStatus()
-    {
-        switch (Settings.GameMode)
-        {
-            case GameMode.Single:
-                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad != null ? gamepadSprites[0] : gamepadSprites[3];
-                break;
-
-            case GameMode.LocalCoop:
-                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad != null ? gamepadSprites[1] : gamepadSprites[3];
-                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad != null ? gamepadSprites[2] : gamepadSprites[3];
-                break;
-
-            case GameMode.Host:
-            case GameMode.Client:
-                player1GamepadImage.sprite = PlayersSettings.Player1.Gamepad != null || PlayersSettings.Player1.NetworkGamepad 
-                    ? gamepadSprites[0] 
-                    : gamepadSprites[3];
-                
-                player2GamepadImage.sprite = PlayersSettings.Player2.Gamepad != null || PlayersSettings.Player2.NetworkGamepad 
-                    ? gamepadSprites[0] 
-                    : gamepadSprites[3];
-                break;
-        }
     }
 
     public void ChangePlayer1Scheme()

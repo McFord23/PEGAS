@@ -4,24 +4,19 @@ public class LocalizationBase : MonoBehaviour
 {
     [SerializeField] protected string file;
     [SerializeField] protected string phrase;
-    private bool isStarted;
+    private bool wasStarted;
 
     protected bool IsPathEmpty => string.IsNullOrEmpty(file) || string.IsNullOrEmpty(phrase);
     
     protected virtual void Start()
     {
-        isStarted = true;
+        wasStarted = true;
 
         if (IsPathEmpty) return;
         
         LocalizationManager.Instance.LanguageChangeEvent.AddListener(Localize);
         Localize();
     }
-    
-    //protected void OnDestroy()
-    //{
-    //    LocalizationManager.LanguageChange -= Localize;
-    //}
     
     public void UpdatePhrase(string newFile, string newPhrase, bool apply = true)
     {
@@ -38,6 +33,6 @@ public class LocalizationBase : MonoBehaviour
 
     protected virtual void Localize()
     {
-        if (!isStarted) Start();
+        if (!wasStarted) Start();
     }
 }

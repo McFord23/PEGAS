@@ -404,8 +404,8 @@ public partial class @InputData: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""8301fb61-18b5-4c8b-a6ee-ab1f907c9801"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""id"": ""54cef96b-ef37-4935-9c02-907834243834"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -415,8 +415,30 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""54cef96b-ef37-4935-9c02-907834243834"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""991d23c4-2b9a-4e44-8cfe-7a8a13a999be"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b95dfcd2-e01c-47a8-954c-7633714e1051"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8301fb61-18b5-4c8b-a6ee-ab1f907c9801"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -438,7 +460,7 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dac9c256-3c04-4f1b-8f23-1fc111e2bbdd"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

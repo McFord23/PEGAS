@@ -2,6 +2,8 @@ using UnityEngine.InputSystem;
 
 public static class PlayersSettings
 {
+    public static bool IsSharedGamepad { get; private set; }
+    
     public class Player
     {
         public PlayerCharacter Character;
@@ -36,5 +38,46 @@ public static class PlayersSettings
     {
         (Player1.Character, Player2.Character) = (Player2.Character, Player1.Character);
         OnSwapCharactersEvent?.Invoke();
+    }
+    
+    public static bool CanShareGamepad()
+    {
+        var isLocalCoop = Settings.GameMode is GameMode.LocalCoop;
+        var isZeroGamepad = Player1.Gamepad == null && Player2.Gamepad == null; 
+        var isTwoGamepad = Player1.Gamepad != null && Player2.Gamepad != null && !IsSharedGamepad;
+
+        return isLocalCoop && !isZeroGamepad && !isTwoGamepad;
+    }
+    
+    public static void ShareGamepad(bool isFromPlayer1)
+    {
+        if (!CanShareGamepad()) return;
+        
+        if (isFromPlayer1)
+        {
+            Player2.Gamepad = Player1.Gamepad;
+        }
+        else
+        {
+            Player1.Gamepad = Player2.Gamepad;
+        }
+
+        IsSharedGamepad = true;
+    }
+
+    public static void GiveGamepad(bool isToPlayer1)
+    {
+        if (!CanShareGamepad()) return;
+        
+        IsSharedGamepad = false;
+        
+        if (isToPlayer1)
+        {
+            Player2.Gamepad = null;
+        }
+        else
+        {
+            Player1.Gamepad = null;
+        }
     }
 }

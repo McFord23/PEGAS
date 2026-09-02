@@ -1,28 +1,20 @@
-﻿using UnityEngine.UI;
-using TMPro;
+﻿using TMPro;
 
 public class LocalizationText : LocalizationBase
 {
-    private Text text;
     private TextMeshPro textPro;
     private TextMeshProUGUI textProGUI;
     private Mode mode;
 
     private enum Mode
     {
-        Text,
         TextMeshPro,
         TextMeshProUGUI
     }
     
     protected override void Start()
     {
-        if (TryGetComponent(out Text txt))
-        {
-            text = txt;
-            mode = Mode.Text;
-        }
-        else if (TryGetComponent(out TextMeshPro tmp))
+        if (TryGetComponent(out TextMeshPro tmp))
         {
             textPro = tmp;
             mode = Mode.TextMeshPro;
@@ -41,14 +33,9 @@ public class LocalizationText : LocalizationBase
         base.Localize();
         
         if (IsPathEmpty) return;
-        //print($"localize {name}");
         
         switch (mode)
         {
-            case Mode.Text:
-                text.text = GetPhrase();
-                break;
-            
             case Mode.TextMeshPro:
                 textPro.text = GetPhrase();
                 break;

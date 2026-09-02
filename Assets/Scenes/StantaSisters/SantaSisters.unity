@@ -21807,58 +21807,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 797751174}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 797751174}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: UpdatePlayer1ControlScheme
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: UpdatePlayer2ControlScheme
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayersManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: PlayersManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7038055525419924560, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ChangeConnectionEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 7038055525419924562, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_InScenePlaced
       value: 1

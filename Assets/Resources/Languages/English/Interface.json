@@ -17,6 +17,7 @@
     "celestia": "Celestia",
     "luna": "Luna",
 
+    "gamepadScheme": "Gamepad Control Scheme",
     "move": "Move",
     "mainAction": "Main Action",
     "additionalAction": "Additional Action",
