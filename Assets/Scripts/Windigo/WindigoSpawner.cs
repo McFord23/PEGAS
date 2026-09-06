@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -19,7 +18,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
     {
         base.Awake();
         
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -27,23 +26,23 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
                 break;
             
             case GameMode.Host:
-                NetworkManager.SceneManager.OnLoadEventCompleted += OnLoadEventComplate;
+                NetworkManager.SceneManager.OnLoadEventCompleted += OnLoadEventCompleted;
                 break;
         }
     }
 
-    private void OnLoadEventComplate(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
+    private void OnLoadEventCompleted(string sceneName, LoadSceneMode loadsceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        if ((Global.fullParty && clientscompleted.Count > 1) || !Global.fullParty)
+        if ((Global.IsNetworkPlayerConnected && clientsCompleted.Count > 1) || !Global.IsNetworkPlayerConnected)
         {
             Spawn();
-            NetworkManager.SceneManager.OnLoadEventCompleted -= OnLoadEventComplate;
+            NetworkManager.SceneManager.OnLoadEventCompleted -= OnLoadEventCompleted;
         }
     }
 
     public void Spawn()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -58,7 +57,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestSpawnWindigoServerRpc()
     {
         Windigo windigo;
@@ -75,7 +74,7 @@ public class WindigoSpawner : SingletonNetworkBehaviour<WindigoSpawner>
     [ClientRpc]
     private void RequestSpawnWindigoClientRpc()
     {
-        if (Global.gameMode != GameMode.Client) return;
+        if (Settings.GameMode != GameMode.Client) return;
         
         Windigo windigo;
         windigo = GameObject.Find("Windigo(Clone)").GetComponent<Windigo>();

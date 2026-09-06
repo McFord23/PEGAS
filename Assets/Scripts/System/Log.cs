@@ -18,7 +18,7 @@ public class Log : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F3))
+        if (Controls.Logs)
         {
             float alpha = style.normal.textColor.a == 1 ? 0 : 1;
             

@@ -1,0 +1,13 @@
+{
+    "createdBy": "Автор",
+    "programmers": "Программисты",
+    "programmingConsultant": "Консультант по программированию",
+    "gameDesignConsultant": "Консультант по гейм-дизайну",
+    "artists": "Художники",
+    "characterArtist": "Художник по персонажам",
+    "locationArtist": "Художник по локациям",
+    "music": "Музыка",
+    "specialThanks": "Особая благодарность",
+
+    "skip": "Пропустить"
+}

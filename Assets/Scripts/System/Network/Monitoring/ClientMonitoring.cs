@@ -1,5 +1,5 @@
-using Enums;
 using System.Collections;
+using System.Text;
 using UnityEngine;
 
 public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
@@ -9,8 +9,8 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
     public delegate void ConnectionStartEvent();
     public event ConnectionStartEvent OnConnectionStartEvent;
 
-    public delegate void ConnectionFailureEvent();
-    public event ConnectionFailureEvent OnConnectionFailureEvent;
+    public delegate void ConnectionFailedEvent();
+    public event ConnectionFailedEvent OnConnectionFailedEvent;
 
     public delegate void ConnectedEvent();
     public event ConnectedEvent OnConnectedEvent;
@@ -18,12 +18,21 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
     public delegate void DisconnectedEvent();
     public event DisconnectedEvent OnDisconnectedEvent;
 
+    private byte[] password;
+
+    public void SetPassword(string newPassword)
+    {
+       password = Encoding.UTF8.GetBytes(newPassword);
+    }
+    
     public void StartConnection()
     {
+        NetworkManager.NetworkConfig.ConnectionData = password;
         NetworkManager.StartClient();
         OnConnectionStartEvent?.Invoke();
 
         NetworkManager.OnClientConnectedCallback += OnConnected;
+        NetworkManager.OnClientDisconnectCallback += OnFailedConnection;
 
         waitingConnection = WaitingConnection();
         StartCoroutine(waitingConnection);
@@ -32,6 +41,7 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
     public void CancelConnection()
     {
         NetworkManager.OnClientConnectedCallback -= OnConnected;
+        NetworkManager.OnClientDisconnectCallback -= OnFailedConnection;
         StopCoroutine(waitingConnection);
         NetworkManager.Shutdown();
 
@@ -43,10 +53,11 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
         if (NetworkManager.IsHost) return;
 
         StopCoroutine(waitingConnection);
+        NetworkManager.OnClientDisconnectCallback -= OnFailedConnection;
         NetworkManager.OnClientDisconnectCallback += StopClient;
 
-        Global.gameMode = GameMode.Client;
-        Global.fullParty = true;
+        Settings.ChangeGameMode(GameMode.Client);
+        Global.IsNetworkPlayerConnected = true;
         OnConnectedEvent?.Invoke();
     }
 
@@ -55,28 +66,41 @@ public class ClientMonitoring : SingletonNetworkBehaviour<ClientMonitoring>
         StopClient();
     }
 
+    private void OnFailedConnection(ulong id)
+    {
+        if (waitingConnection != null)
+        {
+            StopCoroutine(waitingConnection);
+            waitingConnection = null;
+        }
+        
+        OnConnectionFailedEvent?.Invoke();
+    }
+
     private void StopClient(ulong id = 1)
     {
-        if (Global.gameMode != GameMode.Client) return;
+        if (Settings.GameMode != GameMode.Client) return;
 
         NetworkManager.OnClientConnectedCallback -= OnConnected;
         NetworkManager.OnClientDisconnectCallback -= StopClient;
         StopCoroutine(waitingConnection);
         NetworkManager.Shutdown();
 
-        Global.gameMode = GameMode.Single;
-        Global.fullParty = false;
+        Settings.ChangeGameMode(GameMode.Single);
+        Global.IsNetworkPlayerConnected = false;
         OnDisconnectedEvent?.Invoke();
     }
     
     private IEnumerator WaitingConnection()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(Settings.NETWORK_CONNECTING_TIMER);
 
+        waitingConnection = null;
+        
         if (!NetworkManager.IsConnectedClient)
         {
             NetworkManager.Shutdown();
-            OnConnectionFailureEvent?.Invoke();
+            OnConnectionFailedEvent?.Invoke();
         }
     }
 }

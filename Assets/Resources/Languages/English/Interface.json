@@ -1,0 +1,52 @@
+{
+    "play": "Play",
+    "exit": "Exit",
+    "back": "Back",
+    "retry": "Retry",
+    "resume": "Resume",
+    "continue": "Continue",
+
+    "settings": "Settings",
+    "audio": "Audio",
+    "sensitivity": "Sensitivity",
+    "language": "Language",
+    "player1": "Player 1",
+    "player2": "Player 2",
+    "you": "You",
+    "sister": "Sister",
+    "celestia": "Celestia",
+    "luna": "Luna",
+
+    "gamepadScheme": "Gamepad Control Scheme",
+    "move": "Move",
+    "mainAction": "Main Action",
+    "additionalAction": "Additional Action",
+
+    "none": "",
+    "local": "Local",
+    "network": "Network",
+    "create": "Create",
+    "creating": "creating",
+    "created": "session created",
+    "creationError": "creation error",
+    "connect": "Connect",
+    "connecting": "connecting",
+    "playerConnecting": "player connecting",
+    "connectionError": "connection error",
+    "networkHint": "If you don't have a public IP address, you can use a local network emulator, such as Radmin VPN or Hamachi. You may need to disable your firewall for the emulator to work.\n\n1) Connect to the same network\n2) Copy the host's IP address and paste it below\n3) Enter the host's open port (default is 7777)",
+    "passwordFieldHint": "fill this field if you want to password-protect your session",
+    "passwordButtonHint": "this button is toggle\npassword masking",
+    "password": "Password:",
+    "passwordWrong": "Wrong session password",
+    "fullSession": "Session is full",
+
+    "pause": "Pause",
+    "mission": "Mission",
+    "failed": "Mission Failed",
+    "passed": "Mission Passed",
+
+    "contents": "Contents",
+    "chapter": "Chapter",
+
+    "returnToMainMenu": "Return to Сover?"
+}

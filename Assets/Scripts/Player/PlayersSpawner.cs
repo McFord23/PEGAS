@@ -1,68 +1,39 @@
 using System;
-using System.Collections.Generic;
-using Enums;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-/**
- * Спавнит игроков в режиме мультиплеера и одного игрока в одиночном режиме
- */
-public class PlayersSpawner : NetworkBehaviour
+public class PlayersSpawner : MonoBehaviour
 {
+    [Header("Celestia")]
     [SerializeField] private GameObject celestiaPrefab;
+    [SerializeField] private Transform celestiaSpawnPoint;
+    
+    [Header("Luna")]
     [SerializeField] private GameObject lunaPrefab;
+    [SerializeField] private Transform lunaSpawnPoint;
     
-    private void Awake()
+    public GameObject SpawnPlayer(PlayersSettings.Player player)
     {
-        if (Global.gameMode == GameMode.Single)
-        {
-            SpawnSinglePlayer();
-            return;
-        }
-
-        if (NetworkManager.IsHost)
-        {
-            NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnOnLoadEventCompleted;
-        }
-    }
-
-    private void SceneManagerOnOnLoadEventCompleted(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
-    {
-        var playerNum = 0;
-        foreach (ulong clientId in clientscompleted)
-        {
-            SpawnCharacter(playerNum, clientId);
-            playerNum++;
-        }
-
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManagerOnOnLoadEventCompleted;
-    }
-
-    private void SpawnSinglePlayer()
-    {
-        var objectToSpawn = GetObjectToSpawn(Global.players[0].character);
-        var selfTransform = transform;
-        Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
+        var objectToSpawn = GetObjectToSpawn(player.Character);
+        var spawnPosition = GetSpawnPosition(player.Character);
+        return Instantiate(objectToSpawn, spawnPosition, transform.rotation);
     }
     
-    private void SpawnCharacter(int playerNum, ulong clientId)
-    {
-        if (!IsHost) return;
-
-        var objectToSpawn = GetObjectToSpawn(Global.players[playerNum].character);
-        var selfTransform = transform;
-        var instanceTransform = Instantiate(objectToSpawn, selfTransform.position, selfTransform.rotation);
-
-        instanceTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
-    }
-    
-    private GameObject GetObjectToSpawn(Character character)
+    private GameObject GetObjectToSpawn(PlayerCharacter character)
     {
         return character switch
         {
-            Character.Celestia => celestiaPrefab,
-            Character.Luna => lunaPrefab,
+            PlayerCharacter.Celestia => celestiaPrefab,
+            PlayerCharacter.Luna => lunaPrefab,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    private Vector2 GetSpawnPosition(PlayerCharacter character)
+    {
+        return character switch
+        {
+            PlayerCharacter.Celestia => celestiaSpawnPoint.position,
+            PlayerCharacter.Luna => lunaSpawnPoint.position,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

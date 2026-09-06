@@ -1,45 +1,40 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 
 public class Shooting : NetworkBehaviour
 {
     [SerializeField] private GameObject fireball;
-    private int speed = 50;
+    [SerializeField] private int speed = 50;
     
-    private Player player;
-    private PlayerController controller;
+    private PlayerBase player;
 
     private void Start()
     {
-        player = GetComponentInParent<Player>();
-        controller = player.GetComponent<PlayerController>();
+        player = GetComponentInParent<PlayerBase>();
     }
 
     private void FixedUpdate()
     {
-        if (player.moveState is MoveState.Paused or MoveState.Stunned or MoveState.Dead or MoveState.Winner) return;
-
-        if (controller.GetShootInput() > 0)
-        {
-            if (Global.gameMode is GameMode.Single or GameMode.LocalCoop) SpawnFireball();
-            else RequestSpawnFireballServerRpc();
-        }
+        if (!player.IsInputAvailable()) return;
+        if (player.AdditionalActionInput == 0) return;
+        
+        if (Settings.GameMode is GameMode.Single or GameMode.LocalCoop) SpawnFireball();
+        else RequestSpawnFireballServerRpc();
     }
 
     private void SpawnFireball()
     {
         var selfTransform = transform;
         var newFireball = Instantiate(fireball, selfTransform.position, selfTransform.rotation);
-        newFireball.GetComponent<Rigidbody2D>().AddForce(player.transform.right * (speed + player.speed), ForceMode2D.Impulse);
+        newFireball.GetComponent<Rigidbody2D>().AddForce(player.transform.right * (speed + player.Speed), ForceMode2D.Impulse);
     }
     
-    [ServerRpc]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestSpawnFireballServerRpc()
     {
         var selfTransform = transform;
         var newFireball = Instantiate(fireball, selfTransform.position, selfTransform.rotation);
-        newFireball.GetComponent<Rigidbody2D>().AddForce(player.transform.right * (speed + player.speed), ForceMode2D.Impulse);
+        newFireball.GetComponent<Rigidbody2D>().AddForce(player.transform.right * (speed + player.Speed), ForceMode2D.Impulse);
         newFireball.name = $"Fireball {player.name}";
         newFireball.GetComponent<NetworkObject>().Spawn(true);
         
@@ -49,12 +44,10 @@ public class Shooting : NetworkBehaviour
     [ClientRpc]
     private void RequestSpawnFireballClientRpc()
     {
-        //print("Rotation: " + player.transform.rotation.z);
-        
-        if (Global.gameMode != GameMode.Client) return;
+        if (Settings.GameMode != GameMode.Client) return;
         
         Rigidbody2D fireball = GameObject.Find("Fireball(Clone)").GetComponent<Rigidbody2D>();
-        fireball.AddForce(player.transform.right * (speed + player.speed), ForceMode2D.Impulse);
+        fireball.AddForce(player.transform.right * (speed + player.Speed), ForceMode2D.Impulse);
         fireball.name = $"Fireball {player.name}";
     }
 }

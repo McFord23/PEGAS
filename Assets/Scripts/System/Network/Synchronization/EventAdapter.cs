@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Enums;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,8 +7,9 @@ public enum EventKey
 {
     Pause,
     Resume,
-    Victory,
-    CollectingItemDrop
+    Lose,
+    Retry,
+    Victory
 }
 
 public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>
@@ -27,7 +27,7 @@ public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>
 
     public void Execute(EventKey eventKey)
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -40,8 +40,8 @@ public class EventAdapter : SingletonNetworkBehaviour<EventAdapter>
                 break;
         }
     }
-
-    [ServerRpc(RequireOwnership = false)]
+    
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestExecuteServerRpc(EventKey eventKey)
     {
         RequestExecuteClientRpc(eventKey);

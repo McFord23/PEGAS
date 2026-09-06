@@ -1,106 +1,183 @@
-﻿using Enums;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
-public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
+public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 {
-    private Player[] players = new Player[2];
-    private PlayerController[] playerControllers = new PlayerController[2];
+    private PlayerBase[] Players { get; set; } = new PlayerBase[2];
+    
+    public bool HaveSecondPlayer => (bool)Players[1];
+    private bool isRetryEnable = true;
 
-    public bool HaveBothPlayers => (bool)players[0] && HaveOtherPlayer;
-    private bool HaveOtherPlayer => (bool)players[1];
+    private float midPosition;
+    private float midDirection;
 
+    [SerializeField] private PlayersSpawner spawner;
+    
     public UnityEvent PauseEvent;
     public UnityEvent ResumeEvent;
     public UnityEvent DeadEvent;
     public UnityEvent ResetEvent;
+    public UnityEvent PlayerTakeItemEvent;
+    public UnityEvent PlayerDropItemEvent;
     public UnityEvent VictoryEvent;
-    
-    public void LoadPlayer(Player newPlayer)
+
+    private void Start()
     {
-        newPlayer.transform.position = transform.position;
-        
-        var spawnPlayerNum = 0;
-        if (players[0] != null)
+        Settings.OnChangeGameModeEvent += UpdatePlayersAmount;
+        UpdatePlayersAmount();
+    }
+
+    public override void OnDestroy()
+    {
+        Settings.OnChangeGameModeEvent -= UpdatePlayersAmount;
+        base.OnDestroy();
+    }
+
+    private void UpdatePlayersAmount()
+    {
+        switch (Settings.GameMode)
         {
-            spawnPlayerNum = 1;
+            case GameMode.Single:
+                TrySpawnPlayer(0);
+                TryDestroySecondPlayer();
+                break;
+            
+            case GameMode.LocalCoop:
+                TrySpawnPlayer(0);
+                TrySpawnPlayer(1);
+                break;
+            
+            case GameMode.Host:
+                NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnLoadEventCompleted;
+                Global.IsLoading = true;
+                break;
+        }
+    }
+
+    private void TrySpawnPlayer(int playerId)
+    {
+        if (Players[playerId] != null) return;
+        
+        var player = playerId > 0 ? PlayersSettings.Player2 : PlayersSettings.Player1;
+        Players[playerId] = spawner.SpawnPlayer(player).GetComponent<PlayerBase>();
+        Players[playerId].Initialize(player, this);
+    }
+    
+    private void SceneManagerOnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        //if (!IsHost) return;
+        
+        var playerId = 0;
+        foreach (var clientId in clientsCompleted)
+        {
+            var player = playerId > 0 ? PlayersSettings.Player2 : PlayersSettings.Player1;
+            
+            if (Players[playerId] == null)
+            {
+                var playerObject = spawner.SpawnPlayer(player);
+                playerObject.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+                Players[playerId] = playerObject.GetComponent<PlayerBase>();
+                Players[playerId].Initialize(player, this);
+            }
+            
+            playerId++;
         }
 
-        players[spawnPlayerNum] = newPlayer;
-        playerControllers[spawnPlayerNum] = newPlayer.GetComponent<PlayerController>();
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManagerOnLoadEventCompleted;
+        Global.IsLoading = false;
+    }
+    
+    private void TryDestroySecondPlayer()
+    {
+        if (Players[1] == null) return;
+        Destroy(Players[1].gameObject);
+        Players[1] = null;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton5))
-        {
-            if (players[0].moveState == MoveState.Paused)
-            {
-                EventAdapter.Instance.Execute(EventKey.Resume);
-            }
-            
-            Reset();
-        }
+        if (Global.IsLoading) return;
+        
+        RetryInput();
+        PauseInput();
 
-        if (HaveOtherPlayer)
+        if (Settings.GameMode is GameMode.LocalCoop)
         {
-            if (players[0].moveState is MoveState.Paused or MoveState.Winner) return;
-            if (players[1].moveState is MoveState.Paused or MoveState.Winner) return;
-            if (players[0].moveState == MoveState.Dead && players[1].moveState == MoveState.Dead) return;
-            if (Input.GetButtonDown("Cancel"))
-            {
-                EventAdapter.Instance.Execute(EventKey.Pause);
-            }
-        }
-        else if (players[0])
-        {
-            if (players[0].moveState is MoveState.Paused or MoveState.Dead or MoveState.Winner) 
-                return;
-            
-            if (Input.GetButtonDown("Cancel"))
-            {
-                EventAdapter.Instance.Execute(EventKey.Pause);
-            }
+            UpdateMidDirection();
         }
     }
 
-    private int GetCurrentPlayerNum()
+    private void RetryInput()
     {
-        if ((bool)players[1] && players[1].IsOwner)
+        if (isRetryEnable && Controls.Retry)
         {
-            return 1;
+            EventAdapter.Instance.Execute(EventKey.Retry);
         }
+    }
+    
+    private void PauseInput()
+    {
+        if (HaveSecondPlayer)
+        {
+            if (!Players[0].Live && !Players[1].Live) return;
+        }
+        else
+        {
+            if (!Players[0].Live) return;
+        }
+        
+        if (!Global.IsPause && Controls.Pause)
+        {
+            EventAdapter.Instance.Execute(EventKey.Pause);
+        }
+    }
 
-        return 0;
+    private void UpdateMidDirection()
+    {
+        var newMidPosition = GetPosition().x;
+        if (newMidPosition > midPosition + 0.1f) midDirection = 1;
+        else if (newMidPosition < midPosition - 0.1f) midDirection = -1;
+
+        midPosition = newMidPosition;
     }
 
     public Vector3 GetPosition()
     {
-        var playerNum = GetCurrentPlayerNum();
-        
-        if ((bool)players[playerNum])
+        switch (Settings.GameMode)
         {
-            return GetPosition(playerNum);
+            case GameMode.Single:
+            case GameMode.Host:
+                return Players[0].transform.position;
+            
+            case GameMode.Client:
+                return HaveSecondPlayer ? Players[1].transform.position : Players[0].transform.position;
+            
+            case GameMode.LocalCoop:
+                return (Players[0].transform.position + Players[1].transform.position) / 2;
+            
+            default:
+                return Vector3.zero;
         }
-
-        return Vector3.zero;
     }
-
-    public Vector3 GetPosition(int i) => players[i].transform.position;
+    
+    public Vector3 GetPosition(int i) => Players[i].transform.position;
 
     public float GetSpeed()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
-            case GameMode.Host when HaveBothPlayers:
-                return players[0].speed;
+            case GameMode.Host:
+                return Players[0].Speed;
 
-            case GameMode.Client when HaveBothPlayers:
-                return players[1].speed;
+            case GameMode.Client:
+                return HaveSecondPlayer ? Players[1].Speed : Players[0].Speed;
             
-            case GameMode.LocalCoop when HaveBothPlayers:
-                return (players[1].speed + players[0].speed) / 2;
+            case GameMode.LocalCoop:
+                return (Players[1].Speed + Players[0].Speed) / 2;
             
             default:
                 return 0;
@@ -109,72 +186,84 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
 
     public float GetDirection()
     {
-        var playerNum = GetCurrentPlayerNum();
-        
-        if ((bool)players[playerNum] && players[playerNum].moveState != MoveState.Dead)
+        switch (Settings.GameMode)
         {
-            return players[playerNum].transform.localScale.y;
+            case GameMode.Single:
+            case GameMode.Host:
+                return Players[0].transform.localScale.y;
+            
+            case GameMode.Client:
+                return HaveSecondPlayer ? Players[1].transform.localScale.y : Players[0].transform.localScale.y;
+            
+            case GameMode.LocalCoop:
+                return midDirection;
+            
+            default:
+                return 0;
         }
-        
-        return 0;
     }
 
+    public void UpdatePlayersControlScheme()
+    {
+        Players[0]?.UpdateControlScheme();
+        Players[1]?.UpdateControlScheme();
+    }
+    
     public void Pause()
     {
-        players[0]?.Pause();
-        players[1]?.Pause();
+        Global.IsPause = true;
+        Players[0]?.Pause();
+        Players[1]?.Pause();
         PauseEvent.Invoke();
     }
 
     public void Resume()
     {
-        players[0]?.Resume();
-        players[1]?.Resume();
+        Global.IsPause = false;
+        Players[0]?.Resume();
+        Players[1]?.Resume();
         ResumeEvent.Invoke();
     }
 
     public void KillPlayer(int i)
     {
-        players[i]?.Kill();
+        Players[i]?.Kill();
     }
 
-    public void Dead()
+    public void ExecuteDeath()
     {
-        if (HaveOtherPlayer)
+        EventAdapter.Instance.Execute(EventKey.Lose);
+    }
+
+    public void Death()
+    {
+        if (HaveSecondPlayer)
         {
-            if (players[0].moveState == MoveState.Dead && players[1].moveState != MoveState.Dead)
+            if (!Players[0].Live && !Players[1].Live)
             {
-                Global.players[0].live = false;
+                DeadEvent.Invoke();
             }
-            else if (players[0].moveState != MoveState.Dead && players[1].moveState == MoveState.Dead)
-            {
-                Global.players[1].live = false;
-            }
-            else DeadEvent.Invoke();
         }
         else
         {
-            Global.players[0].live = false;
             DeadEvent.Invoke();
         }
     }
 
     public void Reset()
     {
-        players[0]?.Revive();
-        Global.players[0].live = true;
-
-        players[1]?.Revive();
-        Global.players[1].live = true;
-
+        Players[0]?.Revive();
+        Players[1]?.Revive();
         ResetEvent.Invoke();
     }
 
     public void Victory()
     {
-        players[0]?.Victory();
-        players[1]?.Victory();
-        
+        Players[0]?.Victory();
+        Players[1]?.Victory();
+
+        isRetryEnable = false;
+        Global.IsPause = true;
         VictoryEvent.Invoke();
     }
 }

@@ -1,4 +1,3 @@
-using Enums;
 using Unity.Netcode;
 using UnityEngine;
 using Unity.Collections;
@@ -25,7 +24,7 @@ public class WindigoDestructor : SingletonNetworkBehaviour<WindigoDestructor>
     
     public void Destruct(Windigo windigo, bool ignoreSee)
     {
-        if (Global.gameMode is GameMode.Single or GameMode.LocalCoop)
+        if (Settings.GameMode is GameMode.Single or GameMode.LocalCoop)
         {
             WindigosManager.Instance.Remove(windigo);
             Destroy(windigo.gameObject);
@@ -52,13 +51,13 @@ public class WindigoDestructor : SingletonNetworkBehaviour<WindigoDestructor>
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestUpdateClientSeeServerRpc(bool client)
     {
         clientDontSee.Value = client;
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestDestroyServerRpc(FixedString64Bytes path)
     {
         RequestRemoveClientRpc(path);

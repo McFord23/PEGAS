@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,7 @@ public class ItemSpawner : NetworkBehaviour
     
     private void Awake()
     {
-        if (Global.gameMode == GameMode.Single)
+        if (Settings.GameMode == GameMode.Single)
         {
             SpawnSingleItem();
             return;

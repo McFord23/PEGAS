@@ -1,10 +1,7 @@
-﻿namespace Enums
+﻿public enum GameMode
 {
-    public enum GameMode
-    {
-        Single,
-        LocalCoop,
-        Host,
-        Client
-    }
+    Single,
+    LocalCoop,
+    Host,
+    Client
 }

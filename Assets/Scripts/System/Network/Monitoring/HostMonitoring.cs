@@ -1,4 +1,6 @@
-using Enums;
+using System.Text;
+using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
@@ -14,6 +16,12 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
     public delegate void CreatedEvent();
     public event CreatedEvent OnCreatedEvent;
 
+    public delegate void ClientConnectionStartEvent();
+    public event ClientConnectionStartEvent OnClientConnectionStartEvent;
+    
+    public delegate void ClientConnectionFailedEvent();
+    public event ClientConnectionFailedEvent OnClientConnectionFailedEvent;
+
     public delegate void ClientConnectedEvent();
     public event ClientConnectedEvent OnClientConnectedEvent;
 
@@ -23,6 +31,25 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
     public delegate void ShutdownHostEvent();
     public event ShutdownHostEvent OnShutdownEvent;
 
+    private string sessionPassword;
+    private Coroutine waitConnection;
+
+    private enum DisconnectReason
+    {
+        FullSession,
+        PasswordWrong
+    }
+
+    private void Start()
+    {
+        NetworkManager.ConnectionApprovalCallback = ApprovalCheck;
+    }
+    
+    public void SetPassword(string newPassword)
+    {
+        sessionPassword = newPassword;
+    }
+    
     public void CreateHost()
     {
         OnStartCreationEvent?.Invoke();
@@ -46,44 +73,104 @@ public class HostMonitoring : SingletonNetworkBehaviour<HostMonitoring>
     {
         if (!NetworkManager.IsHost) return;
 
-        Global.gameMode = GameMode.Host;
+        Settings.ChangeGameMode(GameMode.Host);
         Application.logMessageReceived -= CheckCreatingFailure;
-        NetworkManager.OnClientConnectedCallback += OnClientConnect;
+        
+        NetworkManager.OnClientConnectedCallback += OnClientConnected;
         NetworkManager.OnClientDisconnectCallback += OnClientDisconnect;
         OnCreatedEvent?.Invoke();
     }
 
-    private void OnClientConnect(ulong id = 1)
+    private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+    {
+        if (request.ClientNetworkId == NetworkManager.ServerClientId)
+        {
+            response.Reason = "";
+            response.Approved = true;
+            return;
+        }
+
+        if (NetworkManager.ConnectedClients.Count > 1)
+        {
+            response.Reason = DisconnectReason.FullSession.ToString();
+            response.Approved = false;
+            return;
+        }
+
+        var clientData = request.Payload;
+        var clientPassword = Encoding.UTF8.GetString(clientData);
+        
+        if (clientPassword != sessionPassword)
+        {
+            response.Reason = DisconnectReason.PasswordWrong.ToString();
+            response.Approved = false;
+            return;
+        }
+        
+        response.Reason = "";
+        response.Approved = true;
+        OnClientConnectionStartEvent?.Invoke();
+        waitConnection = StartCoroutine(WaitingConnection());
+    }
+    
+    private void OnClientConnected(ulong id = 1)
     {
         if (id != NetworkManager.LocalClientId)
         {
+            if (waitConnection != null)
+            {
+                StopCoroutine(waitConnection);
+                waitConnection = null;
+            }
+            
             clientID = id;
-            Global.fullParty = true;
+            Global.IsNetworkPlayerConnected = true;
             OnClientConnectedEvent?.Invoke();
         }
     }
     
     public void DisconnectClient()
     {
-        NetworkManager.DisconnectClient(clientID);
-        OnClientDisconnect();
+        if (clientID != NetworkManager.LocalClientId)
+        {
+            NetworkManager.DisconnectClient(clientID);
+            OnClientDisconnect();
+        }
     }
 
     private void OnClientDisconnect(ulong id = 1)
     {
-        Global.fullParty = false;
+        Global.IsNetworkPlayerConnected = false;
         OnClientDisconnectedEvent?.Invoke();
     }
 
     public void ShutdownHost()
     {
+        if (waitConnection != null)
+        {
+            StopCoroutine(waitConnection);
+            waitConnection = null;
+        }
+        
         NetworkManager.OnServerStarted -= OnServerUp;
-        NetworkManager.OnClientDisconnectCallback -= OnClientConnect;
+        NetworkManager.OnClientConnectedCallback -= OnClientConnected;
         NetworkManager.OnClientDisconnectCallback -= OnClientDisconnect;
         NetworkManager.Shutdown();
 
-        Global.gameMode = GameMode.Single;
-        Global.fullParty = false;
+        Settings.ChangeGameMode(GameMode.Single);
+        Global.IsNetworkPlayerConnected = false;
         OnShutdownEvent?.Invoke();
+    }
+    
+    private IEnumerator WaitingConnection()
+    {
+        yield return new WaitForSeconds(Settings.NETWORK_CONNECTING_TIMER);
+        
+        if (NetworkManager.ConnectedClients.Count < 2)
+        {
+            OnClientConnectionFailedEvent?.Invoke();
+        }
+
+        waitConnection = null;
     }
 }

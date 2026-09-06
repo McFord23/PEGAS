@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -6,19 +5,14 @@ using UnityEngine.UI;
 
 public class CharacterSync : NetworkBehaviour
 {
-    [SerializeField]
-    private PlayersMenu playersMenu;
+    [SerializeField] private PlayersMenu playersMenu;
 
-    [SerializeField]
-    private List<Button> buttons = new List<Button>();
+    [SerializeField] private List<Button> buttons = new List<Button>();
 
     private HostMonitoring host;
     private ClientMonitoring client;
 
-    private NetworkVariable<Character> characterHost = new (Character.Celestia, 
-        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    
-    private NetworkVariable<Character> characterClient = new (Character.Luna, 
+    private NetworkVariable<PlayerCharacter> characterHost = new (PlayerCharacter.Celestia, 
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
@@ -29,8 +23,7 @@ public class CharacterSync : NetworkBehaviour
         host.OnCreatedEvent += OnHostUp;
         client.OnConnectedEvent += OnClientConnected;
 
-        characterHost.OnValueChanged += OnHostCharacterChange;
-        characterClient.OnValueChanged += OnClientCharacterChange;
+        characterHost.OnValueChanged += OnCharacterChange;
 
         foreach (Button button in buttons)
         {
@@ -43,8 +36,7 @@ public class CharacterSync : NetworkBehaviour
         host.OnCreatedEvent -= OnHostUp;
         client.OnConnectedEvent -= OnClientConnected;
 
-        characterHost.OnValueChanged -= OnHostCharacterChange;
-        characterClient.OnValueChanged -= OnClientCharacterChange;
+        characterHost.OnValueChanged -= OnCharacterChange;
 
         foreach (Button button in buttons)
         {
@@ -54,51 +46,37 @@ public class CharacterSync : NetworkBehaviour
 
     private void OnHostUp()
     {
-        characterHost.Value = Global.players[0].character;
-        characterClient.Value = Global.players[1].character;
-
-        playersMenu.ChangeHostCharacter(characterHost.Value);
-        playersMenu.ChangeClientCharacter(characterClient.Value);
+        characterHost.Value = PlayersSettings.Player1.Character;
     }
 
     private void OnClientConnected()
     {
-        Global.players[0].character = characterHost.Value;
-        Global.players[1].character = characterClient.Value;
-
-        playersMenu.ChangeHostCharacter(characterHost.Value);
-        playersMenu.ChangeClientCharacter(characterClient.Value);
+        if (PlayersSettings.Player2.Character == characterHost.Value)
+        {
+            playersMenu.ChangeCharacter();
+        }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestChangeCharacterServerRpc(Character host, Character client)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void RequestChangeCharacterServerRpc(PlayerCharacter host)
     {
         characterHost.Value = host;
-        characterClient.Value = client;
     }
 
     private void CharacterChangeSync()
     {
-        if (Global.gameMode == GameMode.Host)
+        if (Settings.GameMode == GameMode.Host)
         {
-            characterHost.Value = Global.players[0].character;
-            characterClient.Value = Global.players[1].character;
+            characterHost.Value = PlayersSettings.Player1.Character;
         }
-        else if (Global.gameMode == GameMode.Client)
+        else if (Settings.GameMode == GameMode.Client)
         {
-            RequestChangeCharacterServerRpc(Global.players[0].character, Global.players[1].character);
+            RequestChangeCharacterServerRpc(PlayersSettings.Player1.Character);
         }
     }
 
-    private void OnHostCharacterChange(Character oldCharacter, Character newCharacter)
+    private void OnCharacterChange(PlayerCharacter oldCharacter, PlayerCharacter newCharacter)
     {
-        Global.players[0].character = newCharacter;
-        playersMenu.ChangeHostCharacter(newCharacter);
-    }
-
-    private void OnClientCharacterChange(Character oldCharacter, Character newCharacter)
-    {
-        Global.players[1].character = newCharacter;
-        playersMenu.ChangeClientCharacter(newCharacter);
+        playersMenu.ChangeCharacter();
     }
 }

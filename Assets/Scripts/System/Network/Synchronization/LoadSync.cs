@@ -1,4 +1,3 @@
-using Enums;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,13 +6,13 @@ using Unity.Netcode;
 public class LoadSync : NetworkBehaviour
 {
     [SerializeField] private GameObject loadScreen;
-    [SerializeField] private bool loadFromStart = false;
+    [SerializeField] private bool loadFromStart;
 
     private void Awake()
     {
-        if (Global.gameMode == GameMode.Host || Global.gameMode == GameMode.Client)
+        if (Settings.GameMode == GameMode.Host || Settings.GameMode == GameMode.Client)
         {
-            if (Global.fullParty && loadFromStart)
+            if (Global.IsNetworkPlayerConnected && loadFromStart)
             {
                 loadScreen.SetActive(true);
                 NetworkManager.SceneManager.OnLoadEventCompleted += LoadCompleted;
@@ -21,9 +20,9 @@ public class LoadSync : NetworkBehaviour
         }
     }
 
-    private void LoadCompleted(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
+    private void LoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        if (clientscompleted.Count > 1)
+        if (clientsCompleted.Count > 1)
         {
             loadScreen.SetActive(false);
             NetworkManager.SceneManager.OnLoadEventCompleted -= LoadCompleted;

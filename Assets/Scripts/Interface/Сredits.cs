@@ -1,38 +1,63 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using TMPro;
 
 public class Сredits : MonoBehaviour
 {
-    public float speed = 0.05f;
-    public GameObject skip;
+    [SerializeField] private float creditsSpeed = 0.85f;
+    [SerializeField] private float skipSpeed = 0.01f;
+    [SerializeField] private TextMeshProUGUI skip;
 
-    void Start()
+    private AudioSource music;
+    
+    private void Start()
     {
-        skip.SetActive(false);
+        skip.color = new Color(skip.color.r, skip.color.g, skip.color.b,0);
+        skip.gameObject.SetActive(false);
+
+        music = GetComponent<AudioSource>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (transform.position.y < 30) transform.position += new Vector3(0f, speed * Time.deltaTime, 0f);
-        else Exit();
-
-        if (skip.activeSelf)
+        if (!music.isPlaying)
         {
-            if (Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel"))
+            Exit();
+        }
+        
+        if (Controls.Apply || Controls.Pause || Mouse.current.leftButton.isPressed)
+        {
+            if (skip.color.a == 0)
+            {
+                skip.gameObject.SetActive(true);
+                skip.color = new Color(skip.color.r, skip.color.g, skip.color.b,1);
+                return;
+            }
+        }
+
+        if (Controls.Apply || Controls.Pause)
+        {
+            if (skip.color.a != 0)
             {
                 Exit();
             }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetButtonDown("Submit") || Input.GetButtonDown("Cancel"))
-        {
-            skip.SetActive(true);
-            skip.GetComponent<Button>().Select();
-        }
+    private void FixedUpdate()
+    {
+        transform.position += new Vector3(0f, creditsSpeed * Time.deltaTime, 0f);
+        
+        if (skip.color.a == 0) return;
+        
+        var albedo = Mathf.Clamp(skip.color.a - skipSpeed, 0, 1);
+        skip.color = new Color(skip.color.r, skip.color.g, skip.color.b,albedo);
+        
+        if (skip.color.a == 0) skip.gameObject.SetActive(false);
     }
 
     public void Exit()
     {
-        SceneManagerAdapter.Instance.LoadScene("Main Menu");
+        SceneManagerAdapter.Instance.LoadScene(Level.MainMenu);
     }
 }

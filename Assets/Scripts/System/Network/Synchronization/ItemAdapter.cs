@@ -1,4 +1,3 @@
-using Enums;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -20,7 +19,7 @@ public class ItemAdapter : NetworkBehaviour
 
     public void PickUp(Transform character)
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -34,7 +33,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestPickUpServerRpc(FixedString64Bytes path)
     {
         characterPath.Value = path;
@@ -50,7 +49,7 @@ public class ItemAdapter : NetworkBehaviour
 
     public void Reset()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -64,7 +63,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestResetServerRpc()
     {
         RequestResetClientRpc();
@@ -78,7 +77,7 @@ public class ItemAdapter : NetworkBehaviour
     
     public void Drop()
     {
-        switch (Global.gameMode)
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
@@ -92,7 +91,7 @@ public class ItemAdapter : NetworkBehaviour
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestDropServerRpc()
     {
         RequestDropClientRpc();

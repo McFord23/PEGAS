@@ -1,11 +1,11 @@
-﻿using Enums;
+﻿using System;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /**
- * Абстрагирует мультиплеерный и одиночный переход между сценами 
+ * Абстрагирует локальный и сетевой переход между сценами 
  */
 public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter>
 {
@@ -23,25 +23,50 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
             if (loadScreen) loadScreen.SetActive(true);
         }
     }*/
-    
-    public void LoadScene(string sceneName)
+
+    public static bool IsMenuScene()
     {
-        switch (Global.gameMode)
+        return SceneManager.GetActiveScene().name == Level.MainMenu.ToString();
+    }
+    
+    public static bool IsGameScene()
+    {
+        return !IsMenuScene() && SceneManager.GetActiveScene().name != Level.Credits.ToString();
+    }
+    
+    public static Level GetActiveScene()
+    {
+        return SceneManager.GetActiveScene().name switch
+        {
+            "MainMenu" => Level.MainMenu,
+            "Credits" => Level.Credits,
+            "DisciplinaryCleanup" => Level.DisciplinaryCleanup,
+            "SantaSisters" => Level.SantaSisters,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    public void LoadScene(Level level)
+    {
+        Global.IsPause = false;
+        var sceneName = level.ToString();
+        switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
+                ClearSubscribers();
                 SceneManager.LoadScene(sceneName);
                 break;
 
             case GameMode.Host:
             case GameMode.Client:
-                if (loadScreen) loadScreen.SetActive(true);
+                loadScreen.SetActive(true);
                 RequestLoadSceneServerRpc(new FixedString32Bytes(sceneName));
                 break;
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void RequestLoadSceneServerRpc(FixedString32Bytes sceneName)
     {
         RequestLoadSceneClientRpc(sceneName);
@@ -52,9 +77,17 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
     {
         if (loadScreen) loadScreen.SetActive(true);
 
-        if (Global.gameMode == GameMode.Host)
+        if (Settings.GameMode == GameMode.Host)
         {
+            ClearSubscribers();
             NetworkManager.SceneManager.LoadScene(sceneName.ToString(), LoadSceneMode.Single);
         }
+    }
+
+    private void ClearSubscribers()
+    {
+        Settings.ClearSubscribers();
+        PlayersSettings.ClearSubscribers();
+        LocalizationManager.ClearSubscribers();
     }
 }

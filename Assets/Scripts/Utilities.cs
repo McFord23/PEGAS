@@ -15,4 +15,27 @@ public static class Utilities
 
         return new FixedString64Bytes(path);
     }
+
+    public static void PlayRandomSound(AudioSource audioPlayer, AudioClip[] sounds)
+    {
+        var index = Random.Range(0, sounds.Length);
+        audioPlayer.clip = sounds[index];
+        audioPlayer.Play();
+    }
+
+    public static string ToCamelCase(string key)
+    {
+        return char.ToLower(key[0]) + key[1..];
+    }
+    
+    public static Vector2 Vector2Slerp(Vector2 firstPoint, Vector2 secondPoint, float interpolation)
+    {
+        var result = Vector3.Slerp(Vector2ToVector3(firstPoint), Vector2ToVector3(secondPoint), interpolation);
+        return new Vector2(result.x, result.y);
+    }
+    
+    private static Vector3 Vector2ToVector3(Vector2 vector2)
+    {
+        return new Vector3(vector2.x, vector2.y, 0);
+    }
 }

@@ -1,17 +1,29 @@
-﻿using Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Thermaldome : MonoBehaviour
 {
-    public PlayersManager players;
+    [SerializeField] private int radius = 250;
+    private PlayersManager players;
 
-    void Update()
+    private void Start()
     {
-        if (GetDistance(1) > 225) players.KillPlayer(1);
-        if (Global.gameMode != GameMode.Single && GetDistance(2) > 225) players.KillPlayer(2);
+        players = PlayersManager.Instance;
     }
 
-    float GetDistance(int player)
+    private void Update()
+    {
+        if (GetDistance(1) > 225)
+        {
+            players.KillPlayer(1);
+        }
+
+        if (players.HaveSecondPlayer && GetDistance(2) > radius)
+        {
+            players.KillPlayer(2);
+        }
+    }
+
+    private float GetDistance(int player)
     {
         var vector = players.GetPosition(player) - transform.position;
         return Mathf.Abs(vector.magnitude);
