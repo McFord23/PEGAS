@@ -37,16 +37,18 @@ public class CameraController : SingletonMonoBehaviour<CameraController>
 
     private void FixedUpdate()
     {
+        if (Global.IsLoading) return;
+        
         var playerPosition = playersManager.GetPosition();
         if (playerPosition == Vector3.zero)
         {
             return;
         }
         
-        Vector3 target = transform.position;
+        var target = transform.position;
         
         // max player speed = 184
-        float speed = Mathf.Max(playersManager.GetSpeed() / 70, 1) * moveSpeed;
+        var speed = Mathf.Max(playersManager.GetSpeed() / 70, 1) * moveSpeed;
 
         switch (mode)
         {

@@ -33,11 +33,25 @@ public class GamepadManager : MonoBehaviour
         switch (Settings.GameMode)
         {
             case GameMode.Single:
-                var isPlayerHaveGamepad = PlayersSettings.Player1.Gamepad != null;
-                showPlayer1GamepadSchemeButton.SetActive(isPlayerHaveGamepad);
-                player1GamepadImage.sprite = isPlayerHaveGamepad
-                    ? gamepadSprites[0] 
-                    : gamepadSprites[3];
+                if (PlayersSettings.Player1.Gamepad == null)
+                {
+                    if (PlayersSettings.Player2.Gamepad != null)
+                    {
+                        GiveGamepad(true);
+                        showPlayer1GamepadSchemeButton.SetActive(true);
+                        player1GamepadImage.sprite = gamepadSprites[0];
+                    }
+                    else
+                    {
+                        showPlayer1GamepadSchemeButton.SetActive(false);
+                        player1GamepadImage.sprite = gamepadSprites[3];
+                    }
+                }
+                else
+                {
+                    showPlayer1GamepadSchemeButton.SetActive(true);
+                    player1GamepadImage.sprite = gamepadSprites[0];
+                }
                 break;
 
             case GameMode.LocalCoop:

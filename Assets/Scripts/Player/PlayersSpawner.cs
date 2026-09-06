@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PlayersSpawner : NetworkBehaviour
+public class PlayersSpawner : MonoBehaviour
 {
     [Header("Celestia")]
     [SerializeField] private GameObject celestiaPrefab;
@@ -13,61 +10,12 @@ public class PlayersSpawner : NetworkBehaviour
     [Header("Luna")]
     [SerializeField] private GameObject lunaPrefab;
     [SerializeField] private Transform lunaSpawnPoint;
-
-    private PlayersManager playersManager;
     
-    private void Awake()
-    {
-        playersManager = GetComponent<PlayersManager>();
-        Spawn();
-    }
-    
-    public void Spawn()
-    {
-        switch (Settings.GameMode)
-        {
-            case GameMode.Single:
-                if (playersManager.Players[0] == null) SpawnPlayer(PlayersSettings.Player1);
-                break;
-            
-            case GameMode.LocalCoop:
-                if (playersManager.Players[0] == null) SpawnPlayer(PlayersSettings.Player1);
-                if (playersManager.Players[1] == null) SpawnPlayer(PlayersSettings.Player2);
-                break;
-            
-            case GameMode.Host:
-                NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnOnLoadEventCompleted;
-                break;
-        }
-    }
-
-    private void SceneManagerOnOnLoadEventCompleted(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
-    {
-        if (!IsHost) return;
-        
-        var playerNum = 0;
-        foreach (ulong clientId in clientscompleted)
-        {
-            var player = playerNum > 0 ? PlayersSettings.Player1 : PlayersSettings.Player2;
-            
-            if (playersManager.Players[playerNum] == null)
-            {
-                SpawnPlayer(player).GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
-            }
-            
-            playerNum++;
-        }
-
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManagerOnOnLoadEventCompleted;
-    }
-    
-    private GameObject SpawnPlayer(PlayersSettings.Player player)
+    public GameObject SpawnPlayer(PlayersSettings.Player player)
     {
         var objectToSpawn = GetObjectToSpawn(player.Character);
         var spawnPosition = GetSpawnPosition(player.Character);
-        var playerObject = Instantiate(objectToSpawn, spawnPosition, transform.rotation);
-        playerObject.GetComponent<PlayerBase>().Initialize(player);
-        return playerObject;
+        return Instantiate(objectToSpawn, spawnPosition, transform.rotation);
     }
     
     private GameObject GetObjectToSpawn(PlayerCharacter character)

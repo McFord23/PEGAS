@@ -1,15 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
-public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
+public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 {
-    public PlayerBase[] Players { get; } = new PlayerBase[2];
+    private PlayerBase[] Players { get; set; } = new PlayerBase[2];
     
     public bool HaveSecondPlayer => (bool)Players[1];
     private bool isRetryEnable = true;
 
     private float midPosition;
     private float midDirection;
+
+    [SerializeField] private PlayersSpawner spawner;
     
     public UnityEvent PauseEvent;
     public UnityEvent ResumeEvent;
@@ -18,15 +23,84 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
     public UnityEvent PlayerTakeItemEvent;
     public UnityEvent PlayerDropItemEvent;
     public UnityEvent VictoryEvent;
-    
-    public void LoadPlayer(PlayerBase newPlayer)
+
+    private void Start()
     {
-        var spawnPlayerNum = Players[0] == null ? 0 : 1;
-        Players[spawnPlayerNum] = newPlayer;
+        Settings.OnChangeGameModeEvent += UpdatePlayersAmount;
+        UpdatePlayersAmount();
+    }
+
+    public override void OnDestroy()
+    {
+        Settings.OnChangeGameModeEvent -= UpdatePlayersAmount;
+        base.OnDestroy();
+    }
+
+    private void UpdatePlayersAmount()
+    {
+        switch (Settings.GameMode)
+        {
+            case GameMode.Single:
+                TrySpawnPlayer(0);
+                TryDestroySecondPlayer();
+                break;
+            
+            case GameMode.LocalCoop:
+                TrySpawnPlayer(0);
+                TrySpawnPlayer(1);
+                break;
+            
+            case GameMode.Host:
+                NetworkManager.SceneManager.OnLoadEventCompleted += SceneManagerOnLoadEventCompleted;
+                Global.IsLoading = true;
+                break;
+        }
+    }
+
+    private void TrySpawnPlayer(int playerId)
+    {
+        if (Players[playerId] != null) return;
+        
+        var player = playerId > 0 ? PlayersSettings.Player2 : PlayersSettings.Player1;
+        Players[playerId] = spawner.SpawnPlayer(player).GetComponent<PlayerBase>();
+        Players[playerId].Initialize(player, this);
+    }
+    
+    private void SceneManagerOnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        //if (!IsHost) return;
+        
+        var playerId = 0;
+        foreach (var clientId in clientsCompleted)
+        {
+            var player = playerId > 0 ? PlayersSettings.Player2 : PlayersSettings.Player1;
+            
+            if (Players[playerId] == null)
+            {
+                var playerObject = spawner.SpawnPlayer(player);
+                playerObject.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+                Players[playerId] = playerObject.GetComponent<PlayerBase>();
+                Players[playerId].Initialize(player, this);
+            }
+            
+            playerId++;
+        }
+
+        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= SceneManagerOnLoadEventCompleted;
+        Global.IsLoading = false;
+    }
+    
+    private void TryDestroySecondPlayer()
+    {
+        if (Players[1] == null) return;
+        Destroy(Players[1].gameObject);
+        Players[1] = null;
     }
 
     private void Update()
     {
+        if (Global.IsLoading) return;
+        
         RetryInput();
         PauseInput();
 
@@ -86,15 +160,6 @@ public class PlayersManager : SingletonMonoBehaviour<PlayersManager>
             
             default:
                 return Vector3.zero;
-        }
-    }
-
-    public void DestroySecondPlayer()
-    {
-        if (Players[1] != null)
-        {
-            Destroy(Players[1].gameObject);
-            Players[1] = null;
         }
     }
     

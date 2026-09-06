@@ -16,6 +16,13 @@ public static class Utilities
         return new FixedString64Bytes(path);
     }
 
+    public static void PlayRandomSound(AudioSource audioPlayer, AudioClip[] sounds)
+    {
+        var index = Random.Range(0, sounds.Length);
+        audioPlayer.clip = sounds[index];
+        audioPlayer.Play();
+    }
+
     public static string ToCamelCase(string key)
     {
         return char.ToLower(key[0]) + key[1..];

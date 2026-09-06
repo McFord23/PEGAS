@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 public class HeadwindEffect : MonoBehaviour
 {
@@ -27,17 +26,19 @@ public class HeadwindEffect : MonoBehaviour
 
     private void Update()
     {
-        var localTranform = transform;
+        if (Global.IsLoading) return;
+        
+        var localTransform = transform;
         
         ratio = playersManager.GetSpeed() / 150f;
         main.startSpeed = ratio * 100;
         emission.rateOverTime = ratio * 250;
 
-        float x = view.position.x + playersManager.GetDirection() * offset.x;
-        localTranform.position = new Vector3(x, localTranform.position.y, 0);
+        var x = view.position.x + playersManager.GetDirection() * offset.x;
+        localTransform.position = new Vector3(x, localTransform.position.y, 0);
 
-        Quaternion rot = localTranform.rotation;
+        var rot = localTransform.rotation;
         rot.eulerAngles = new Vector3(0, playersManager.GetDirection() * -90, 0);
-        localTranform.rotation = rot;
+        localTransform.rotation = rot;
     }
 }

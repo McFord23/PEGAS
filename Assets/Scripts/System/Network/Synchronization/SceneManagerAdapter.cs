@@ -54,6 +54,7 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
+                ClearSubscribers();
                 SceneManager.LoadScene(sceneName);
                 break;
 
@@ -78,7 +79,15 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
 
         if (Settings.GameMode == GameMode.Host)
         {
+            ClearSubscribers();
             NetworkManager.SceneManager.LoadScene(sceneName.ToString(), LoadSceneMode.Single);
         }
+    }
+
+    private void ClearSubscribers()
+    {
+        Settings.ClearSubscribers();
+        PlayersSettings.ClearSubscribers();
+        LocalizationManager.ClearSubscribers();
     }
 }

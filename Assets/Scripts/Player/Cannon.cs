@@ -1,129 +1,101 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class Cannon : MonoBehaviour
 {
-    bool active;
-    public float power = 100f;
-    public float speed;
-    public float angle;
-    public Vector3 direction;
-    Rigidbody2D rb;
+    [SerializeField] private float power = 100f;
+    [SerializeField] private float speed;
+    [SerializeField] private float angle;
+    [SerializeField] private Vector3 direction;
+    [SerializeField] private AudioSource scratchAudio;
+    [SerializeField] private AudioSource shootAudio;
 
-    //public Player player;
-    public SoundController soundController;
+    private PlayerBase player;
+    private Rigidbody2D rb;
+    private bool active;
 
     public UnityEvent CannonShootEvent;
 
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        active = false;
-        //soundController.cannonScratchSound.Play();
     }
 
-    void Update()
+    private void Update()
     {
-        if (active)
-        {           
-            if ((360 - transform.eulerAngles.z) > 300)
-            {
-                if (transform.eulerAngles.z < 55)
-                {
-                    rb.AddTorque(0.1f * Input.GetAxis("Rotate-Mouse"));
-                    rb.AddTorque(Input.GetAxis("Rotate"));
-                }
-                else if ((Input.GetAxis("Rotate-Mouse") < 0) || (Input.GetAxis("Rotate") < 0))
-                {
-                    rb.AddTorque(0.1f * Input.GetAxis("Rotate-Mouse"));
-                    rb.AddTorque(Input.GetAxis("Rotate"));
-                }
-            }
-            else
-            {
-                if ((Input.GetAxis("Rotate-Mouse") > 0) || (Input.GetAxis("Rotate") > 0))
-                {
-                    rb.AddTorque(0.1f * Input.GetAxis("Rotate-Mouse"));
-                    rb.AddTorque(Input.GetAxis("Rotate"));
-                }
-            }
+        if (!active) return;
+        if (Global.IsPause) return;
 
-            // gamepad axis conflicts with mouse / keyboard
-            if ((360 - transform.eulerAngles.z) > 300)
+        var powerInput = player.MoveInput.x;
+        var rotateInput = player.MoveInput.y;
+        var shootInput = player.MainActionInput;
+        
+        if ((360 - transform.eulerAngles.z) > 300)
+        {
+            if (transform.eulerAngles.z < 55)
             {
-                if (transform.eulerAngles.z < 55)
-                {
-                    rb.AddTorque(Input.GetAxis("Rotate-Gamepad"));
-                }
-                else if (Input.GetAxis("Rotate-Gamepad") < 0)
-                {
-                    rb.AddTorque(Input.GetAxis("Rotate-Gamepad"));
-                }
+                rb.AddTorque(rotateInput);
             }
-            else
+            else if (rotateInput < 0)
             {
-                if (Input.GetAxis("Rotate-Gamepad") > 0)
-                {
-                    rb.AddTorque(Input.GetAxis("Rotate-Gamepad"));
-                }
+                rb.AddTorque(rotateInput);
             }
-
-            direction = transform.right;
-            direction.Normalize();
-
-            soundController.cannonScratchSound.volume = Mathf.Clamp(Mathf.Abs(rb.angularVelocity / 20), 0f, 0.5f);
-
-            if (((Input.GetAxis("Horizontal") < 0) || (Input.GetAxis("Horizontal-Mouse") < 0)) && (power > 20000))
+        }
+        else
+        {
+            if (rotateInput > 0)
             {
-                power -= 100f;
-            }
-
-            if (((Input.GetAxis("Horizontal") > 0) || (Input.GetAxis("Horizontal-Mouse") > 0)) && (power < 40000))
-            {
-                power += 100f;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) || (Input.GetAxis("Gas-Gamepad") > 0))
-            {
-                Shoot();
+                rb.AddTorque(rotateInput);
             }
         }
 
+        direction = transform.right;
+        direction.Normalize();
+
+        scratchAudio.volume = Mathf.Clamp(Mathf.Abs(rb.angularVelocity / 20), 0f, 0.5f);
+        
+
+        power = Mathf.Clamp(power + powerInput, 20000, 40000);
+
+        if (shootInput > 0)
+        {
+            Shoot();
+        }
+            
         angle = transform.eulerAngles.z;
     }
-
-    public void Reset()
-    {
-        active = true;
-        soundController.cannonScratchSound.Play();
-    }
-
-    public void Pause()
+    
+    public void OnReset()
     {
         if (active)
         {
             active = false;
-            soundController.cannonScratchSound.Pause();
-        } 
+            scratchAudio.Stop();
+        }
     }
 
-    /*public void Resume()
+    public void Pause()
     {
-        if (player.moveState == MoveState.Loaded)
-        {
-            active = true;
-            soundController.cannonScratchSound.UnPause();
-        }
-    }*/
+        if (active) scratchAudio.Pause();
+    }
+
+    public void Resume()
+    {
+        if (active) scratchAudio.UnPause();
+    }
+
+    public void Interact(PlayerBase playerBase)
+    {
+        active = true;
+        player = playerBase;
+        scratchAudio.Play();
+    }
 
     public void Shoot()
     {
         active = false;
         CannonShootEvent.Invoke();
-        soundController.cannonShootSound.Play();
-        soundController.cannonScratchSound.Stop();   
+        shootAudio.Play();
+        scratchAudio.Stop();  
     }
 }

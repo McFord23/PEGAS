@@ -185,7 +185,9 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationMethod: 0
   spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -726,13 +728,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Arrow Scheme
+      name: Arrows
       rect:
         serializedVersion: 2
-        x: 230
-        y: 325
-        width: 156
-        height: 92
+        x: 292
+        y: 356
+        width: 94
+        height: 61
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -748,13 +750,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WASD Scheme
+      name: WASD
       rect:
         serializedVersion: 2
-        x: 72
-        y: 325
-        width: 156
-        height: 92
+        x: 134
+        y: 356
+        width: 94
+        height: 61
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1394,7 +1396,7 @@ TextureImporter:
         width: 122
         height: 92
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1403,6 +1405,94 @@ TextureImporter:
       bones: []
       spriteID: 03d4a0191e6f29f4c8902e7d3fe99a01
       internalID: -2140546194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Space
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 325
+        width: 156
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f6bac44093c1e84aacfcc574c23e781
+      internalID: -845255751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shift Left
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 356
+        width: 60
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 977b5bb94ea1f6a4ca23dcf254ce3b6b
+      internalID: -1003062232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Control Right
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 325
+        width: 46
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aaec32e250f7c748a24db8583266b98
+      internalID: 313619421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shift Right
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 356
+        width: 60
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69609ddc4aa7ee6499712c031356a7ff
+      internalID: -417842466
       vertices: []
       indices: 
       edges: []
@@ -1423,12 +1513,13 @@ TextureImporter:
     nameFileIdTable:
       Apply: 1615479723
       Apply Selected: 90844844
-      Arrow Scheme: -273060469431498887
+      Arrows: -273060469431498887
       Background: -4814514297299439395
       Big Outline: 6620621745411573659
       Close: -1557013538026691241
       Close Selected: -3947773304791079134
       Control Layout Outline: 238177201661318622
+      Control Right: 313619421
       Coop: -6180191441002391703
       Deco: 82707731993968007
       Done: 1539648257
@@ -1468,13 +1559,16 @@ TextureImporter:
       Right Arrow: 7448113381798972013
       Settings On: -5583131565456696208
       Settings off: -1734547207228286997
+      Shift Left: -1003062232
+      Shift Right: -417842466
       Small Outline: -256003546741158619
       Solo: -1682551497440473549
       Sound Off: -2338714880042470739
       Sound On: 4529634503963134589
+      Space: -845255751
       Stick: 362594528
       Swap: -3197610074630747010
-      WASD Scheme: 9094600903545770030
+      WASD: 9094600903545770030
       empty: 7301787903208175943
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

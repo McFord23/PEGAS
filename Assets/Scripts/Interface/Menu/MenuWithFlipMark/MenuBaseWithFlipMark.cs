@@ -4,6 +4,12 @@ public class MenuBaseWithFlipMark : MenuBase
 {
     [SerializeField] private BookMark mark;
 
+    public override void Initialize(MenuManager manager, MenuBackground background)
+    {
+        mark.Initialize();
+        base.Initialize(manager, background);
+    }
+    
     public override void SetActive(bool value)
     {
         base.SetActive(value);

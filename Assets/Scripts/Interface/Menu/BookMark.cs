@@ -11,10 +11,10 @@ public class BookMark : MonoBehaviour
     private RectTransform rect;
     private Toggle toggle;
     
-    private void Start()
+    public void Initialize()
     {
         positionX = icon.anchoredPosition.x;
-        rect = GetComponent<RectTransform>();
+        rect = transform as RectTransform;
         toggle = GetComponent<Toggle>();
     }
 

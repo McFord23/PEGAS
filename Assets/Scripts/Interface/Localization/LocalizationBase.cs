@@ -14,7 +14,7 @@ public class LocalizationBase : MonoBehaviour
 
         if (IsPathEmpty) return;
         
-        LocalizationManager.Instance.LanguageChangeEvent.AddListener(Localize);
+        LocalizationManager.OnChangeLanguageEvent += Localize;
         Localize();
     }
     
@@ -22,7 +22,7 @@ public class LocalizationBase : MonoBehaviour
     {
         if (IsPathEmpty)
         {
-            LocalizationManager.Instance.LanguageChangeEvent.AddListener(Localize);
+            LocalizationManager.OnChangeLanguageEvent += Localize;
         }
         
         file = newFile;

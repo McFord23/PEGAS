@@ -48,6 +48,6 @@ public class LocalizationText : LocalizationBase
 
     protected virtual string GetPhrase()
     {
-        return LocalizationManager.Instance.GetPhrase(file, phrase);
+        return LocalizationManager.GetPhrase(file, phrase);
     }
 }

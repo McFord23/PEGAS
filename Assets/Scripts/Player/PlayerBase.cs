@@ -17,7 +17,6 @@ public class PlayerBase : NetworkBehaviour
     
     protected Rigidbody2D rigidbody;
     protected Animator animatorController;
-    protected SoundController soundController;
     protected PlayersManager playersManager;
     private PlayerInput input;
     private PlayersSettings.Player playerSettings;
@@ -29,17 +28,14 @@ public class PlayerBase : NetworkBehaviour
     private Vector2 spawnPosition;
     private Vector2 savedDirection;
     
-    public virtual void Initialize(PlayersSettings.Player player)
+    public virtual void Initialize(PlayersSettings.Player player, PlayersManager manager)
     {
         playerSettings = player;
+        playersManager = manager;
         spawnPosition = transform.position;
         rigidbody = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
         animatorController = GetComponentInChildren<Animator>();
-        soundController = SoundController.Instance;
-        playersManager = PlayersManager.Instance;
-        playersManager.LoadPlayer(this);
-        
         UpdateControlScheme();
     }
 

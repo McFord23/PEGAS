@@ -34,6 +34,11 @@ public static class PlayersSettings
     public delegate void SwapCharactersEvent();
     public static event SwapCharactersEvent OnSwapCharactersEvent;
 
+    public static void ClearSubscribers()
+    {
+        OnSwapCharactersEvent = null;
+    }
+    
     public static void SwapCharacters()
     {
         (Player1.Character, Player2.Character) = (Player2.Character, Player1.Character);
@@ -49,11 +54,11 @@ public static class PlayersSettings
         return isLocalCoop && !isZeroGamepad && !isTwoGamepad;
     }
     
-    public static void ShareGamepad(bool isFromPlayer1)
+    public static void ShareGamepad(bool fromPlayer1)
     {
         if (!CanShareGamepad()) return;
         
-        if (isFromPlayer1)
+        if (fromPlayer1)
         {
             Player2.Gamepad = Player1.Gamepad;
         }
@@ -65,18 +70,20 @@ public static class PlayersSettings
         IsSharedGamepad = true;
     }
 
-    public static void GiveGamepad(bool isToPlayer1)
+    public static void GiveGamepad(bool toPlayer1)
     {
         if (!CanShareGamepad()) return;
         
         IsSharedGamepad = false;
         
-        if (isToPlayer1)
+        if (toPlayer1)
         {
+            Player1.Gamepad = Player2.Gamepad;
             Player2.Gamepad = null;
         }
         else
         {
+            Player2.Gamepad = Player1.Gamepad;
             Player1.Gamepad = null;
         }
     }

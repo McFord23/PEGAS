@@ -12,18 +12,15 @@ public static class Settings
     
     public delegate void ChangeGameModeEvent();
     public static event ChangeGameModeEvent OnChangeGameModeEvent;
+    
+    public static void ClearSubscribers()
+    {
+        OnChangeGameModeEvent = null;
+    }
 
     public static void ChangeGameMode(GameMode mode)
     {
         GameMode = mode;
         OnChangeGameModeEvent?.Invoke();
     }
-}
-
-public enum GameMode
-{
-    Single,
-    LocalCoop,
-    Host,
-    Client
 }

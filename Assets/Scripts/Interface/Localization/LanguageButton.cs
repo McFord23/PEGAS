@@ -8,7 +8,7 @@ public class LanguageButton : MonoBehaviour
     private void Start()
     {
         OnLanguageChange();
-        LocalizationManager.Instance.LanguageChangeEvent.AddListener(OnLanguageChange);
+        LocalizationManager.OnChangeLanguageEvent += OnLanguageChange;
     }
 
     private void OnLanguageChange()
@@ -18,6 +18,6 @@ public class LanguageButton : MonoBehaviour
     
     public void ChangeLanguage()
     {
-        LocalizationManager.Instance.SetLanguage(language);
+        LocalizationManager.SetLanguage(language);
     }
 }

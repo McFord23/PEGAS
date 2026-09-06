@@ -9,7 +9,7 @@ public class LocalizationChapter : LocalizationText
     {
         var chapter = base.GetPhrase();
         var indent = number.Contains(".") ? "   " : "";
-        var chapterName = LocalizationManager.Instance.GetPhrase($"{level.ToString()}/Info", "title");
+        var chapterName = LocalizationManager.GetPhrase($"{level.ToString()}/Info", "title");
         return $"{indent}{chapter} {number}. {chapterName}";
     }
 }

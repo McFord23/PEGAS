@@ -14,6 +14,11 @@ public class FlyingPlayer : PlayerBase
     
     [Header("Live")]
     [SerializeField] private float reviveTime = 3f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource headwindAudio;
+    [SerializeField] private AudioSource hitAudio;
+    [SerializeField] private AudioClip[] hitSounds;
     
     private PolygonCollider2D flyCollider;
     private CapsuleCollider2D deathCollider;
@@ -39,9 +44,9 @@ public class FlyingPlayer : PlayerBase
         Stunned
     }
 
-    public override void Initialize(PlayersSettings.Player player)
+    public override void Initialize(PlayersSettings.Player player, PlayersManager manager)
     {
-        base.Initialize(player);
+        base.Initialize(player, manager);
         
         rigidbody.linearDamping = Mathf.Epsilon;
         aspectRatio = (wingSpan * wingSpan) / wingArea;
@@ -98,6 +103,8 @@ public class FlyingPlayer : PlayerBase
                 break;
                 
         }
+        
+        headwindAudio.volume = Mathf.Pow(Speed, 2) / 4000f;
 
         if (IsInputAvailable())
         {
@@ -318,7 +325,7 @@ public class FlyingPlayer : PlayerBase
         
         if (!Live)
         {
-            soundController.Hit();
+            Utilities.PlayRandomSound(hitAudio, hitSounds);
         }
         else if (moveState is MoveState.FreeFall or MoveState.Flap)
         {
@@ -328,7 +335,7 @@ public class FlyingPlayer : PlayerBase
                 return;
             }
         
-            soundController.Hit();
+            Utilities.PlayRandomSound(hitAudio, hitSounds);
             Kill();
         }
     }

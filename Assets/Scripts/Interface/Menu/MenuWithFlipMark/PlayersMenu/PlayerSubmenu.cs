@@ -1,35 +1,41 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
 
 public class PlayerSubmenu : MonoBehaviour
 {
     [Header("Character")]
-    public GameObject celestia;
-    public GameObject luna;
-    public LocalizationBase text;
+    [SerializeField] private GameObject celestia;
+    [SerializeField] private GameObject luna;
+    [SerializeField] private LocalizationBase text;
     [SerializeField] private GameObject characterButton;
     
     [Header("Controls")]
-    public ControlScheme Scheme { private set; get; }
     [SerializeField] private GameObject nextSchemeButton;
     [SerializeField] private GameObject previousSchemeButton;
-    [SerializeField] private Image schemeSprite;
-    private Sprite[] schemesSprites;
+    [SerializeField] private GameObject[] controlSchemes;
     private int indexBlocked;
     private int index;
 
-    public void Initialize(Sprite[] initialLayoutSprites)
+    public void Initialize(ControlScheme controlScheme)
     {
-        schemesSprites = initialLayoutSprites;
-        index = (int)Scheme;
-        schemeSprite.sprite = schemesSprites[index];
+        index = (int)controlScheme;
+
+        for (var i = 0; i < controlSchemes.Length; i++)
+        {
+            controlSchemes[i].SetActive(i == index);
+        }
     }
 
     public void SetScheme(ControlScheme controlScheme)
     {
-        Scheme = controlScheme;
+        controlSchemes[index].SetActive(false);
         index = (int)controlScheme;
-        schemeSprite.sprite = schemesSprites[index];
+        controlSchemes[index].SetActive(true);
+    }
+
+    public ControlScheme GetScheme()
+    {
+        return (ControlScheme)Enum.GetValues(typeof(ControlScheme)).GetValue(index);
     }
 
     public void Block(ControlScheme indexAnotherPlayer)
@@ -39,33 +45,34 @@ public class PlayerSubmenu : MonoBehaviour
 
     public void NextScheme()
     {
-        if (index < schemesSprites.Length - 1) index++;
+        controlSchemes[index].SetActive(false);
+        
+        if (index < controlSchemes.Length - 1) index++;
         else index = 0;
 
         if (Settings.GameMode == GameMode.LocalCoop)
         {
-            if (index == indexBlocked && indexBlocked == schemesSprites.Length - 1) index = 0;
+            if (index == indexBlocked && indexBlocked == controlSchemes.Length - 1) index = 0;
             else if (index == indexBlocked) index++;
         }
         
-        schemeSprite.sprite = schemesSprites[index];
-        Scheme = (ControlScheme)index;
-
+        controlSchemes[index].SetActive(true);
     }
 
     public void PreviousScheme()
     {
+        controlSchemes[index].SetActive(false);
+        
         if (index > 0) index--;
-        else index = schemesSprites.Length - 1;
+        else index = controlSchemes.Length - 1;
 
         if (Settings.GameMode == GameMode.LocalCoop)
         {
-            if (index == indexBlocked && indexBlocked == 0) index = schemesSprites.Length - 1;
+            if (index == indexBlocked && indexBlocked == 0) index = controlSchemes.Length - 1;
             else if (index == indexBlocked) index--;
         }
-
-        schemeSprite.sprite = schemesSprites[index];
-        Scheme = (ControlScheme)index;
+        
+        controlSchemes[index].SetActive(true);
     }
 
     public void ChangeCharacter(PlayerCharacter playerCharacter)

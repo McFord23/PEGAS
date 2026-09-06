@@ -1,26 +1,33 @@
 ﻿using UnityEngine.Events;
 
-public class LocalizationManager : SingletonMonoBehaviour<LocalizationManager>
+public static class LocalizationManager
 {
-    public UnityEvent LanguageChangeEvent;
-    public static Language CurrentLanguage { get; private set; } = Language.English;
-
     public enum Language
     {
         English,
         Russian
     }
+    
+    public static Language CurrentLanguage { get; private set; } = Language.English;
+    
+    public delegate void ChangeLanguageEvent();
+    public static event ChangeLanguageEvent OnChangeLanguageEvent;
+    
+    public static void ClearSubscribers()
+    {
+        OnChangeLanguageEvent = null;
+    }
 
-    public string GetPhrase(string file, string phrase)
+    public static string GetPhrase(string file, string phrase)
     {
         var path = $"Languages/{CurrentLanguage}/{file}";
         var jsonData = JsonReader<string, string>.LoadFile(path);
         return jsonData[phrase];
     }
 
-    public void SetLanguage(Language newLanguage)
+    public static void SetLanguage(Language newLanguage)
     {
         CurrentLanguage = newLanguage;
-        LanguageChangeEvent?.Invoke();
+        OnChangeLanguageEvent?.Invoke();
     }
 }

@@ -24,15 +24,12 @@ public class PlayersMenu : MenuBaseWithFlipMark
     [SerializeField] private GameObject networkSubmenu;
     [SerializeField] private CloseCoopButton closeCoopButton;
     
-    [Header("Controls")]
-    [SerializeField] private Sprite[] controlSchemeSprites;
-    
     public override void Initialize(MenuManager manager, MenuBackground background)
     {
         base.Initialize(manager, background);
         
-        player1Submenu.Initialize(controlSchemeSprites);
-        player2Submenu.Initialize(controlSchemeSprites);
+        player1Submenu.Initialize(PlayersSettings.Player1.ControlScheme);
+        player2Submenu.Initialize(PlayersSettings.Player2.ControlScheme);
         
         switch (Settings.GameMode)
         {            
@@ -65,6 +62,8 @@ public class PlayersMenu : MenuBaseWithFlipMark
         }
         
         ShowPlayer2Submenu();
+        player1Submenu.Block(PlayersSettings.Player2.ControlScheme);
+        player2Submenu.Block(PlayersSettings.Player1.ControlScheme);
         closeCoopButton.ChangeMode(CloseCoopButton.Mode.LocalKick);
     }
 
@@ -145,14 +144,14 @@ public class PlayersMenu : MenuBaseWithFlipMark
 
     public void ChangePlayer1Scheme()
     {
-        PlayersSettings.Player1.ControlScheme = player1Submenu.Scheme;
-        player2Submenu.Block(player1Submenu.Scheme);
+        PlayersSettings.Player1.ControlScheme = player1Submenu.GetScheme();
+        player2Submenu.Block(PlayersSettings.Player1.ControlScheme);
     }
 
     public void ChangePlayer2Scheme()
     {
-        PlayersSettings.Player2.ControlScheme = player2Submenu.Scheme;
-        player1Submenu.Block(player2Submenu.Scheme);
+        PlayersSettings.Player2.ControlScheme = player2Submenu.GetScheme();
+        player1Submenu.Block(PlayersSettings.Player2.ControlScheme);
     }
 
     public void UpdatePlayersSchemes()

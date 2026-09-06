@@ -1,152 +1,147 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class MusicController : MonoBehaviour
 {
-    private AudioSource flyingMusic;
-    private AudioSource pauseMusic;
-    private AudioSource menuMusic;
-    private AudioSource victoryMusic;
-    private AudioSource creditsMusic;
-
-    private AudioSource celestiaMenuStart;
-    private AudioSource celestiaMenuLoop;
-    private AudioSource lunaMenu;
-
-    private AudioSource lunaFlying;
-    private AudioSource celestiaFlyingStart;
-    private AudioSource celestiaFlyingLoop;
-
-    private AudioSource lunaPause;
-    private AudioSource celestiaPause;
-
-    private Mode mode;
-
-    private enum Mode
+    [Serializable]
+    public class MusicTheme
     {
-        MainMenu,
-        Game,
-        Credits
+        public Music main;
+        public Music pause;
+        public Music victory;
     }
+
+    [Serializable]
+    public class Music
+    {
+        public bool hasIntro;
+        public AudioClip intro;
+        public AudioClip loop;
+    }
+
+    public MusicTheme celestiaTheme;
+    public MusicTheme lunaTheme;
+    public MusicTheme coopTheme;
+    private MusicTheme currentTheme;
+    
+    private AudioSource musicPlayer;
+    private Coroutine playIntro;
+    private bool savedLoop;
+    private float savedTime;
 
     private void Start()
     {
-        mode = SceneManagerAdapter.GetActiveScene() switch
-        {
-            Level.MainMenu => Mode.MainMenu,
-            Level.Credits => Mode.Credits,
-            _ => Mode.Game
-        };
-
-        switch (mode)
-        {
-            case Mode.MainMenu:
-                celestiaMenuStart = transform.Find("Celestia Menu (start)").GetComponentInChildren<AudioSource>();
-                celestiaMenuLoop = transform.Find("Celestia Menu (loop)").GetComponentInChildren<AudioSource>();
-                lunaMenu = transform.Find("Luna Menu").GetComponentInChildren<AudioSource>();
-
-                switch (PlayersSettings.Player1.Character)
-                {
-                    case PlayerCharacter.Luna:
-                        menuMusic = lunaMenu;
-                        break;
-
-                    case PlayerCharacter.Celestia:
-                        menuMusic = celestiaMenuStart;
-                        break;
-                }
-
-                menuMusic.Play();
-                break;
-
-            case Mode.Game:
-                lunaFlying = transform.Find("Luna Flying").GetComponentInChildren<AudioSource>();
-                lunaPause = transform.Find("Luna Pause").GetComponentInChildren<AudioSource>();
-                celestiaFlyingStart = transform.Find("Celestia Flying (start)").GetComponentInChildren<AudioSource>();
-                celestiaFlyingLoop = transform.Find("Celestia Flying (loop)").GetComponentInChildren<AudioSource>();
-                celestiaPause = transform.Find("Celestia Pause").GetComponentInChildren<AudioSource>();
-                victoryMusic = transform.Find("Victory").GetComponentInChildren<AudioSource>();
-
-                switch (PlayersSettings.Player1.Character)
-                {
-                    case PlayerCharacter.Luna:
-                        flyingMusic = lunaFlying;
-                        pauseMusic = lunaPause;
-                        break;
-
-                    case PlayerCharacter.Celestia:
-                        flyingMusic = celestiaFlyingStart;
-                        pauseMusic = celestiaPause;
-                        break;
-                }
-
-                flyingMusic.Play();
-                break;
-            
-            case Mode.Credits:
-                creditsMusic.Play();
-                break;
-        }
-    }
-
-    private void Update()
-    {
-        switch (mode)
-        {
-            case Mode.MainMenu:
-                if (PlayersSettings.Player1.Character == PlayerCharacter.Celestia && !menuMusic.isPlaying)
-                {
-                    menuMusic.Stop();
-                    menuMusic = celestiaMenuLoop;
-                    menuMusic.Play();
-                }
-                break;
-
-            case Mode.Game:
-                if (PlayersSettings.Player1.Character == PlayerCharacter.Celestia && !(flyingMusic.loop) && (flyingMusic.time >= 116.5f))
-                {
-                    flyingMusic.Stop();
-                    flyingMusic = celestiaFlyingLoop;
-                    flyingMusic.Play();
-                }
-                break;
-        }
-    }
-
-    public void ChangeTheme(PlayerCharacter theme)
-    {
-        flyingMusic.Stop();
+        musicPlayer = GetComponent<AudioSource>();
+        Settings.OnChangeGameModeEvent += ChangeTheme;
+        PlayersSettings.OnSwapCharactersEvent += ChangeTheme;
         
-        switch (theme)
+        ChangeTheme();
+        PlayMainMusic();
+    }
+    
+    public void PauseMusic()
+    {
+        savedTime = musicPlayer.time;
+        savedLoop = musicPlayer.loop;
+        musicPlayer.Stop();
+
+        PlayMusic(currentTheme.pause);
+    }
+
+    public void ResumeMusic()
+    {
+        if (playIntro != null)
         {
-            case PlayerCharacter.Luna:
-                flyingMusic = lunaFlying;
-                pauseMusic = lunaPause;
-                break;
-
-            case PlayerCharacter.Celestia:
-                flyingMusic = celestiaFlyingStart;
-                pauseMusic = celestiaPause;
-                break;
+            StopCoroutine(playIntro);
+            playIntro = null;
         }
-
-        flyingMusic.Play();
-    }
-
-    public void PauseFlyMusic()
-    {
-        flyingMusic.Pause();
-        pauseMusic.Play();
-    }
-
-    public void ResumeFlyMusic()
-    {
-        pauseMusic.Stop();
-        flyingMusic.UnPause();
+        
+        musicPlayer.Stop();
+        
+        if (savedLoop)
+        {
+            musicPlayer.clip = currentTheme.main.loop;
+            musicPlayer.time = savedTime;
+            musicPlayer.loop = savedLoop;
+            musicPlayer.Play();
+        }
+        else
+        {
+            playIntro = StartCoroutine(PlayIntro(currentTheme.main, savedTime));
+        }
     }
 
     public void PlayVictoryMusic()
     {
-        flyingMusic.Stop();
-        victoryMusic.Play();
+        PlayMusic(currentTheme.victory);
+    }
+
+    private void PlayMainMusic()
+    {
+        PlayMusic(currentTheme.main);
+    }
+
+    private void PlayMusic(Music music, float time = 0)
+    {
+        if (playIntro != null)
+        {
+            StopCoroutine(playIntro);
+            playIntro = null;
+        }
+        
+        if (musicPlayer.isPlaying) musicPlayer.Stop();
+        
+        if (music.hasIntro)
+        {
+            playIntro = StartCoroutine(PlayIntro(music, time));
+        }
+        else
+        {
+            musicPlayer.clip = music.loop;
+            musicPlayer.time = time;
+            musicPlayer.loop = true;
+            musicPlayer.Play();
+        }
+    }
+    
+    private IEnumerator PlayIntro(Music music, float time)
+    {
+        if (music.loop.loadState == AudioDataLoadState.Unloaded)
+        {
+            music.loop.LoadAudioData();
+        }
+        
+        musicPlayer.clip = music.intro;
+        musicPlayer.loop = false;
+        musicPlayer.time = time;
+        musicPlayer.Play();
+        
+        yield return new WaitUntil(() => !musicPlayer.isPlaying);
+        
+        musicPlayer.clip = music.loop;
+        musicPlayer.loop = true;
+        musicPlayer.Play();
+        
+        playIntro = null;
+    }
+    
+    private void ChangeTheme()
+    {
+        MusicTheme newTheme;
+        
+        if (Settings.GameMode is GameMode.Single)
+        {
+            newTheme = PlayersSettings.Player1.Character is PlayerCharacter.Celestia ? celestiaTheme : lunaTheme;
+        }
+        else
+        {
+            newTheme = coopTheme;
+        }
+        
+        if (currentTheme == newTheme) return;
+
+        currentTheme = newTheme;
+        PlayMusic(currentTheme.main);
     }
 }
