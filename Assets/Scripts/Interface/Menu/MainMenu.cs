@@ -27,7 +27,6 @@ public class MainMenu : MenuBase
     public void Load()
     {
         SceneManagerAdapter.Instance.LoadScene(Level.MainMenu);
-
     }
     
     public void Exit()

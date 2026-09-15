@@ -13,62 +13,41 @@ public class PlayerBase : NetworkBehaviour
                                           + Controls.AdditionalActionByGamepad(playerSettings);
     
     public bool Live { get; protected set; } = true;
-    public float Speed { get; private set; }
+    public float Speed { get; protected set; }
     
-    protected Rigidbody2D rigidbody;
-    protected Animator animatorController;
+    [SerializeField] protected Animator animator;
+    
     protected PlayersManager playersManager;
-    private PlayerInput input;
+    
     private PlayersSettings.Player playerSettings;
-
+    
+    private PlayerInput input;
     private Vector2 moveByKeyboardAndMouse;
     private float mainActionByKeyboardAndMouse;
     private float additionalActionByKeyboardAndMouse;
-    
-    private Vector2 spawnPosition;
-    private Vector2 savedDirection;
     
     public virtual void Initialize(PlayersSettings.Player player, PlayersManager manager)
     {
         playerSettings = player;
         playersManager = manager;
-        spawnPosition = transform.position;
-        rigidbody = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
-        animatorController = GetComponentInChildren<Animator>();
         UpdateControlScheme();
-    }
-
-    protected virtual void FixedUpdate()
-    {
-        Speed = rigidbody.linearVelocity.magnitude;
     }
 
     public virtual void Pause()
     {
-        animatorController.speed = 0;
-        
-        savedDirection = rigidbody.linearVelocity;
-        rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-        rigidbody.gravityScale = 0f;
+        Freeze();
+        animator.speed = 0;
     }
 
     public virtual void Resume()
     {
-        animatorController.speed = 1;
-
-        rigidbody.gravityScale = 1f;
-        rigidbody.constraints = RigidbodyConstraints2D.None;
-        rigidbody.AddForce(savedDirection * 500f, ForceMode2D.Impulse);
+        animator.speed = 1;
+        UnFreeze();
     }
     
-    public virtual void Revive(bool teleportBack = true)
+    public virtual void OnReset(bool teleportBack = true)
     {
-        rigidbody.linearVelocity = new Vector2(0, 0);
-        rigidbody.angularVelocity = 0f;
-        
-        if (teleportBack) rigidbody.position = spawnPosition;
-
         Live = true;
     }
 
@@ -79,9 +58,7 @@ public class PlayerBase : NetworkBehaviour
 
     public virtual void Victory()
     {
-        rigidbody.gravityScale = 0f;
-        rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        rigidbody.linearVelocity = new Vector2(0, 0);
+        Freeze();
     }
     
     public void UpdateControlScheme()
@@ -101,6 +78,10 @@ public class PlayerBase : NetworkBehaviour
 
         return true;
     }
+    
+    protected virtual void Freeze() {}
+    
+    protected virtual void UnFreeze() {}
 
     private void OnMove(InputValue value)
     {

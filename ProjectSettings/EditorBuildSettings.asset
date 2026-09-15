@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 29d9a59d282326c49b5451bacfd2ee92
+  - enabled: 1
+    path: Assets/Scenes/DisciplinaryCleanup.unity
+    guid: 06db27b4f9cd2464987d9005ab657f59
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 63803f318ffb9954595c1896c9337e7c, type: 2}

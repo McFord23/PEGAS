@@ -6,10 +6,8 @@ public class Fireball : MonoBehaviour
 
     private void Start()
     {
-        var tempTransform = transform;
-        fireball = tempTransform.gameObject;
-
-        Invoke("AutoDestroy", 1.0f);
+        fireball = transform.gameObject;
+        Invoke(nameof(AutoDestroy), 1.0f);
     }
 
     private void AutoDestroy()

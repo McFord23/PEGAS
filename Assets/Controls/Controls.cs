@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Controls : MonoBehaviour
 {
     private const float GAMEPAD_SENSITIVITY = 8;
+
+    // Gameplay
+    public static bool MovePressed => inputData.Gameplay.Move.triggered;
+    public static bool MainActionPressed => inputData.Gameplay.MainAction.triggered;
+    public static bool AdditionalActionPressed => inputData.Gameplay.AdditionalAction.triggered;
     
     // UI
     public static bool Retry => inputData.UI.Retry.triggered;
@@ -22,7 +28,7 @@ public class Controls : MonoBehaviour
         inputData.Enable();
     }
     
-    private void OnDestroy()
+    private void OnDisable()
     {
         inputData.Disable();
     }

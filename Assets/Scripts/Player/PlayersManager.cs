@@ -14,7 +14,7 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
     private float midPosition;
     private float midDirection;
 
-    [SerializeField] private PlayersSpawner spawner;
+    [SerializeField] private PlayerSpawner spawner;
     
     public UnityEvent PauseEvent;
     public UnityEvent ResumeEvent;
@@ -26,6 +26,12 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 
     private void Start()
     {
+        if (!SceneManagerAdapter.IsGameScene())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         Settings.OnChangeGameModeEvent += UpdatePlayersAmount;
         UpdatePlayersAmount();
     }
@@ -66,10 +72,9 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         Players[playerId].Initialize(player, this);
     }
     
+    //[Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void SceneManagerOnLoadEventCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
-        //if (!IsHost) return;
-        
         var playerId = 0;
         foreach (var clientId in clientsCompleted)
         {
@@ -252,8 +257,8 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 
     public void Reset()
     {
-        Players[0]?.Revive();
-        Players[1]?.Revive();
+        Players[0]?.OnReset();
+        Players[1]?.OnReset();
         ResetEvent.Invoke();
     }
 

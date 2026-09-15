@@ -8,18 +8,15 @@ public class Chunk : MonoBehaviour
     public void Start()
     {
         background = GetComponentInParent<Background>();
-        if (background.transparency != 1) SetTransparency();
+        if (background.transparency < 1) SetTransparency();
     }
 
     private void SetTransparency()
     {
-        Material material;
-        Color color;
-
         for (int i = 0; i < transform.childCount; i++)
         {
-            material = transform.GetChild(i).GetComponent<Renderer>().material;
-            color = material.color;
+            var material = transform.GetChild(i).GetComponent<Renderer>().material;
+            var color = material.color;
             color.a = background.transparency;
             material.color = color;
         }
@@ -29,7 +26,7 @@ public class Chunk : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("MainCamera"))
         {
-            Vector3 playerPos = transform.InverseTransformPoint(collider.transform.position);
+            var playerPos = transform.InverseTransformPoint(collider.transform.position);
             playerOnRight = playerPos.x > background.size / 2;
 
             background.LoadChunk(transform, playerOnRight);
@@ -40,7 +37,7 @@ public class Chunk : MonoBehaviour
     {
         if (collider.gameObject.CompareTag("MainCamera"))
         {
-            Vector3 playerPos = transform.InverseTransformPoint(collider.transform.position);
+            var playerPos = transform.InverseTransformPoint(collider.transform.position);
             
             if (playerOnRight == playerPos.x > background.size / 2)
             {

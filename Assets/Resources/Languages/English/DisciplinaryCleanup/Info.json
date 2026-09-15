@@ -2,8 +2,10 @@
     "title": "Disciplinary Cleanup",
 
     "description": "Once upon a time, in the magical land of Equestria... \nAs part of a disciplinary punishment, the Royal Sisters were told to clean up after themselves. However, even such a tedious chore sisters can turn into a wild competition.",
+    "failedDescription": "Poor little pony :c",
+    "passedDescription": "The Royal Sisters had a chance to clean up after themselves, but they didn't stand a chance of cleaning up the mess their mentor had made...",
 
-    "move": "Move",
-    "mainAction": "",
-    "additionalAction": ""
+    "move": "Move/Rotate",
+    "mainAction": "Change mop",
+    "additionalAction": "Change Camera"
 }
