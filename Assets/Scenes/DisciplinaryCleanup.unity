@@ -709,9 +709,9 @@ Transform:
   - {fileID: 918195179}
   - {fileID: 2014254623}
   - {fileID: 454978893}
-  - {fileID: 82603598}
   - {fileID: 529391327}
   - {fileID: 315177648}
+  - {fileID: 82603598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &247399250
@@ -726,6 +726,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0899747a85b4126ae0cdc697766712f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilesManager
+  progressIncreaseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1298505607}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: IncreaseTaskCounter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  progressDecreaseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1298505607}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: DecreaseTaskCounter
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &287685697
 GameObject:
   m_ObjectHideFlags: 0
@@ -2209,8 +2239,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3484257249
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4521970763726086589, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2224,17 +2262,69 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4858601913212127554, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: targetCounter
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: spawner
       value: 
       objectReference: {fileID: 1298505606}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 247399250}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: OnReset
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: TilesManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924562, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7038055525419924562, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3295371207
       objectReference: {fileID: 0}
+    - target: {fileID: 7038055525419924562, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525529011597, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7038055525529011597, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 561593326
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525529011597, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055525529011597, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_InScenePlacedDisabledByDefault
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7038055526008829119, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2245,8 +2335,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7038055527208871908, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055527208871908, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 811735411
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038055527208871908, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: tasksTargetCounter.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: 'tasksTargetCounter.Array.data[0]'
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8825258293389494982, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2328,6 +2434,17 @@ MonoBehaviour:
   lunaPrefab: {fileID: 3734004042316625641, guid: a0ab45880d30fa4489a70bdab673c68b, type: 3}
   lunaSpawnPoint: {fileID: 1298505603}
   strategicCamera: {fileID: 141420066}
+--- !u!114 &1298505607 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+  m_PrefabInstance: {fileID: 1298505602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c38df22641426aa706dac638bff6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionManager
 --- !u!1001 &1327008733
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -56,7 +56,7 @@ public class WallToWallPlayer : PlayerBase3D
         spriteJointRigidbody.Move(rigidbody.position, rigidbody.rotation);
     }
     
-    private void Update()
+    protected virtual void Update()
     {
         if (!IsInputAvailable()) return;
         

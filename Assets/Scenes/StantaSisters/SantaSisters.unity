@@ -4165,17 +4165,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &526724600 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4616049240770255281, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-  m_PrefabInstance: {fileID: 1923240992}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 251e5b12e3644ad6802ddd79a1d2f05d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MissionSubmenu
 --- !u!1 &551176508
 GameObject:
   m_ObjectHideFlags: 0
@@ -8143,9 +8132,9 @@ MonoBehaviour:
   windigoDeathEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 526724600}
-        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
-        m_MethodName: AddTaskCounter
+      - m_Target: {fileID: 1923240997}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: IncreaseTaskCounter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13083,9 +13072,9 @@ MonoBehaviour:
   itemDeliveredEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 526724600}
-        m_TargetAssemblyTypeName: MissionSubmenu, Assembly-CSharp
-        m_MethodName: AddTaskCounter
+      - m_Target: {fileID: 1923240997}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: IncreaseTaskCounter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14091,11 +14080,11 @@ PrefabInstance:
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 526724600}
+      objectReference: {fileID: 1923240997}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerTakeItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 526724600}
+      objectReference: {fileID: 1923240997}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -14106,11 +14095,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SubtractTaskCounter
+      value: DecreaseTaskCounter
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerTakeItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddTaskCounter
+      value: IncreaseTaskCounter
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: DeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -14127,6 +14116,10 @@ PrefabInstance:
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PauseEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
       value: CameraController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: MissionManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -14150,11 +14143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MissionSubmenu, Assembly-CSharp
+      value: MissionManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerTakeItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MissionSubmenu, Assembly-CSharp
+      value: MissionManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
@@ -14524,6 +14517,22 @@ PrefabInstance:
       propertyPath: SceneMigrationSynchronization
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: tasksTargetCounter.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: 'tasksTargetCounter.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: 'tasksTargetCounter.Array.data[1]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: 'tasksTargetCounter.Array.data[2]'
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7209221170412868503, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: loadFromStart
       value: 1
@@ -14622,6 +14631,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4108819562215853379, guid: 5c42a939415746547992b73eacf219e7, type: 3}
   m_PrefabInstance: {fileID: 1923240992}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1923240997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+  m_PrefabInstance: {fileID: 1923240992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91c38df22641426aa706dac638bff6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionManager
 --- !u!4 &1999732768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 740235175102597459, guid: a37de47c6d026074498c7da1ba987d8e, type: 3}

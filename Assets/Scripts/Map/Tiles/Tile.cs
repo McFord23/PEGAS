@@ -7,8 +7,17 @@ public class Tile : MonoBehaviour
     public bool IsBackEnd { get; private set; }
     public bool IsLeftEnd { get; private set; }
 
+    protected TilesManager tilesManager;
+    
     [SerializeField] private float size = 0.3f;
     [SerializeField] private LayerMask mask;
+
+    public virtual void Initialize(TilesManager manager)
+    {
+        tilesManager = manager;
+    }
+    
+    public virtual void OnReset() { }
     
     public void CheckWalls()
     {

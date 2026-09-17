@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1450624145009930347}
   - component: {fileID: 6431024931389018970}
   - component: {fileID: 4286139889325033844}
-  - component: {fileID: 4039992671337850927}
+  - component: {fileID: 2834296151254596804}
   m_Layer: 0
-  m_Name: Floor Tile
+  m_Name: DirtTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 0.01, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4039992671337850927
+--- !u!114 &2834296151254596804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,10 +122,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 453911146750018557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bef063c47004aa5ad58ca31fcef0093, type: 3}
+  m_Script: {fileID: 11500000, guid: 466dac753fcc4f449ddeca4b5bbbcf03, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tile
+  m_EditorClassIdentifier: Assembly-CSharp::DirtTile
   size: 0.3
   mask:
     serializedVersion: 2
     m_Bits: 1
+  dirtMaterial: {fileID: -9007632685173550870, guid: 67e1ba53ce5af0b41866f69a7872edc1, type: 3}
+  wetMaterial: {fileID: 2100000, guid: 27f879dc87fcfcc4c870fc4a72c6cda0, type: 2}
