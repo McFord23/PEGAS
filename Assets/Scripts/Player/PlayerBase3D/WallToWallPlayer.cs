@@ -45,9 +45,9 @@ public class WallToWallPlayer : PlayerBase3D
     {
         base.Initialize(player, manager);
         ChangeDirection(SPAWN_DIRECTION);
-        AddRigidbodyResetor(movementTarget);
-        AddRigidbodyResetor(spriteRigidbody);
-        AddRigidbodyResetor(spriteJointRigidbody);
+        AddRigidbodyResetter(movementTarget);
+        AddRigidbodyResetter(spriteRigidbody);
+        AddRigidbodyResetter(spriteJointRigidbody);
     }
 
     protected override void FixedUpdate()
@@ -177,7 +177,9 @@ public class WallToWallPlayer : PlayerBase3D
         
         if (Physics.Raycast(playerPosition, rigidbody.transform.forward, out var wallHit, MAX_DISTANCE, movementLayer))
         {
-            if (Physics.Raycast(wallHit.point, Vector3.down, out var tileHit, 1, movementLayer))
+            var downPoint = Vector3.MoveTowards(wallHit.point, playerPosition, 0.1f);
+            
+            if (Physics.Raycast(downPoint, Vector3.down, out var tileHit, 1, movementLayer))
             {
                 var tileObject = tileHit.transform.gameObject;
                 var tilePosition = tileObject.transform.position;

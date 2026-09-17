@@ -12,7 +12,9 @@ public class PlayerBase2D : PlayerBase
     public override void Initialize(PlayersSettings.Player player, PlayersManager manager)
     {
         base.Initialize(player, manager);
-        RigidbodiesResetter.Add(rigidbody2D, new Rigidbody2DResetter(rigidbody2D));
+        AddRigidbodyResetter(rigidbody2D);
+        
+        savedConstraints2D = rigidbody2D.constraints;
     }
     
     protected virtual void FixedUpdate()
@@ -30,6 +32,11 @@ public class PlayerBase2D : PlayerBase
         }
     }
 
+    protected void AddRigidbodyResetter(Rigidbody2D rb)
+    {
+        RigidbodiesResetter.Add(rb, new Rigidbody2DResetter(rb));
+    }
+    
     protected override void Freeze()
     {
         savedVelocity2D = rigidbody2D.linearVelocity;

@@ -2271,6 +2271,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1298505606}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: hasCollisionBetweenPlayers
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -2431,7 +2435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WallToWallPlayerSpawner
   celestiaPrefab: {fileID: 3734004042316625641, guid: ac1bc71702ca43241860e3a8d3381469, type: 3}
   celestiaSpawnPoint: {fileID: 1298505604}
-  lunaPrefab: {fileID: 3734004042316625641, guid: a0ab45880d30fa4489a70bdab673c68b, type: 3}
+  lunaPrefab: {fileID: 3734004042316625641, guid: 785db8e833f38794fa09130299fcb19d, type: 3}
   lunaSpawnPoint: {fileID: 1298505603}
   strategicCamera: {fileID: 141420066}
 --- !u!114 &1298505607 stripped

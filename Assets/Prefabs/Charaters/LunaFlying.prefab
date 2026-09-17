@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 6759180967252205640}
   - component: {fileID: 8747500646428120952}
   m_Layer: 8
-  m_Name: Luna Flying
+  m_Name: LunaFlying
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

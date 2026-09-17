@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 3734004042316625644}
   - component: {fileID: 6956734378273049271}
   m_Layer: 8
-  m_Name: Celestia Flying
+  m_Name: CelestiaFlying
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,9 @@ public class PlayerBase3D : PlayerBase
     public override void Initialize(PlayersSettings.Player player, PlayersManager manager)
     {
         base.Initialize(player, manager);
-        AddRigidbodyResetor(rigidbody);
+        AddRigidbodyResetter(rigidbody);
+
+        savedConstraints = rigidbody.constraints;
     }
 
     protected virtual void FixedUpdate()
@@ -30,7 +32,7 @@ public class PlayerBase3D : PlayerBase
         }
     }
 
-    protected void AddRigidbodyResetor(Rigidbody rb)
+    protected void AddRigidbodyResetter(Rigidbody rb)
     {
         RigidbodiesResetter.Add(rb, new Rigidbody3DResetter(rb));
     }

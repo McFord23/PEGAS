@@ -6,7 +6,7 @@ using Unity.Netcode;
 
 public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 {
-    private PlayerBase[] Players { get; set; } = new PlayerBase[2];
+    private PlayerBase[] Players { get; } = new PlayerBase[2];
     
     public bool HaveSecondPlayer => (bool)Players[1];
     private bool isRetryEnable = true;
@@ -14,6 +14,7 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
     private float midPosition;
     private float midDirection;
 
+    [SerializeField] private bool hasCollisionBetweenPlayers;
     [SerializeField] private PlayerSpawner spawner;
     
     public UnityEvent PauseEvent;
@@ -32,6 +33,9 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
             return;
         }
 
+        var playerLayer = LayerMask.NameToLayer("Player");
+        Physics.IgnoreLayerCollision(playerLayer, playerLayer, hasCollisionBetweenPlayers);
+        Physics2D.IgnoreLayerCollision(playerLayer, playerLayer, hasCollisionBetweenPlayers);
         Settings.OnChangeGameModeEvent += UpdatePlayersAmount;
         UpdatePlayersAmount();
     }

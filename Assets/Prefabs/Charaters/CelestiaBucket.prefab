@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4206623958773926820}
   - component: {fileID: 6956734378273049271}
   m_Layer: 8
-  m_Name: Celestia Bucket
+  m_Name: CelestiaBucket
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2497731370
+  GlobalObjectIdHash: 4004424796
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
   movementTarget: {fileID: 1756911285602475236}
   movementLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   closeCamera: {fileID: 8505399019006523260}
   collider: {fileID: 6851500889544607718}
 --- !u!114 &6956734378273049271
