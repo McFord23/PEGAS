@@ -16,6 +16,11 @@ public class PlayerBase3D : PlayerBase
 
         savedConstraints = rigidbody.constraints;
     }
+    
+    public override Vector3 GetPosition()
+    {
+        return rigidbody.position;
+    }
 
     protected virtual void FixedUpdate()
     {

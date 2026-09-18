@@ -159,13 +159,13 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         {
             case GameMode.Single:
             case GameMode.Host:
-                return Players[0].transform.position;
+                return Players[0].GetPosition();
             
             case GameMode.Client:
-                return HaveSecondPlayer ? Players[1].transform.position : Players[0].transform.position;
+                return HaveSecondPlayer ? Players[1].GetPosition() : Players[0].GetPosition();
             
             case GameMode.LocalCoop:
-                return (Players[0].transform.position + Players[1].transform.position) / 2;
+                return (Players[0].GetPosition() + Players[1].GetPosition()) / 2;
             
             default:
                 return Vector3.zero;

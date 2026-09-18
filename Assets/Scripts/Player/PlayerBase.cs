@@ -34,6 +34,11 @@ public class PlayerBase : NetworkBehaviour
         UpdateControlScheme();
     }
 
+    public virtual Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+    
     public virtual void Pause()
     {
         Freeze();

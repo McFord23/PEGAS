@@ -16,7 +16,12 @@ public class PlayerBase2D : PlayerBase
         
         savedConstraints2D = rigidbody2D.constraints;
     }
-    
+
+    public override Vector3 GetPosition()
+    {
+        return rigidbody2D.position;
+    }
+
     protected virtual void FixedUpdate()
     {
         Speed = rigidbody2D.linearVelocity.magnitude;

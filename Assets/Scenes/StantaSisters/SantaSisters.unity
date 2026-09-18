@@ -3994,8 +3994,8 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420029}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420030}
   - component: {fileID: 519420034}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4023,13 +4023,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b559245db0e114eaf47937b1667c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerOffset: {x: 10, y: 0, z: 0}
-  interfaceOffset: {x: 2.75, y: 0, z: 0}
-  mapOffset: {x: 0, y: 0, z: -10}
+  menuOffset: {x: 2.75, y: 0, z: 0}
+  playerOffset: {x: 0, y: 0, z: -10}
   moveSpeed: 0.1
-  zoomSpeed: 0.04
-  flySize: 60
-  minSize: 30
+  fovSpeed: 0.01
+  gameFOV: 60
+  menuFOV: 30
+  playersManager: {fileID: 1923240998}
+  flyingOffset: {x: 10, y: 0, z: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -14023,7 +14024,7 @@ PrefabInstance:
       objectReference: {fileID: 519420030}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: DeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: FocusOnPlayer
+      value: MenuMode
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PauseEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
@@ -14051,7 +14052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PauseEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: FocusOnPlayer
+      value: MenuMode
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PauseEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
@@ -14059,7 +14060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: FocusOnFly
+      value: GameMode
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
@@ -14079,7 +14080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResumeEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: FocusOnFly
+      value: GameMode
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResumeEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
@@ -14091,7 +14092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: VictoryEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: FocusOnPlayer
+      value: MenuMode
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -14127,11 +14128,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: DeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: CameraController, Assembly-CSharp
+      value: FlyingCamera, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PauseEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: CameraController, Assembly-CSharp
+      value: FlyingCamera, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PauseEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
@@ -14143,7 +14144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
-      value: CameraController, Assembly-CSharp
+      value: FlyingCamera, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
@@ -14155,7 +14156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResumeEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: CameraController, Assembly-CSharp
+      value: FlyingCamera, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResumeEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
@@ -14163,7 +14164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: VictoryEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: CameraController, Assembly-CSharp
+      value: FlyingCamera, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: PlayerDropItemEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -14670,6 +14671,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c38df22641426aa706dac638bff6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissionManager
+--- !u!114 &1923240998 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+  m_PrefabInstance: {fileID: 1923240992}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923240993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9608e948458ce714aa60310d68f35766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayersManager
 --- !u!4 &1999732768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 740235175102597459, guid: a37de47c6d026074498c7da1ba987d8e, type: 3}
