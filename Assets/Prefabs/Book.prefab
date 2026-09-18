@@ -9927,8 +9927,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c38df22641426aa706dac638bff6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissionManager
-  tasksTargetCounter: 
   submenu: {fileID: 4616049240770255281}
+  tasksTargetCounter: 
+  tasksTargetCounterFromChildCount: []
+  initializeMode: 0
 --- !u!1 &3717368009411739642
 GameObject:
   m_ObjectHideFlags: 0
@@ -17668,6 +17670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayersManager
   ShowTopMostFoldoutHeaderGroup: 1
+  hasCollisionBetweenPlayers: 0
   spawner: {fileID: 0}
   PauseEvent:
     m_PersistentCalls:
@@ -17756,6 +17759,18 @@ MonoBehaviour:
       - m_Target: {fileID: 7053619764198189064}
         m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
         m_MethodName: OnReset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 373646196387432793}
+        m_TargetAssemblyTypeName: MusicController, Assembly-CSharp
+        m_MethodName: ResumeMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

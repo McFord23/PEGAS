@@ -27,6 +27,7 @@ public class MusicController : MonoBehaviour
     
     private AudioSource musicPlayer;
     private Coroutine playIntro;
+    private bool hasPausedMusic;
     private bool savedLoop;
     private float savedTime;
 
@@ -44,6 +45,7 @@ public class MusicController : MonoBehaviour
     {
         savedTime = musicPlayer.time;
         savedLoop = musicPlayer.loop;
+        hasPausedMusic = true;
         musicPlayer.Stop();
 
         PlayMusic(currentTheme.pause);
@@ -51,6 +53,9 @@ public class MusicController : MonoBehaviour
 
     public void ResumeMusic()
     {
+        if (!Global.IsPause) return;
+        if (!hasPausedMusic) return;
+        
         if (playIntro != null)
         {
             StopCoroutine(playIntro);
@@ -70,6 +75,8 @@ public class MusicController : MonoBehaviour
         {
             playIntro = StartCoroutine(PlayIntro(currentTheme.main, savedTime));
         }
+
+        hasPausedMusic = false;
     }
 
     public void PlayVictoryMusic()
@@ -141,6 +148,7 @@ public class MusicController : MonoBehaviour
         
         if (currentTheme == newTheme) return;
 
+        hasPausedMusic = false;
         currentTheme = newTheme;
         PlayMusic(currentTheme.main);
     }

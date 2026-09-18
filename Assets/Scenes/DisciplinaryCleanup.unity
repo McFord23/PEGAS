@@ -2814,7 +2814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4108819562215853379, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4360778953670908931, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_InScenePlaced
@@ -2838,7 +2838,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4521970763726086589, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_LocalPosition.z
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616049240770255281, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: isFlipImage
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616049240770255281, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: missionSprite
+      value: 
+      objectReference: {fileID: -7095738011103112824, guid: ffb5b5b31e71ee94792dadeabe337e20, type: 3}
+    - target: {fileID: 4616049240770255281, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: missionImageSize.x
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 4616049240770255281, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: missionImageSize.y
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 4858601913212127554, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: targetCounter
@@ -2854,30 +2870,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 247399250}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: OnReset
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: MusicController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
       value: TilesManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833560828200586988, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: ResetEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7038055525419924562, guid: 5c42a939415746547992b73eacf219e7, type: 3}
@@ -2929,13 +2957,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
-      propertyPath: tasksTargetCounter.Array.size
+      propertyPath: initializeMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: tasksTargetCounter.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: 'tasksTargetCounter.Array.data[0]'
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: tasksTargetCounterFromChildCount.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053619764198189064, guid: 5c42a939415746547992b73eacf219e7, type: 3}
+      propertyPath: 'tasksTargetCounterFromChildCount.Array.data[0]'
+      value: 
+      objectReference: {fileID: 247399249}
     - target: {fileID: 8825258293389494982, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3015,6 +3055,7 @@ MonoBehaviour:
   celestiaSpawnPoint: {fileID: 1298505604}
   lunaPrefab: {fileID: 3734004042316625641, guid: 785db8e833f38794fa09130299fcb19d, type: 3}
   lunaSpawnPoint: {fileID: 1298505603}
+  height: 1
   strategicCamera: {fileID: 141420066}
 --- !u!114 &1298505607 stripped
 MonoBehaviour:

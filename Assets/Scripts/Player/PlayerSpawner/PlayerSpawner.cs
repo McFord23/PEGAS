@@ -5,11 +5,11 @@ public class PlayerSpawner : MonoBehaviour
 {
     [Header("Celestia")]
     [SerializeField] private GameObject celestiaPrefab;
-    [SerializeField] private Transform celestiaSpawnPoint;
+    [SerializeField] protected Transform celestiaSpawnPoint;
     
     [Header("Luna")]
     [SerializeField] private GameObject lunaPrefab;
-    [SerializeField] private Transform lunaSpawnPoint;
+    [SerializeField] protected Transform lunaSpawnPoint;
     
     public virtual GameObject SpawnPlayer(PlayersSettings.Player player)
     {
@@ -28,7 +28,7 @@ public class PlayerSpawner : MonoBehaviour
         };
     }
     
-    private Vector2 GetSpawnPosition(PlayerCharacter character)
+    protected virtual Vector3 GetSpawnPosition(PlayerCharacter character)
     {
         return character switch
         {

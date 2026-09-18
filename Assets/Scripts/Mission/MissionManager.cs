@@ -3,9 +3,19 @@ using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
+    public MissionSubmenu submenu;
     [Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии\n\n1 - одноразовое задание\n>1 - задание со счётчиком")]
-    [SerializeField] private int[] tasksTargetCounter;
-    [SerializeField] private MissionSubmenu submenu;
+    public List<int> tasksTargetCounter;
+    [Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии")]
+    public List<Transform> tasksTargetCounterFromChildCount;
+
+    public InitializeMode initializeMode = InitializeMode.Standard;
+    
+    public enum InitializeMode
+    {
+        Standard,
+        ChildCount
+    }
     
     private readonly List<MissionTask> missionTasks = new();
     private int tasksDoneTarget;
@@ -14,8 +24,18 @@ public class MissionManager : MonoBehaviour
     private void Start()
     {
         if (!SceneManagerAdapter.IsGameScene()) return;
+
+        if (initializeMode is InitializeMode.ChildCount)
+        {
+            tasksTargetCounter.Clear();
+            foreach (var targetTransform in tasksTargetCounterFromChildCount)
+            {
+                tasksTargetCounter.Add(targetTransform.childCount);
+            }
+        }
         
-        tasksDoneTarget = tasksTargetCounter.Length;
+        tasksDoneTarget = tasksTargetCounter.Count;
+        
         submenu.Initialize(tasksDoneTarget);
         var labels = submenu.GetTasksLabels();
         

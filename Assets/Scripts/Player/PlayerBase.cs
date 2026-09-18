@@ -49,6 +49,12 @@ public class PlayerBase : NetworkBehaviour
     public virtual void OnReset(bool teleportBack = true)
     {
         Live = true;
+
+        if (Global.IsPause)
+        {
+            animator.speed = 1;
+            UnFreeze();
+        }
     }
 
     public virtual void Kill()

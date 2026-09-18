@@ -228,10 +228,10 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 
     public void Resume()
     {
-        Global.IsPause = false;
         Players[0]?.Resume();
         Players[1]?.Resume();
         ResumeEvent.Invoke();
+        Global.IsPause = false;
     }
 
     public void KillPlayer(int i)
@@ -264,6 +264,7 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         Players[0]?.OnReset();
         Players[1]?.OnReset();
         ResetEvent.Invoke();
+        Global.IsPause = false;
     }
 
     public void Victory()

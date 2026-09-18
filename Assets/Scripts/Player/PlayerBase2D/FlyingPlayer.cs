@@ -10,7 +10,6 @@ public class FlyingPlayer : PlayerBase2D
     [SerializeField] private float takeoffForce = 250f;
     [SerializeField] private float takeoffSpeed = 40f;
     [SerializeField] private float maxLandedSpeed = 30f;
-    [SerializeField] private float crushSpeed = 80f;
     
     [Header("Live")]
     [SerializeField] private float reviveTime = 3f;
@@ -26,6 +25,7 @@ public class FlyingPlayer : PlayerBase2D
     private CrushEffect crushEffect;
     private CollectingItem item;
     
+    private float crashSpeed = 80f;
     private float aspectRatio;
     private float angleOfAttack;
     private bool landed;
@@ -56,6 +56,11 @@ public class FlyingPlayer : PlayerBase2D
         crushEffect = GetComponentInChildren<CrushEffect>();
         
         Idle();
+    }
+
+    public void SetCrashSpeed(float value)
+    {
+        crashSpeed = value;
     }
 
     private void Update()
@@ -298,7 +303,7 @@ public class FlyingPlayer : PlayerBase2D
         animator.Play("Dead");
         rigidbody2D.angularDamping = 0.3f;
             
-        if (Speed >= crushSpeed)
+        if (Speed >= crashSpeed)
         {
             Live = false;
             crushEffect.StartExplode();
