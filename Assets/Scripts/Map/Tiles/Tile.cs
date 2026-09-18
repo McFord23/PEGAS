@@ -1,49 +1,44 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public bool IsForwardEnd { get; private set; }
-    public bool IsRightEnd { get; private set; }
-    public bool IsBackEnd { get; private set; }
-    public bool IsLeftEnd { get; private set; }
-
-    protected TilesManager tilesManager;
+    private const float HEIGHT = 0.1f;
     
     [SerializeField] private float size = 0.3f;
     [SerializeField] private LayerMask mask;
 
+    protected TilesManager tilesManager;
+    
     public virtual void Initialize(TilesManager manager)
     {
         tilesManager = manager;
     }
     
     public virtual void OnReset() { }
+
+    public float GetSize()
+    {
+        return size;
+    }
     
-    public void CheckWalls()
+    public List<Vector3> GetWallsPoints()
     {
-        IsForwardEnd = HasWall(Vector3.forward);
-        IsRightEnd = HasWall(Vector3.right);
-        IsBackEnd = HasWall(Vector3.back);
-        IsLeftEnd = HasWall(Vector3.left);
+        var wallsPoints = new List<Vector3>();
+        CheckFloor(Vector3.forward, wallsPoints);
+        CheckFloor(Vector3.right, wallsPoints);
+        CheckFloor(Vector3.back, wallsPoints);
+        CheckFloor(Vector3.left, wallsPoints);
+        return wallsPoints;
     }
 
-    private bool HasWall(Vector3 direction)
+    private void CheckFloor(Vector3 direction, List<Vector3> points)
     {
-        var origin = transform.position + Vector3.up * 0.1f;
-        var distance = size + 0.1f;
+        var origin = transform.position + (Vector3.up * HEIGHT) + (direction * size);
+        var distance = size + HEIGHT;
+
+        if (Physics.Raycast(origin, -transform.up, distance, mask)) return;
         
-        return Physics.Raycast(origin, direction, distance, mask);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        var origin = transform.position + Vector3.up * 0.1f;
-        var distance = size + 0.1f;
-
-        Gizmos.color = Color.green;
-        if (IsForwardEnd) Gizmos.DrawRay(origin, Vector3.forward * distance);
-        if (IsRightEnd) Gizmos.DrawRay(origin, Vector3.right * distance);
-        if (IsBackEnd) Gizmos.DrawRay(origin, Vector3.back * distance);
-        if (IsLeftEnd) Gizmos.DrawRay(origin, Vector3.left * distance);
+        points.Add( transform.position + (direction * size) );
     }
 }

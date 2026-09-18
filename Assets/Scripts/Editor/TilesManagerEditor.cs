@@ -7,14 +7,24 @@ using UnityEditor.SceneManagement;
 public class TilesManagerEditor : Editor
 {
     private TilesManager tilesManager;
+    
     private SerializedProperty progressIncreased;
     private SerializedProperty progressDecreased;
+
+    private SerializedProperty floor;
+    private SerializedProperty wallPrefab;
+    private SerializedProperty wallsParent;
     
     private void OnEnable()
     {
         tilesManager = (TilesManager)target;
+        
         progressIncreased = serializedObject.FindProperty( nameof( tilesManager.progressIncreaseEvent ));
         progressDecreased = serializedObject.FindProperty( nameof( tilesManager.progressDecreaseEvent ));
+        
+        floor = serializedObject.FindProperty( nameof( tilesManager.floor ));
+        wallPrefab = serializedObject.FindProperty( nameof( tilesManager.wallPrefab ));
+        wallsParent = serializedObject.FindProperty( nameof( tilesManager.wallsParent ));
     }
 
     public override void OnInspectorGUI()
@@ -22,16 +32,16 @@ public class TilesManagerEditor : Editor
         serializedObject.Update();
         EditorGUILayout.PropertyField(progressIncreased);
         EditorGUILayout.PropertyField(progressDecreased);
+        EditorGUILayout.Space();
+        EditorGUILayout.PropertyField(floor);
+        EditorGUILayout.PropertyField(wallPrefab);
+        EditorGUILayout.PropertyField(wallsParent);
         serializedObject.ApplyModifiedProperties();
         
+        EditorGUILayout.Space();
         if (GUILayout.Button("Check Walls"))
         {
-            for (int i = 0; i < tilesManager.transform.childCount; i++)
-            {
-                var tile = tilesManager.transform.GetChild(i).GetComponent<Tile>();
-                tile.CheckWalls();
-            }
-            
+            tilesManager.GenerateWalls();
             EditorUtility.SetDirty(target);
             EditorSceneManager.MarkSceneDirty(tilesManager.gameObject.scene);
         }
