@@ -14,6 +14,7 @@ public class TilesManagerEditor : Editor
     private SerializedProperty floor;
     private SerializedProperty wallPrefab;
     private SerializedProperty wallsParent;
+    private SerializedProperty tilesClusters;
     
     private void OnEnable()
     {
@@ -25,6 +26,7 @@ public class TilesManagerEditor : Editor
         floor = serializedObject.FindProperty( nameof( tilesManager.floor ));
         wallPrefab = serializedObject.FindProperty( nameof( tilesManager.wallPrefab ));
         wallsParent = serializedObject.FindProperty( nameof( tilesManager.wallsParent ));
+        tilesClusters = serializedObject.FindProperty( nameof( tilesManager.tilesClusters ));
     }
 
     public override void OnInspectorGUI()
@@ -36,6 +38,7 @@ public class TilesManagerEditor : Editor
         EditorGUILayout.PropertyField(floor);
         EditorGUILayout.PropertyField(wallPrefab);
         EditorGUILayout.PropertyField(wallsParent);
+        EditorGUILayout.PropertyField(tilesClusters);
         serializedObject.ApplyModifiedProperties();
         
         EditorGUILayout.Space();

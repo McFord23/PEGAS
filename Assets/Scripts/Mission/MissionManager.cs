@@ -5,16 +5,17 @@ public class MissionManager : MonoBehaviour
 {
     public MissionSubmenu submenu;
     [Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии\n\n1 - одноразовое задание\n>1 - задание со счётчиком")]
-    public List<int> tasksTargetCounter;
-    [Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии")]
-    public List<Transform> tasksTargetCounterFromChildCount;
+    public List<int> tasksTargetCount;
+    
+    [RequireInterface(typeof(ITaskTargetCount)), Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии")]
+    public List<GameObject> tasksTargetCountFromObject;
 
-    public InitializeMode initializeMode = InitializeMode.Standard;
+    public InitializeMode initializeMode = InitializeMode.FromNumber;
     
     public enum InitializeMode
     {
-        Standard,
-        ChildCount
+        FromNumber,
+        FromObject
     }
     
     private readonly List<MissionTask> missionTasks = new();
@@ -25,23 +26,24 @@ public class MissionManager : MonoBehaviour
     {
         if (!SceneManagerAdapter.IsGameScene()) return;
 
-        if (initializeMode is InitializeMode.ChildCount)
+        if (initializeMode is InitializeMode.FromObject)
         {
-            tasksTargetCounter.Clear();
-            foreach (var targetTransform in tasksTargetCounterFromChildCount)
+            tasksTargetCount.Clear();
+            foreach (var targetCountObject in tasksTargetCountFromObject)
             {
-                tasksTargetCounter.Add(targetTransform.childCount);
+                var targetCountInterface = targetCountObject.GetComponent<ITaskTargetCount>();
+                tasksTargetCount.Add(targetCountInterface.GetTargetCount());
             }
         }
         
-        tasksDoneTarget = tasksTargetCounter.Count;
+        tasksDoneTarget = tasksTargetCount.Count;
         
         submenu.Initialize(tasksDoneTarget);
         var labels = submenu.GetTasksLabels();
         
         for (var i = 0; i < tasksDoneTarget; i++)
         {
-            var missionTask = new MissionTask(tasksTargetCounter[i], labels[i]);
+            var missionTask = new MissionTask(tasksTargetCount[i], labels[i]);
             missionTasks.Add(missionTask);
         }
     }

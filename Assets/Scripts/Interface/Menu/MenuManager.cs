@@ -4,6 +4,8 @@ using UnityEngine.Events;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private Vignette vignette;
+    
     [SerializeField] private GameObject block;
     private GameObject currentPopup;
     
@@ -96,12 +98,14 @@ public class MenuManager : MonoBehaviour
 
     public void Enable()
     {
+        vignette.SetActive(true);
         gameObject.SetActive(true);
         MenuEnabledEvent.Invoke();
     }
     
     public void Disable()
     {
+        vignette.SetActive(false);
         gameObject.SetActive(false);
         MenuDisabledEvent.Invoke();
     }

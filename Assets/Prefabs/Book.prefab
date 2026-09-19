@@ -9928,8 +9928,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissionManager
   submenu: {fileID: 4616049240770255281}
-  tasksTargetCounter: 
-  tasksTargetCounterFromChildCount: []
+  tasksTargetCount: 
+  tasksTargetCountFromObject: []
   initializeMode: 0
 --- !u!1 &3717368009411739642
 GameObject:
@@ -25922,6 +25922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d578637920f61c4eb6a050fc2fd5984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vignette: {fileID: 4216986183001934942}
   block: {fileID: 3740343311858952880}
   menus:
   - {fileID: 7038055526109019382}
@@ -30500,8 +30501,9 @@ GameObject:
   - component: {fileID: 7038055527132185627}
   - component: {fileID: 7038055527132185629}
   - component: {fileID: 7038055527132185628}
+  - component: {fileID: 4216986183001934942}
   m_Layer: 5
-  m_Name: Shadow
+  m_Name: Vignette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30564,6 +30566,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4216986183001934942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7038055527132185626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5b64d5b7c740f680c6a55ad9ddb30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Vignette
+  image: {fileID: 7038055527132185628}
 --- !u!1 &7038055527136537913
 GameObject:
   m_ObjectHideFlags: 0
