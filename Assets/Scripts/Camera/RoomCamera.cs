@@ -19,7 +19,7 @@ public class RoomCamera : CameraBase
     {
         base.MenuMode();
         if (move != null) StopCoroutine(move);
-        move = StartCoroutine( Move( playersManager.GetPosition() + menuOffset ));
+        move = StartCoroutine( Move( playersManager.GetPositionForMenu() + menuOffset ));
     }
 
     private IEnumerator Move(Vector3 targetPosition)

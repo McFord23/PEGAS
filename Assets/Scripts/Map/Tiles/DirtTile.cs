@@ -30,28 +30,40 @@ public class DirtTile : Tile
     {
         switch (other.name)
         {
-            case "Wet Collider":
+            case "Player 1 Wet Collider":
+            case "Player 2 Wet Collider":
                 if (status is Status.Clean)
                 {
                     tilesManager.progressDecreaseEvent.Invoke();
+
+                    if (other.name.Contains("1")) Global.Player1Points--;
+                    else Global.Player2Points--;
                 }
                 
                 SetStatus(Status.Wet);
                 break;
             
-            case "Dry Collider":
+            case "Player 1 Dry Collider":
+            case "Player 2 Dry Collider":
                 if (status is Status.Wet)
                 {
                     SetStatus(Status.Clean);
                     tilesManager.progressIncreaseEvent.Invoke();
+                    
+                    if (other.name.Contains("1")) Global.Player1Points++;
+                    else Global.Player2Points++;
                 }
                 break;
             
-            case "Dirt Collider":
+            case "Player 1 Dirt Collider":
+            case "Player 2 Dirt Collider":
                 if (status is Status.Clean)
                 {
                     SetStatus(Status.Dirt);
                     tilesManager.progressDecreaseEvent.Invoke();
+                    
+                    if (other.name.Contains("1")) Global.Player1Points--;
+                    else Global.Player2Points--;
                 }
                 break;
         }

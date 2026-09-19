@@ -16,7 +16,8 @@ public class PlayerBase : NetworkBehaviour
     public float Speed { get; protected set; }
     
     [SerializeField] protected Animator animator;
-    
+
+    protected bool isPlayer1;
     protected PlayersManager playersManager;
     
     private PlayersSettings.Player playerSettings;
@@ -28,6 +29,7 @@ public class PlayerBase : NetworkBehaviour
     
     public virtual void Initialize(PlayersSettings.Player player, PlayersManager manager)
     {
+        isPlayer1 = player == PlayersSettings.Player1;
         playerSettings = player;
         playersManager = manager;
         input = GetComponent<PlayerInput>();
@@ -65,6 +67,7 @@ public class PlayerBase : NetworkBehaviour
     public virtual void Kill()
     {
         Live = false;
+        playersManager.ExecuteDeath();
     }
 
     public virtual void Victory()

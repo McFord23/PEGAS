@@ -34,8 +34,8 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         }
 
         var playerLayer = LayerMask.NameToLayer("Player");
-        Physics.IgnoreLayerCollision(playerLayer, playerLayer, hasCollisionBetweenPlayers);
-        Physics2D.IgnoreLayerCollision(playerLayer, playerLayer, hasCollisionBetweenPlayers);
+        Physics.IgnoreLayerCollision(playerLayer, playerLayer, !hasCollisionBetweenPlayers);
+        Physics2D.IgnoreLayerCollision(playerLayer, playerLayer, !hasCollisionBetweenPlayers);
         Settings.OnChangeGameModeEvent += UpdatePlayersAmount;
         UpdatePlayersAmount();
     }
@@ -165,6 +165,16 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
                 return HaveSecondPlayer ? Players[1].GetPosition() : Players[0].GetPosition();
             
             case GameMode.LocalCoop:
+                if (Players[0].Live && !Players[1].Live)
+                {
+                    return GetPosition(0);
+                }
+                
+                if (!Players[0].Live && Players[1].Live)
+                {
+                    return GetPosition(1);
+                }
+                
                 return (Players[0].GetPosition() + Players[1].GetPosition()) / 2;
             
             default:
@@ -172,7 +182,17 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         }
     }
     
-    public Vector3 GetPosition(int i) => Players[i].transform.position;
+    public Vector3 GetPosition(int i) => Players[i].GetPosition();
+
+    public Vector3 GetPositionForMenu()
+    {
+        if (Settings.GameMode is GameMode.Single)
+        {
+            return GetPosition(0);
+        }
+        
+        return Global.Player1Points >= Global.Player2Points ? GetPosition(0) : GetPosition(1);
+    }
 
     public float GetSpeed()
     {
@@ -248,7 +268,15 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
     {
         if (HaveSecondPlayer)
         {
-            if (!Players[0].Live && !Players[1].Live)
+            if (!Players[0].Live && Players[1].Live)
+            {
+                Global.Player1Points--;
+            }
+            else if (Players[0].Live && !Players[1].Live)
+            {
+                Global.Player2Points--;
+            }
+            else if (!Players[0].Live && !Players[1].Live)
             {
                 DeadEvent.Invoke();
             }
@@ -264,7 +292,7 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         Players[0]?.OnReset();
         Players[1]?.OnReset();
         ResetEvent.Invoke();
-        Global.IsPause = false;
+        Global.Reset();
     }
 
     public void Victory()

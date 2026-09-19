@@ -9,9 +9,9 @@ public class ItemSpawner : NetworkBehaviour
     
     private void Awake()
     {
-        if (Settings.GameMode == GameMode.Single)
+        if (Settings.GameMode is GameMode.Single or GameMode.LocalCoop)
         {
-            SpawnSingleItem();
+            SpawnItem();
             return;
         }
 
@@ -21,16 +21,14 @@ public class ItemSpawner : NetworkBehaviour
         }
     }
 
-    private void SpawnSingleItem()
+    private void SpawnItem()
     {
-        var selfTransform = transform;
-        Instantiate(prefab, selfTransform.position, selfTransform.rotation);
+        Instantiate(prefab, transform.position, transform.rotation);
     }
     
     private void OnLoadEventCompleted(string scenename, LoadSceneMode loadscenemode, List<ulong> clientscompleted, List<ulong> clientstimedout)
     {
-        var selfTransform = transform;
-        var instanceTransform = Instantiate(prefab, selfTransform.position, selfTransform.rotation);
+        var instanceTransform = Instantiate(prefab, transform.position, transform.rotation);
         instanceTransform.GetComponent<NetworkObject>().Spawn(true);
 
         NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnLoadEventCompleted;

@@ -24,6 +24,8 @@ public class PlayerSubmenu : MonoBehaviour
         {
             controlSchemes[i].SetActive(i == index);
         }
+        
+        characterButton.SetActive(!SceneManagerAdapter.IsGameScene());
     }
 
     public void SetScheme(ControlScheme controlScheme)
@@ -95,7 +97,7 @@ public class PlayerSubmenu : MonoBehaviour
 
     public void ShowButton(bool value)
     {
-        characterButton.SetActive(value);
+        characterButton.SetActive(!SceneManagerAdapter.IsGameScene() && value);
         nextSchemeButton.SetActive(value);
         previousSchemeButton.SetActive(value);
     }

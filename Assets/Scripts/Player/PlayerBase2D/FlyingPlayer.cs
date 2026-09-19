@@ -175,9 +175,9 @@ public class FlyingPlayer : PlayerBase2D
 
         rigidbody2D.linearDamping = Mathf.Epsilon;
         rigidbody2D.angularDamping = 2.5f;
-        
         deathCollider.enabled = false;
         rideCollider.enabled = true;
+        crushEffect.OnExplodeFinish();
         Idle();
 
         if (item)
@@ -318,6 +318,10 @@ public class FlyingPlayer : PlayerBase2D
         {
             item.ExecuteDrop();
             item = null;
+            
+            if (isPlayer1) Global.Player1Points--;
+            else Global.Player2Points--;
+            
             playersManager.PlayerDropItemEvent?.Invoke();
         }
     }
@@ -362,6 +366,10 @@ public class FlyingPlayer : PlayerBase2D
        {
            item = tempItem;
            item.ExecutePickUp(transform);
+           
+           if (isPlayer1) Global.Player1Points++;
+           else Global.Player2Points++;
+           
            playersManager.PlayerTakeItemEvent?.Invoke();
        }
    }

@@ -71,7 +71,7 @@ public class WallToWallPlayer : PlayerBase3D
                 break;
         }
         
-        ChangeCamera();
+        //ChangeCamera();
     }
 
     public void SetStrategicCamera(GameObject camera)

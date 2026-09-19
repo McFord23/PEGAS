@@ -11,19 +11,6 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
 {
     [SerializeField] private GameObject loadScreen;
 
-    /*private void Start()
-    {
-        ClientMonitoring.Instance.OnConnectedEvent += LoadHostScene;
-    }
-
-    private void LoadHostScene()
-    {
-        if (SceneManager.GetActiveScene().name != NetworkManager.SceneManager.)
-        {
-            if (loadScreen) loadScreen.SetActive(true);
-        }
-    }*/
-
     public static bool IsMenuScene()
     {
         return SceneManager.GetActiveScene().name == Level.MainMenu.ToString();
@@ -48,12 +35,12 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
     
     public void LoadScene(Level level)
     {
-        Global.IsPause = false;
         var sceneName = level.ToString();
         switch (Settings.GameMode)
         {
             case GameMode.Single:
             case GameMode.LocalCoop:
+                Global.Reset();
                 ClearSubscribers();
                 SceneManager.LoadScene(sceneName);
                 break;
@@ -79,6 +66,7 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
 
         if (Settings.GameMode == GameMode.Host)
         {
+            Global.Reset();
             ClearSubscribers();
             NetworkManager.SceneManager.LoadScene(sceneName.ToString(), LoadSceneMode.Single);
         }

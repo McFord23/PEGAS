@@ -34,6 +34,7 @@ public class BucketPlayer : WallToWallPlayer
     private void SetStatus(Status newStatus)
     {
         status = newStatus;
-        collider.name = $"{status.ToString()} Collider";
+        var playerNumber = isPlayer1 ? 1 : 2;
+        collider.name = $"Player {playerNumber} {status.ToString()} Collider";
     }
 }

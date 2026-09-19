@@ -281,7 +281,7 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dd7756e5-8632-4177-9704-a0dd02b35b98"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";WASD"",
@@ -325,7 +325,7 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""34e17e75-a1ee-4909-b7b7-9f47b553cd99"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""WASD"",

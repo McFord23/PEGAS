@@ -4024,13 +4024,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuOffset: {x: 2.75, y: 0, z: 0}
-  playerOffset: {x: 0, y: 0, z: -10}
   moveSpeed: 0.1
   fovSpeed: 0.01
   gameFOV: 60
   menuFOV: 30
   playersManager: {fileID: 1923240998}
   flyingOffset: {x: 10, y: 0, z: 0}
+  playerOffset: {x: 0, y: 0, z: -10}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -8986,7 +8986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &863847438
 SpriteRenderer:
   serializedVersion: 3

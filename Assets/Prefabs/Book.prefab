@@ -8807,7 +8807,7 @@ GameObject:
   - component: {fileID: 4245275645599090237}
   - component: {fileID: 168112604602625576}
   m_Layer: 5
-  m_Name: Main Action Hint
+  m_Name: Additional Action Hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8874,7 +8874,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Action
+  m_text: Additional Action
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98cf017908630954580ae21e6bd9c902, type: 2}
   m_sharedMaterial: {fileID: -1272100093222816868, guid: 98cf017908630954580ae21e6bd9c902, type: 2}
@@ -8959,7 +8959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizationControlHint
   file: 
-  phrase: mainAction
+  phrase: additionalAction
 --- !u!1 &3308015351923615847
 GameObject:
   m_ObjectHideFlags: 0
@@ -11493,7 +11493,7 @@ GameObject:
   - component: {fileID: 4027301627507755749}
   - component: {fileID: 6746230456061431007}
   m_Layer: 5
-  m_Name: Additional Action Hint
+  m_Name: Main Action Hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11560,7 +11560,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Additional Action
+  m_text: Main Action
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98cf017908630954580ae21e6bd9c902, type: 2}
   m_sharedMaterial: {fileID: -1272100093222816868, guid: 98cf017908630954580ae21e6bd9c902, type: 2}
@@ -11645,7 +11645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizationControlHint
   file: 
-  phrase: additionalAction
+  phrase: mainAction
 --- !u!1 &4235119504001422308
 GameObject:
   m_ObjectHideFlags: 0
@@ -30904,7 +30904,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7993335385577522354}
   m_OnClick:
     m_PersistentCalls:

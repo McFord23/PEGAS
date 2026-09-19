@@ -5,7 +5,7 @@
     "failedDescription": "Poor little pony :c",
     "passedDescription": "The Royal Sisters had a chance to clean up after themselves, but they didn't stand a chance of cleaning up the mess their mentor had made...",
 
-    "move": "Move/Rotate",
+    "move": "Move",
     "mainAction": "Change mop",
-    "additionalAction": "Change Camera"
+    "additionalAction": ""
 }
