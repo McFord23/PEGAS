@@ -4,17 +4,17 @@ using UnityEngine.UI;
 
 public class Vignette : MonoBehaviour
 {
-    private const float DISABLED_ALPHA = 0.25f;
-    private const float ENABLED_ALPHA = 1f;
+    private const float MENU_ALPHA = 1f;
     private const float SPEED = 0.01f;
 
     [SerializeField] private Image image;
+    [SerializeField] private float gameAlpha = 0.3f;
     
     private Coroutine coroutine;
 
     public void SetActive(bool value)
     {
-        var alpha = value ? ENABLED_ALPHA : DISABLED_ALPHA;
+        var alpha = value ? MENU_ALPHA : gameAlpha;
         if (coroutine != null) StopCoroutine(coroutine);
         coroutine = StartCoroutine(SetAlpha(alpha));
     }

@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2634789940381284334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7622865856922012963}
+  - component: {fileID: 6179140556315993929}
+  m_Layer: 12
+  m_Name: 'Collision Between Players '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7622865856922012963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2634789940381284334}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5827077574018263834}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6179140556315993929
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2634789940381284334}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Height: 0.65
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &2686693524993177669
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +251,6 @@ Transform:
   - {fileID: 3734004042074135045}
   - {fileID: 2735320841730004165}
   - {fileID: 2960726397990265259}
-  - {fileID: 571838295992584357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3278046268591591839
@@ -256,14 +310,13 @@ MonoBehaviour:
   rigidbody: {fileID: 6076322362044846440}
   spriteRigidbody: {fileID: 3569424893610808468}
   spriteJointRigidbody: {fileID: 2119294396665350149}
-  spriteRotationSpeed: 0.1
-  rotationTarget: {fileID: 571838295992584357}
+  movementCollider: {fileID: 8666766461654008727}
+  movementJoint: {fileID: 5871776742681351758}
   movementTarget: {fileID: 1756911285602475236}
   movementLayer:
     serializedVersion: 2
     m_Bits: 257
   closeCamera: {fileID: 8505399019006523260}
-  collider: {fileID: 6851500889544607718}
 --- !u!114 &6956734378273049271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +429,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.14
+  m_Radius: 0.15
   m_Height: 0.65
   m_Direction: 1
   m_Center: {x: 0, y: 0.3, z: 0}
@@ -421,8 +474,8 @@ Rigidbody:
   m_GameObject: {fileID: 4598493549414207199}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 100
-  m_AngularDamping: 0.05
+  m_LinearDamping: 1
+  m_AngularDamping: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -437,7 +490,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &6599498049707356576
 GameObject:
@@ -473,6 +526,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6851500889544607718}
+  - {fileID: 7622865856922012963}
   - {fileID: 8850130449909969643}
   - {fileID: 1570555143877724454}
   - {fileID: 7573473531576490574}
@@ -546,7 +600,7 @@ Rigidbody:
   m_GameObject: {fileID: 6599498049707356576}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.02
   m_AngularDamping: 100
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -578,7 +632,7 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_Spring: 10
-  m_Damper: 0.2
+  m_Damper: 1
   m_MinDistance: 0
   m_MaxDistance: 0
   m_Tolerance: 0.01
@@ -586,7 +640,7 @@ SpringJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 8
+  m_MassScale: 16
   m_ConnectedMassScale: 1
 --- !u!1 &8103324805997405410
 GameObject:
@@ -990,34 +1044,3 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!1 &8950915952291387052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 571838295992584357}
-  m_Layer: 8
-  m_Name: Rotation Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &571838295992584357
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8950915952291387052}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.32, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3734004042316625634}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

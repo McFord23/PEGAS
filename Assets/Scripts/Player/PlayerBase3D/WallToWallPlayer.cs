@@ -6,23 +6,28 @@ public class WallToWallPlayer : PlayerBase3D
     private const Direction SPAWN_DIRECTION = Direction.Forward;
     private const float ANGLE_TOLERANCE = 1;
     private const float MAX_DISTANCE = 25;
+    private const float COLLIDER_MIN_SIZE = 0.025f;
+    private const float COLLIDER_SIZE_SPEED = 0.01f;
 
     [Header("Sprite Rotation")]
     [SerializeField] private Rigidbody spriteRigidbody;
     [SerializeField] private Rigidbody spriteJointRigidbody;
-    [SerializeField] private float spriteRotationSpeed = 0.1f;
-    [SerializeField] private Transform rotationTarget;
     
     [Header("Movement")]
+    [SerializeField] protected CapsuleCollider movementCollider;
+    [SerializeField] private SpringJoint movementJoint;
     [SerializeField] private Rigidbody movementTarget;
     [SerializeField] private LayerMask movementLayer;
+    private RigidbodyConstraints idleConstraints;
+    private float colliderMaxSize;
+    private float springForce;
     
     [Header("Additional Camera")]
     [SerializeField] private GameObject closeCamera;
     private GameObject strategicCamera;
     
-    private Coroutine lookAt;
-    private Coroutine move;
+    private Coroutine lookAtCoroutine;
+    private Coroutine colliderSizeCoroutine;
     
     protected Mode mode;
     protected Direction direction;
@@ -48,11 +53,33 @@ public class WallToWallPlayer : PlayerBase3D
         AddRigidbodyResetter(movementTarget);
         AddRigidbodyResetter(spriteRigidbody);
         AddRigidbodyResetter(spriteJointRigidbody);
+
+        idleConstraints = rigidbody.constraints;
+        colliderMaxSize = movementCollider.radius;
+        springForce = movementJoint.spring;
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        
+        var ratio = springForce / Vector3.Distance(rigidbody.position, movementTarget.position);
+        movementJoint.spring = Mathf.Clamp(ratio, 0.5f, springForce);
+        
+        if (Speed == 0)
+        {
+            if (Mathf.Approximately(movementCollider.radius, COLLIDER_MIN_SIZE))
+            {
+                if (colliderSizeCoroutine != null) StopCoroutine(colliderSizeCoroutine);
+                colliderSizeCoroutine = StartCoroutine(SetColliderSize(colliderMaxSize));
+            }
+
+            if (rigidbody.constraints is RigidbodyConstraints.FreezeAll)
+            {
+                rigidbody.constraints = idleConstraints;
+            }
+        }
+        
         spriteJointRigidbody.Move(rigidbody.position, rigidbody.rotation);
     }
     
@@ -89,7 +116,6 @@ public class WallToWallPlayer : PlayerBase3D
     {
         if (MoveInput == Vector2.zero) return;
         if (!Controls.MovePressed) return;
-        if (move != null) return;
         if (Speed > 0.1f) return;
         
         var newDirection = MoveInput.x switch
@@ -105,21 +131,15 @@ public class WallToWallPlayer : PlayerBase3D
         };
 
         RigidbodiesResetter[rigidbody].Reset(false);
-        var rotation = rigidbody.rotation;
-        rotation.eulerAngles = new Vector3(0, (int)newDirection * 90,0);
-        rigidbody.rotation = rotation;
-        
+        rigidbody.rotation = Quaternion.Euler(new Vector3(0, (int)newDirection * 90,0));
         ChangeDirection(newDirection);
-        
-        if (move != null) StopCoroutine(move);
-        move = StartCoroutine(Move());
+        StartCoroutine(Move());
     }
 
     private void CloseRotate()
     {
         if (MoveInput == Vector2.zero) return;
         if (!Controls.MovePressed) return;
-        if (move != null) return;
         if (Speed > 0.1f) return;
         
         float angle = 0;
@@ -138,8 +158,7 @@ public class WallToWallPlayer : PlayerBase3D
                 switch (MoveInput.y)
                 {
                     case > 0:
-                        if (move != null) StopCoroutine(move);
-                        move = StartCoroutine(Move());
+                        StartCoroutine(Move());
                         return;
                     
                     case < 0:
@@ -150,9 +169,8 @@ public class WallToWallPlayer : PlayerBase3D
         }
         
         RigidbodiesResetter[rigidbody].Reset(false);
-        var rotation = rigidbody.rotation;
-        rotation.eulerAngles += new Vector3(0, angle,0);
-        rigidbody.rotation = rotation;
+        var rotation = rigidbody.rotation.eulerAngles + new Vector3(0, angle,0);
+        rigidbody.rotation = Quaternion.Euler(rotation);
 
         angle = rigidbody.rotation.eulerAngles.y;
         if (angle < 0) angle += 360;
@@ -183,13 +201,17 @@ public class WallToWallPlayer : PlayerBase3D
             {
                 var tileObject = tileHit.transform.gameObject;
                 var tilePosition = tileObject.transform.position;
-
-                RigidbodiesResetter[movementTarget].Reset(false);
+                
+                movementTarget.constraints = RigidbodyConstraints.None;
                 movementTarget.position = tilePosition;
+                yield return new WaitForFixedUpdate();
+                movementTarget.constraints = RigidbodyConstraints.FreezeAll;
+                rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                
+                if (colliderSizeCoroutine != null) StopCoroutine(colliderSizeCoroutine);
+                colliderSizeCoroutine = StartCoroutine(SetColliderSize(COLLIDER_MIN_SIZE));
             }
         }
-        
-        move = null;
     }
     
     private void ChangeDirection(Direction newDirection)
@@ -201,8 +223,8 @@ public class WallToWallPlayer : PlayerBase3D
             animator.Play(direction.ToString());
         }
         
-        if (lookAt != null) StopCoroutine(lookAt);
-        lookAt = StartCoroutine(SpriteLookAtCamera());
+        if (lookAtCoroutine != null) StopCoroutine(lookAtCoroutine);
+        lookAtCoroutine = StartCoroutine(SpriteLookAtCamera());
     }
     
     private void ChangeCamera()
@@ -226,8 +248,8 @@ public class WallToWallPlayer : PlayerBase3D
             mode = Mode.Strategic;
         }
         
-        if (lookAt != null) StopCoroutine(lookAt);
-        lookAt = StartCoroutine(SpriteLookAtCamera());
+        if (lookAtCoroutine != null) StopCoroutine(lookAtCoroutine);
+        lookAtCoroutine = StartCoroutine(SpriteLookAtCamera());
     }
     
     private IEnumerator SpriteLookAtCamera()
@@ -248,21 +270,30 @@ public class WallToWallPlayer : PlayerBase3D
                 targetPosition = transform.TransformPoint(targetPosition);
                 break;
         }
-
-        rotationTarget.LookAt(targetPosition);
-        var startRotation = animator.transform.rotation;
-        float progress = 0;
         
-        while (progress < 1)
+        animator.transform.LookAt(targetPosition);
+        lookAtCoroutine = null;
+    }
+
+    private IEnumerator SetColliderSize(float value)
+    {
+        var tempDirection = movementCollider.radius < value ? 1 : -1;
+
+        while (Mathf.Approximately(movementCollider.radius, value))
         {
-            animator.transform.rotation = Quaternion.Lerp(startRotation, rotationTarget.rotation, progress);
-            progress += spriteRotationSpeed;
-            
+            movementCollider.radius += tempDirection * COLLIDER_SIZE_SPEED;
             yield return new WaitForFixedUpdate();
         }
 
-        animator.transform.rotation = rotationTarget.rotation;
-        
-        lookAt = null;
+        movementCollider.radius = value;
+        colliderSizeCoroutine = null;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.gold;
+        Gizmos.DrawCube(movementTarget.position, new Vector3(0.3f, 0.05f, 0.3f));
+        Gizmos.DrawLine(rigidbody.position, movementTarget.position);
+        Gizmos.DrawRay(rigidbody.position + Vector3.up * 0.3f, rigidbody.transform.forward);
     }
 }

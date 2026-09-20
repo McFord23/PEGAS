@@ -1,9 +1,5 @@
-﻿using UnityEngine;
-
-public class BucketPlayer : WallToWallPlayer
+﻿public class BucketPlayer : WallToWallPlayer
 {
-    [Header("Bucket Player")]
-    [SerializeField] private Transform collider;
     private Status status;
     
     private enum Status
@@ -35,6 +31,6 @@ public class BucketPlayer : WallToWallPlayer
     {
         status = newStatus;
         var playerNumber = isPlayer1 ? 1 : 2;
-        collider.name = $"Player {playerNumber} {status.ToString()} Collider";
+        movementCollider.name = $"Player {playerNumber} {status.ToString()} Collider";
     }
 }

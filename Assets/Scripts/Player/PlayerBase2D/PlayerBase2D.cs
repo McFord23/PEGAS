@@ -39,7 +39,7 @@ public class PlayerBase2D : PlayerBase
 
     protected void AddRigidbodyResetter(Rigidbody2D rb)
     {
-        RigidbodiesResetter.Add(rb, new Rigidbody2DResetter(rb));
+        RigidbodiesResetter.Add(rb, new Rigidbody2DResetter(rb, this));
     }
     
     protected override void Freeze()
