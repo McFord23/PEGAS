@@ -1,9 +1,9 @@
 {
     "title": "Disciplinary Cleanup",
 
-    "description": "Once upon a time, in the magical land of Equestria... \nAs part of a disciplinary punishment, the Royal Sisters were told to clean up after themselves. However, even such a tedious chore sisters can turn into a wild competition.",
+    "description": "Once upon a time, in the magical land of Equestria... \nAs part of a disciplinary punishment, the Royal Sisters were told to clean up after themselves. Sisters will have a lot of washing and drying to do.",
     "failedDescription": "Poor little pony :c",
-    "passedDescription": "The Royal Sisters had a chance to clean up after themselves, but they didn't stand a chance of cleaning up the mess their mentor had made...",
+    "passedDescription": "Even such a tedious chore like cleaning Royal Sisters managed to turn it into a adventure!",
 
     "move": "Move",
     "mainAction": "Change mop",

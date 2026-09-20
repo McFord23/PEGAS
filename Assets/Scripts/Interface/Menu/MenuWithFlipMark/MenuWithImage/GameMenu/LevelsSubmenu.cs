@@ -1,21 +1,12 @@
-﻿using System;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelsSubmenu : MonoBehaviour
 {
-    [Serializable]
-    private class LevelDTO
-    {
-        public SceneAsset scene;
-        public Sprite preview;
-    }
-    
     [SerializeField] private Image levelPreview;
     [SerializeField] private LevelInfo levelInfo;
     [SerializeField] private LevelButton[] levelButtons;
-    [SerializeField] private LevelDTO[] levels;
+    [SerializeField] private Sprite[] levelsPreviews;
     private Level selectedLevel;
     private bool hasSelectedLevel;
     
@@ -36,7 +27,7 @@ public class LevelsSubmenu : MonoBehaviour
         selectedLevel = level;
         hasSelectedLevel = true;
         
-        levelPreview.sprite = levels[(int)level - 2].preview;
+        levelPreview.sprite = levelsPreviews[(int)level - 2];
         levelPreview.gameObject.SetActive(true);
         
         levelInfo.Show(level);
