@@ -14492,7 +14492,7 @@ PrefabInstance:
     - target: {fileID: 373646196387432793, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: coopTheme.main.loop
       value: 
-      objectReference: {fileID: 8300000, guid: dd1ba57e4296c5341b05c30b68284b8e, type: 3}
+      objectReference: {fileID: 8300000, guid: aceb5055d5e24b642ab46520090434f1, type: 3}
     - target: {fileID: 373646196387432793, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: lunaTheme.main.loop
       value: 
@@ -14500,7 +14500,7 @@ PrefabInstance:
     - target: {fileID: 373646196387432793, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: coopTheme.main.intro
       value: 
-      objectReference: {fileID: 8300000, guid: ffa3ac3997252724a990d708f4e7fb1c, type: 3}
+      objectReference: {fileID: 8300000, guid: ae20da3ceeea5a541831a49f9baee29a, type: 3}
     - target: {fileID: 373646196387432793, guid: 5c42a939415746547992b73eacf219e7, type: 3}
       propertyPath: coopTheme.pause.loop
       value: 
@@ -14964,9 +14964,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d6cce8557770942a2428c84d5d74e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WallToWallPlayerSpawner
-  celestiaPrefab: {fileID: 3734004042316625641, guid: ac1bc71702ca43241860e3a8d3381469, type: 3}
+  celestiaPrefab: {fileID: 2474170655348712077, guid: caba483214cf1744da8011d80efa03fa, type: 3}
   celestiaSpawnPoint: {fileID: 1298505604}
-  lunaPrefab: {fileID: 3734004042316625641, guid: 785db8e833f38794fa09130299fcb19d, type: 3}
+  lunaPrefab: {fileID: 7351695716725906274, guid: ad18ba1486559fa46abd9321e72c485d, type: 3}
   lunaSpawnPoint: {fileID: 1298505603}
   height: 1
   strategicCamera: {fileID: 141420066}
