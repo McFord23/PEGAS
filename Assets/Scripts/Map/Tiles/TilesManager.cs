@@ -1,50 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class TilesManager : MonoBehaviour, ITaskTargetCount
+public class TilesManager : ProgressObjectsManager
 {
-    public UnityEvent progressIncreaseEvent;
-    public UnityEvent progressDecreaseEvent;
+    [Header("Tile")]
+    [SerializeField] private GameObject floor;
+    [SerializeField] private GameObject wallPrefab;
+    [SerializeField] private Transform wallsParent;
 
-    public GameObject floor;
-    public GameObject wallPrefab;
-    public Transform wallsParent;
-    public Transform[] tilesClusters;
-    
-    private readonly List<Tile> tiles = new();
-    
-    private void Start()
+    public static class Fields
     {
-        foreach (var tilesCluster in tilesClusters)
-        {
-            for (int i = 0; i < tilesCluster.childCount; i++)
-            {
-                var tile = tilesCluster.GetChild(i).GetComponent<Tile>();
-                tile.Initialize(this);
-                tiles.Add(tile);
-            }
-        }
-    }
-
-    public void OnReset()
-    {
-        foreach (var tile in tiles)
-        {
-            tile.OnReset();
-        }
-    }
-
-    public int GetTargetCount()
-    {
-        var tilesAmount = 0;
+        public const string PROGRESS_OBJECTS = nameof(progressObjects);
+        public const string PROGRESS_INCREASE_EVENT = nameof(progressIncreaseEvent);
+        public const string PROGRESS_DECREASE_EVENT = nameof(progressDecreaseEvent);
         
-        foreach (var tilesCluster in tilesClusters)
-        {
-            tilesAmount += tilesCluster.childCount;
-        }
+        public const string FLOOR = nameof(floor);
+        public const string WALL_PREFAB = nameof(wallPrefab);
+        public const string WALLS_PARENT = nameof(wallsParent);
+    }
 
-        return tilesAmount;
+    public void AssignTiles()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var tile = transform.GetChild(i).GetComponent<ProgressObject>();
+            progressObjects.Add(tile);
+        }
     }
     
     public void GenerateWalls()
@@ -52,22 +33,19 @@ public class TilesManager : MonoBehaviour, ITaskTargetCount
         var walls = new List<Vector3>();
         floor.SetActive(false);
 
-        foreach (var tilesCluster in tilesClusters)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            for (int i = 0; i < tilesCluster.childCount; i++)
-            {
-                var tile = tilesCluster.GetChild(i).GetComponent<Tile>();
-                var size = tile.GetSize();
-                var wallsPoints = tile.GetWallsPoints();
+            var tile = transform.GetChild(i).GetComponent<Tile>();
+            var size = tile.GetSize();
+            var wallsPoints = tile.GetWallsPoints();
 
-                foreach (var wallPoint in wallsPoints)
-                {
-                    if (walls.Contains(wallPoint)) continue;
+            foreach (var wallPoint in wallsPoints)
+            {
+                if (walls.Contains(wallPoint)) continue;
                 
-                    var wall = Instantiate(wallPrefab, wallPoint, new Quaternion(0,0,0,1), wallsParent);
-                    wall.transform.localScale = new Vector3(size, wall.transform.localScale.y, size);
-                    walls.Add(wallPoint);
-                }
+                var wall = Instantiate(wallPrefab, wallPoint, new Quaternion(0,0,0,1), wallsParent);
+                wall.transform.localScale = new Vector3(size, wall.transform.localScale.y, size);
+                walls.Add(wallPoint);
             }
         }
         

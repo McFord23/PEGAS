@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 8a060c903b67e3649b66d774de887022
+guid: fad2ba549a5bec74b849f503f10c452f
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Golden Door
+    second: {fileID: 2100000, guid: e4f5a15ada9bcc541a1343b981536f0a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -39,7 +44,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    preBakeConvexCollisionMesh: 1
+    preBakeConvexCollisionMesh: 0
     preBakeTriangleCollisionMesh: 0
     importPhysicalCameras: 1
     importVisibility: 1

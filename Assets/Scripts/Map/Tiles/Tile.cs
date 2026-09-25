@@ -1,21 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class Tile : ProgressObject
 {
     private const float HEIGHT = 0.1f;
     
     [SerializeField] private float size = 0.3f;
     [SerializeField] private LayerMask mask;
-
-    protected TilesManager tilesManager;
-    
-    public virtual void Initialize(TilesManager manager)
-    {
-        tilesManager = manager;
-    }
-    
-    public virtual void OnReset() { }
 
     public float GetSize()
     {

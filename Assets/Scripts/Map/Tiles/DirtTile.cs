@@ -15,9 +15,8 @@ public class DirtTile : Tile
         Clean
     }
     
-    public override void Initialize(TilesManager manager)
+    private void Start()
     {
-        base.Initialize(manager);
         SetStatus(Status.Dirt);
     }
 
@@ -34,7 +33,7 @@ public class DirtTile : Tile
             case "Player 2 Wet Collider":
                 if (status is Status.Clean)
                 {
-                    tilesManager.progressDecreaseEvent.Invoke();
+                    ChangeProgress(false);
 
                     if (other.name.Contains("1")) Global.Player1Points--;
                     else Global.Player2Points--;
@@ -48,7 +47,7 @@ public class DirtTile : Tile
                 if (status is Status.Wet)
                 {
                     SetStatus(Status.Clean);
-                    tilesManager.progressIncreaseEvent.Invoke();
+                    ChangeProgress(true);
                     
                     if (other.name.Contains("1")) Global.Player1Points++;
                     else Global.Player2Points++;
@@ -60,7 +59,7 @@ public class DirtTile : Tile
                 if (status is Status.Clean)
                 {
                     SetStatus(Status.Dirt);
-                    tilesManager.progressDecreaseEvent.Invoke();
+                    ChangeProgress(false);
                     
                     if (other.name.Contains("1")) Global.Player1Points--;
                     else Global.Player2Points--;

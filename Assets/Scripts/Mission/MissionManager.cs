@@ -7,8 +7,8 @@ public class MissionManager : MonoBehaviour
     [Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии\n\n1 - одноразовое задание\n>1 - задание со счётчиком")]
     public List<int> tasksTargetCount;
     
-    [RequireInterface(typeof(ITaskTargetCount)), Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии")]
-    public List<GameObject> tasksTargetCountFromObject;
+    [Tooltip("Максимум 4 задания, ибо больше не помещается в подменю миссии")]
+    public List<ProgressObjectsManager> tasksTargetCountFromObject;
 
     public InitializeMode initializeMode = InitializeMode.FromNumber;
     
@@ -31,8 +31,7 @@ public class MissionManager : MonoBehaviour
             tasksTargetCount.Clear();
             foreach (var targetCountObject in tasksTargetCountFromObject)
             {
-                var targetCountInterface = targetCountObject.GetComponent<ITaskTargetCount>();
-                tasksTargetCount.Add(targetCountInterface.GetTargetCount());
+                tasksTargetCount.Add(targetCountObject.GetTargetCount());
             }
         }
         
