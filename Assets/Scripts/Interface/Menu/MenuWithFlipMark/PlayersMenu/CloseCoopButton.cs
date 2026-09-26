@@ -27,6 +27,15 @@ public class CloseCoopButton : MonoBehaviour
         ShutDown
     }
 
+    private void Start()
+    {
+        var level = LevelManager.GetActiveLevel();
+        if (LevelManager.IsLevelRequiresCoop(level) && Settings.GameMode is not GameMode.Single)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     public void OnPressed()
     {
         currentEvent?.Invoke();

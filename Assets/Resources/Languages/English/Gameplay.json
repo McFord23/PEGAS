@@ -1,6 +1,5 @@
 {
     "wetMop": "Wet Mop",
     "dryMop": "Dry Mop",
-    "dirtMop": "Dirt Mop",
-    "unavalibleTile": "This tile is unavailable without coop"
+    "dirtMop": "Dirt Mop"
 }

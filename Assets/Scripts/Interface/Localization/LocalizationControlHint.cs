@@ -2,8 +2,8 @@
 {
     protected override void Start()
     {
-        file = SceneManagerAdapter.IsGameScene() 
-            ? $"{SceneManagerAdapter.GetActiveScene().ToString()}/Info"
+        file = LevelManager.IsGameLevel() 
+            ? $"{LevelManager.GetActiveLevel().ToString()}/Info"
             : "Interface";
         
         base.Start();

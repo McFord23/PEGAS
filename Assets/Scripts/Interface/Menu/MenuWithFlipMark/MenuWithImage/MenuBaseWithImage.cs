@@ -20,7 +20,7 @@ public class MenuBaseWithImage : MenuBaseWithFlipMark
 
         imageRect = image.GetComponent<RectTransform>();
 
-        if (SceneManagerAdapter.IsMenuScene())
+        if (LevelManager.IsMenuLevel())
         {
             ChangeModeToImage();
             ChangePage(MenuBackground.ImagePageType.Empty);

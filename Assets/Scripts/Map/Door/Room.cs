@@ -19,6 +19,7 @@ public class Room : ProgressObject
 
         progress = 0;
         isDone = false;
+        targets.OnReset();
     }
 
     public override void ChangeProgress(bool isIncrease)

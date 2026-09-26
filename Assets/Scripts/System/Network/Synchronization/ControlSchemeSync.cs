@@ -88,7 +88,7 @@ public class ControlSchemeSync : NetworkBehaviour
     {
         PlayersSettings.Player1.ControlScheme = hostScheme.Value;
         PlayersSettings.Player2.ControlScheme = clientScheme.Value;
-        if (SceneManagerAdapter.IsGameScene()) PlayersManager.Instance.UpdatePlayersControlScheme();
+        if (LevelManager.IsGameLevel()) PlayersManager.Instance.UpdatePlayersControlScheme();
         playersMenu.UpdatePlayersSchemes();
     }
 }

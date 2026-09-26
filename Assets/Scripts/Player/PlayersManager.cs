@@ -27,7 +27,7 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 
     private void Start()
     {
-        if (!SceneManagerAdapter.IsGameScene())
+        if (!LevelManager.IsGameLevel())
         {
             gameObject.SetActive(false);
             return;

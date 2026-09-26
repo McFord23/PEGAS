@@ -13,7 +13,7 @@ public class GameMenu : MenuBaseWithImage
     {
         base.Initialize(manager, background);
 
-        if (SceneManagerAdapter.IsGameScene())
+        if (LevelManager.IsGameLevel())
         {
             FlipImage(true);
             ChangePage(MenuBackground.ImagePageType.Arch);
@@ -28,7 +28,7 @@ public class GameMenu : MenuBaseWithImage
             ChangePage(MenuBackground.ImagePageType.Empty);
             
             currentSubmenu = levelsSubmenu;
-            levelsSubmenu.GetComponent<LevelsSubmenu>().Initialize(this);
+            levelsSubmenu.GetComponent<LevelsSubmenu>().Initialize(this, manager);
             levelsSubmenu.SetActive(true);
         }
     }
@@ -91,12 +91,12 @@ public class GameMenu : MenuBaseWithImage
 
     public void Continue()
     {
-        SceneManagerAdapter.Instance.LoadScene(Level.Credits);
+        LevelManager.Instance.LoadScene(Level.Credits);
     }
     
     public void Exit()
     {
-        SceneManagerAdapter.Instance.LoadScene(Level.MainMenu);
+        LevelManager.Instance.LoadScene(Level.MainMenu);
     }
 
     private void TryEnableMenu()

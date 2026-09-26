@@ -48,5 +48,8 @@
     "contents": "Contents",
     "chapter": "Chapter",
 
-    "returnToMainMenu": "Return to Сover?"
+    "returnToMainMenu": "Return to Сover?",
+
+    "reqireCoopTile": "Open COOP page?",
+    "reqireCoop": "This chapter requires COOP.\n\nLocal COOP lets you play with a friend\nor control both sisters solo."
 }

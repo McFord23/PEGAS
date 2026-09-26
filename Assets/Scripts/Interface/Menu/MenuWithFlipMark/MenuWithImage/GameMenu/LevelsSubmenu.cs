@@ -7,14 +7,17 @@ public class LevelsSubmenu : MonoBehaviour
     [SerializeField] private LevelInfo levelInfo;
     [SerializeField] private LevelButton[] levelButtons;
     [SerializeField] private Sprite[] levelsPreviews;
+    [SerializeField] private GameObject requireCoopPopup;
     private Level selectedLevel;
     private bool hasSelectedLevel;
     
     private GameMenu gameMenu;
+    private MenuManager menuManager;
 
-    public void Initialize(GameMenu menu)
+    public void Initialize(GameMenu menu, MenuManager manager)
     {
         gameMenu = menu;
+        menuManager = manager;
 
         foreach (var levelButton in levelButtons)
         {
@@ -47,7 +50,14 @@ public class LevelsSubmenu : MonoBehaviour
     {
         if (hasSelectedLevel)
         {
-            SceneManagerAdapter.Instance.LoadScene(selectedLevel);
+            if (LevelManager.IsLevelRequiresCoop(selectedLevel) && Settings.GameMode is GameMode.Single)
+            {
+                menuManager.ShowPopup(requireCoopPopup);
+            }
+            else
+            {
+                LevelManager.Instance.LoadScene(selectedLevel);
+            }
         }
     }
 }

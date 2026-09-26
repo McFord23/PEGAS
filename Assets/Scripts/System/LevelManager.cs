@@ -5,23 +5,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /**
- * Абстрагирует локальный и сетевой переход между сценами 
+ * Абстрагирует локальный и сетевой переход между сценами. Выдаёт информацию по текущему уровню.
  */
-public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter>
+public class LevelManager : SingletonNetworkBehaviour<LevelManager>
 {
     [SerializeField] private GameObject loadScreen;
 
-    public static bool IsMenuScene()
+    public static bool IsMenuLevel()
     {
         return SceneManager.GetActiveScene().name == Level.MainMenu.ToString();
     }
     
-    public static bool IsGameScene()
+    public static bool IsGameLevel()
     {
-        return !IsMenuScene() && SceneManager.GetActiveScene().name != Level.Credits.ToString();
+        return !IsMenuLevel() && SceneManager.GetActiveScene().name != Level.Credits.ToString();
     }
     
-    public static Level GetActiveScene()
+    public static Level GetActiveLevel()
     {
         return SceneManager.GetActiveScene().name switch
         {
@@ -31,6 +31,16 @@ public class SceneManagerAdapter : SingletonNetworkBehaviour<SceneManagerAdapter
             "SantaSisters" => Level.SantaSisters,
             _ => throw new ArgumentOutOfRangeException()
         };
+    }
+
+    public static bool IsLevelRequiresCoop(Level level)
+    {
+        Level[] levelsRequiresCoop = 
+        {
+            Level.DisciplinaryCleanup
+        };
+
+        return Array.Exists(levelsRequiresCoop, levelFromMassive => level == levelFromMassive);
     }
     
     public void LoadScene(Level level)

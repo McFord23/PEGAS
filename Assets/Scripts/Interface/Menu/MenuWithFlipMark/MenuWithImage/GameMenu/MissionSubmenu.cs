@@ -25,7 +25,7 @@ public class MissionSubmenu : MonoBehaviour
             ? new Vector3(-1, 1, 1) 
             : new Vector3(1, 1, 1);
         
-        var level = SceneManagerAdapter.GetActiveScene().ToString();
+        var level = LevelManager.GetActiveLevel().ToString();
 
         for (var i = 0; i < tasksDoneTarget; i++)
         {

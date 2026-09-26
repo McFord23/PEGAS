@@ -58,6 +58,6 @@ public class Сredits : MonoBehaviour
 
     public void Exit()
     {
-        SceneManagerAdapter.Instance.LoadScene(Level.MainMenu);
+        LevelManager.Instance.LoadScene(Level.MainMenu);
     }
 }

@@ -14,7 +14,7 @@ public class MainMenu : MenuBase
 
     public void Open()
     {
-        if (SceneManagerAdapter.IsMenuScene())
+        if (LevelManager.IsMenuLevel())
         {
             SetActive(true);
         }
@@ -26,7 +26,7 @@ public class MainMenu : MenuBase
 
     public void Load()
     {
-        SceneManagerAdapter.Instance.LoadScene(Level.MainMenu);
+        LevelManager.Instance.LoadScene(Level.MainMenu);
     }
     
     public void Exit()
