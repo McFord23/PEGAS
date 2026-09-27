@@ -27,7 +27,7 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
 
     private void Start()
     {
-        if (!LevelManager.IsGameLevel())
+        if (!LevelsManager.IsGameLevel())
         {
             gameObject.SetActive(false);
             return;
@@ -36,7 +36,10 @@ public class PlayersManager : SingletonNetworkBehaviour<PlayersManager>
         var playerLayer = LayerMask.NameToLayer("Player");
         Physics.IgnoreLayerCollision(playerLayer, playerLayer, !hasCollisionBetweenPlayers);
         Physics2D.IgnoreLayerCollision(playerLayer, playerLayer, !hasCollisionBetweenPlayers);
+        
         Settings.OnChangeGameModeEvent += UpdatePlayersAmount;
+        PlayersSettings.OnChangeControlEvent += UpdatePlayersControlScheme;
+        
         UpdatePlayersAmount();
     }
 

@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /**
- * Абстрагирует локальный и сетевой переход между сценами. Выдаёт информацию по текущему уровню.
+ * Подготавливает игру к переходу на другую сцену (сбрасывает временные статусы и подписки, а в сетевом коопе так же
+ * отправлет запрос загрузки уровня на сервер). Выдаёт информацию по текущему уровню.
  */
-public class LevelManager : SingletonNetworkBehaviour<LevelManager>
+public class LevelsManager : SingletonNetworkBehaviour<LevelsManager>
 {
     [SerializeField] private GameObject loadScreen;
 
@@ -32,6 +33,16 @@ public class LevelManager : SingletonNetworkBehaviour<LevelManager>
             _ => throw new ArgumentOutOfRangeException()
         };
     }
+    
+    public static bool IsFlyingLevel(Level level)
+    {
+        Level[] flyingLevels = 
+        {
+            Level.SantaSisters
+        };
+
+        return Array.Exists(flyingLevels, levelFromMassive => level == levelFromMassive);
+    }
 
     public static bool IsLevelRequiresCoop(Level level)
     {
@@ -43,7 +54,7 @@ public class LevelManager : SingletonNetworkBehaviour<LevelManager>
         return Array.Exists(levelsRequiresCoop, levelFromMassive => level == levelFromMassive);
     }
     
-    public void LoadScene(Level level)
+    public void LoadLevel(Level level)
     {
         var sceneName = level.ToString();
         switch (Settings.GameMode)

@@ -50,13 +50,13 @@ public class LevelsSubmenu : MonoBehaviour
     {
         if (hasSelectedLevel)
         {
-            if (LevelManager.IsLevelRequiresCoop(selectedLevel) && Settings.GameMode is GameMode.Single)
+            if (LevelsManager.IsLevelRequiresCoop(selectedLevel) && Settings.GameMode is GameMode.Single)
             {
                 menuManager.ShowPopup(requireCoopPopup);
             }
             else
             {
-                LevelManager.Instance.LoadScene(selectedLevel);
+                LevelsManager.Instance.LoadLevel(selectedLevel);
             }
         }
     }

@@ -21,6 +21,17 @@ public class GamepadManager : MonoBehaviour
     {
         Settings.OnChangeGameModeEvent += UpdateGamepadStatus;
         UpdateGamepadStatus();
+        
+        if (Settings.GameMode is GameMode.LocalCoop && PlayersSettings.IsSharedGamepad)
+        {
+            player1GamepadImage.gameObject.SetActive(false);
+            player2GamepadImage.gameObject.SetActive(false);
+        
+            shareFromPlayer1Button.SetActive(false);
+            shareFromPlayer2Button.SetActive(false);
+        
+            sharedGamepadImage.gameObject.SetActive(true);
+        }
     }
 
     private void OnDestroy()

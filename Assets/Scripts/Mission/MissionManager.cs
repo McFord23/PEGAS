@@ -24,7 +24,7 @@ public class MissionManager : MonoBehaviour
     
     private void Start()
     {
-        if (!LevelManager.IsGameLevel()) return;
+        if (!LevelsManager.IsGameLevel()) return;
 
         if (initializeMode is InitializeMode.FromObject)
         {

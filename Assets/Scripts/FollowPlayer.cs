@@ -24,8 +24,9 @@ public class FollowPlayer : MonoBehaviour
         
         if (Settings.GameMode is GameMode.LocalCoop)
         {
-            var value = Vector3.Distance(playersManager.GetPosition(0), playersManager.GetPosition(1));
-            distance = Mathf.Clamp(value, minDistance, maxDistance);
+            var distanceBetweenPlayers = Vector3.Distance(playersManager.GetPosition(0), playersManager.GetPosition(1));
+            var ratio = distanceBetweenPlayers / 6.6f;
+            distance = Mathf.Max(maxDistance * ratio, minDistance);
         }
         
         var target = playersManager.GetPosition() + offset * distance;

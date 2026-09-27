@@ -794,12 +794,12 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mouse Scheme
+      name: Mouse
       rect:
         serializedVersion: 2
-        x: 230
-        y: 419
-        width: 156
+        x: 391
+        y: 231
+        width: 116
         height: 92
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1102,51 +1102,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lil Junior Outline
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 488
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a0e4ff8cd2bd1d290800000000000000
-      internalID: -7867266084347359734
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gamepad Player Scheme
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 43
-        width: 156
-        height: 92
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 778dea71affc84c48bf62d35320f0816
-      internalID: 1898596194
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Gamepad Players Scheme
+      name: Gamepad Scheme
       rect:
         serializedVersion: 2
         x: 230
@@ -1215,8 +1171,8 @@ TextureImporter:
       name: Stick
       rect:
         serializedVersion: 2
-        x: 27
-        y: 259
+        x: 11
+        y: 214
         width: 17
         height: 12
       alignment: 0
@@ -1300,28 +1256,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Done
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 257
-        width: 13
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5fb3f088ab1a8f14aa335b06028a79c2
-      internalID: 1539648257
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Password Hide
       rect:
         serializedVersion: 2
@@ -1391,8 +1325,8 @@ TextureImporter:
       name: Gamepad Shared
       rect:
         serializedVersion: 2
-        x: 389
-        y: 231
+        x: 89
+        y: 43
         width: 122
         height: 92
       alignment: 0
@@ -1418,7 +1352,7 @@ TextureImporter:
         width: 156
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1440,7 +1374,7 @@ TextureImporter:
         width: 60
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1462,7 +1396,7 @@ TextureImporter:
         width: 46
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1484,7 +1418,7 @@ TextureImporter:
         width: 60
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1493,6 +1427,160 @@ TextureImporter:
       bones: []
       spriteID: 69609ddc4aa7ee6499712c031356a7ff
       internalID: -417842466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unused Stick
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 214
+        width: 17
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1ffc6813f90b4d4d9268ff65743a2dc
+      internalID: 1509912792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trigger R
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 200
+        width: 25
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fca5117dc6d271840952b6daf683b89d
+      internalID: 1987107064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trigger L
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 200
+        width: 25
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6b0ac4a8a6106c41b3c694dc3f2f642
+      internalID: 1637860631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bumper L
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 187
+        width: 32
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2042a5b091ec03a44b1c91dae32ece59
+      internalID: 668624713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bumper R
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 187
+        width: 32
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 226d6fa463e6a434d9cf819f29c99e88
+      internalID: 1052758431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mouse LMB
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 137
+        width: 116
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10bb7b5bae5149749ba039685e185acd
+      internalID: -544246529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mouse RMB
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 43
+        width: 116
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d25f17414427c145934961e3edf57a3
+      internalID: 500082658
       vertices: []
       indices: 
       edges: []
@@ -1516,6 +1604,8 @@ TextureImporter:
       Arrows: -273060469431498887
       Background: -4814514297299439395
       Big Outline: 6620621745411573659
+      Bumper L: 668624713
+      Bumper R: 1052758431
       Close: -1557013538026691241
       Close Selected: -3947773304791079134
       Control Layout Outline: 238177201661318622
@@ -1530,8 +1620,7 @@ TextureImporter:
       Gamepad 2 On: -343943630576144839
       Gamepad Off: 9084407170249120912
       Gamepad On: 228940821244427079
-      Gamepad Player Scheme: 1898596194
-      Gamepad Players Scheme: -460153310
+      Gamepad Scheme: -460153310
       Gamepad Shared: -2140546194
       Handle: -5055451889963847731
       Handle Right Selected: -4464969597253999955
@@ -1549,7 +1638,9 @@ TextureImporter:
       Mark x32 Open: 1080825480604336155
       Mark x42: 8586885197115800619
       Mark x42 Open: 8160775752198118580
-      Mouse Scheme: -8346291274449466048
+      Mouse: -8346291274449466048
+      Mouse LMB: -544246529
+      Mouse RMB: 500082658
       Music Off: 2893844524057394724
       Music On: -2343514708694829045
       Numpad Layout: -6595680761151332689
@@ -1568,6 +1659,9 @@ TextureImporter:
       Space: -845255751
       Stick: 362594528
       Swap: -3197610074630747010
+      Trigger L: 1637860631
+      Trigger R: 1987107064
+      Unused Stick: 1509912792
       WASD: 9094600903545770030
       empty: 7301787903208175943
   mipmapLimitGroupName: 

@@ -144,13 +144,13 @@ public class PlayersMenu : MenuBaseWithFlipMark
 
     public void ChangePlayer1Scheme()
     {
-        PlayersSettings.Player1.ControlScheme = player1Submenu.GetScheme();
+        PlayersSettings.ChangeControlScheme(PlayersSettings.Player1, player1Submenu.GetScheme());
         player2Submenu.Block(PlayersSettings.Player1.ControlScheme);
     }
 
     public void ChangePlayer2Scheme()
     {
-        PlayersSettings.Player2.ControlScheme = player2Submenu.GetScheme();
+        PlayersSettings.ChangeControlScheme(PlayersSettings.Player2, player2Submenu.GetScheme());
         player1Submenu.Block(PlayersSettings.Player2.ControlScheme);
     }
 

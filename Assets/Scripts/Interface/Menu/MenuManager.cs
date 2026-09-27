@@ -30,7 +30,7 @@ public class MenuManager : MonoBehaviour
             menu.Initialize(this, menuBackground);
         }
         
-        if (LevelManager.IsMenuLevel())
+        if (LevelsManager.IsMenuLevel())
         {
             mainMenu = menus.Find(menu => menu is MainMenu);
             currentMenu = mainMenu;
@@ -120,7 +120,7 @@ public class MenuManager : MonoBehaviour
             return;
         }
         
-        if (LevelManager.IsMenuLevel())
+        if (LevelsManager.IsMenuLevel())
         {
             if (currentMenu == mainMenu) return;
             mainMenu.SetActive(true);

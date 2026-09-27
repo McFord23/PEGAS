@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BucketPlayer : WallToWallPlayer
 {
+    [FormerlySerializedAs("info")]
     [Header("Bucket")]
-    [SerializeField] private Info info;
+    [SerializeField] private PlayerHint playerHint;
     
     private Status status;
     
@@ -26,7 +28,7 @@ public class BucketPlayer : WallToWallPlayer
         
         if (!IsInputAvailable()) return;
         if (MainActionInput == 0) return;
-        if (!Controls.MainActionPressed) return;
+        if (!Controls.WasMainActionPressed(isPlayer1)) return;
 
         var newStatus = status is Status.Wet ? Status.Dry : Status.Wet;
         SetStatus(newStatus);
@@ -39,7 +41,7 @@ public class BucketPlayer : WallToWallPlayer
         movementCollider.name = $"Player {playerNumber} {status.ToString()} Collider";
         
         var mopType = Utilities.ToCamelCase(status.ToString());
-        var phrase= LocalizationManager.GetPhrase("Gameplay", $"{mopType}Mop");
-        if (!init) info.Show(phrase, Color.white);
+        var phrase= LocalizationManager.GetPhrase($"{LevelsManager.GetActiveLevel().ToString()}/Gameplay", $"{mopType}Mop");
+        if (!init) playerHint.Show(phrase, Color.white);
     }
 }

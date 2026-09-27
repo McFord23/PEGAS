@@ -32,12 +32,23 @@ public class ProgressObjectsManager : MonoBehaviour
         }
     }
     
-    public virtual int GetTargetCount()
+    public int GetTargetCount()
     {
-        return progressObjects.Count;
+        if (progressObjects[0] is not ProgressObjectWithCounter) return progressObjects.Count;
+        
+        var targets = 0;
+            
+        foreach (var progressObject in progressObjects)
+        {
+            var objectWithCounter = progressObject as ProgressObjectWithCounter;
+            if (objectWithCounter == null) continue;
+            targets += objectWithCounter.target;
+        }
+
+        return targets;
     }
     
-    protected virtual void OnChangeProgress(bool isIncrease)
+    private void OnChangeProgress(bool isIncrease)
     {
         if (isIncrease) progressIncreaseEvent?.Invoke();
         else progressDecreaseEvent?.Invoke();

@@ -13,7 +13,7 @@ public class GameMenu : MenuBaseWithImage
     {
         base.Initialize(manager, background);
 
-        if (LevelManager.IsGameLevel())
+        if (LevelsManager.IsGameLevel())
         {
             FlipImage(true);
             ChangePage(MenuBackground.ImagePageType.Arch);
@@ -91,12 +91,12 @@ public class GameMenu : MenuBaseWithImage
 
     public void Continue()
     {
-        LevelManager.Instance.LoadScene(Level.Credits);
+        LevelsManager.Instance.LoadLevel(Level.Credits);
     }
     
     public void Exit()
     {
-        LevelManager.Instance.LoadScene(Level.MainMenu);
+        LevelsManager.Instance.LoadLevel(Level.MainMenu);
     }
 
     private void TryEnableMenu()

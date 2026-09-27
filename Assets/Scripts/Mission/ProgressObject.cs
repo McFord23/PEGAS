@@ -4,6 +4,8 @@ public class ProgressObject : MonoBehaviour
 {
     public delegate void ChangeProgressEvent(bool isIncrease);
     public event ChangeProgressEvent OnChangeProgressEvent;
+
+    protected virtual void Start() { }
     
     public virtual void ChangeProgress(bool isIncrease)
     {

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class ItemDeliveredTrigger : MonoBehaviour
 {
-    public UnityEvent itemDeliveredEvent;
+    [SerializeField] private UnityEvent itemDeliveredEvent;
     
     private void OnTriggerEnter2D(Collider2D item)
     {

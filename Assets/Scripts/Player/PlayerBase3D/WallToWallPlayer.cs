@@ -115,17 +115,17 @@ public class WallToWallPlayer : PlayerBase3D
     private void StrategicRotate()
     {
         if (MoveInput == Vector2.zero) return;
-        if (!Controls.MovePressed) return;
+        if (!Controls.WasMovePressed(isPlayer1)) return;
         if (Speed > 0.1f) return;
         
         var newDirection = MoveInput.x switch
         {
-            > 0 => Direction.Right,
-            < 0 => Direction.Left,
+            > Controls.INPUT_DEAD_ZONE => Direction.Right,
+            < -Controls.INPUT_DEAD_ZONE => Direction.Left,
             _ => MoveInput.y switch
             {
-                > 0 => Direction.Forward,
-                < 0 => Direction.Back,
+                > Controls.INPUT_DEAD_ZONE => Direction.Forward,
+                < -Controls.INPUT_DEAD_ZONE => Direction.Back,
                 _ => direction
             }
         };
@@ -139,7 +139,7 @@ public class WallToWallPlayer : PlayerBase3D
     private void CloseRotate()
     {
         if (MoveInput == Vector2.zero) return;
-        if (!Controls.MovePressed) return;
+        if (!Controls.WasMovePressed(isPlayer1)) return;
         if (Speed > 0.1f) return;
         
         float angle = 0;
@@ -231,7 +231,7 @@ public class WallToWallPlayer : PlayerBase3D
     {
         if (Settings.GameMode is GameMode.LocalCoop) return;
         if (AdditionalActionInput == 0) return;
-        if (!Controls.AdditionalActionPressed) return;
+        if (!Controls.WasAdditionalActionPressed(isPlayer1)) return;
         
         if (mode is Mode.Strategic)
         {

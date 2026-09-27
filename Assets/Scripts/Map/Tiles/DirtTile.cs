@@ -15,7 +15,7 @@ public class DirtTile : Tile
         Clean
     }
     
-    private void Start()
+    protected override void Start()
     {
         SetStatus(Status.Dirt);
     }

@@ -3,12 +3,8 @@ using UnityEngine.InputSystem;
 
 public class Controls : MonoBehaviour
 {
-    private const float GAMEPAD_SENSITIVITY = 8;
-
-    // Gameplay
-    public static bool MovePressed => inputData.Gameplay.Move.triggered;
-    public static bool MainActionPressed => inputData.Gameplay.MainAction.triggered;
-    public static bool AdditionalActionPressed => inputData.Gameplay.AdditionalAction.triggered;
+    public const float INPUT_DEAD_ZONE = 0.25f;
+    private const float FLYING_SENSITIVITY = 8;
     
     // UI
     public static bool Retry => inputData.UI.Retry.triggered;
@@ -32,25 +28,86 @@ public class Controls : MonoBehaviour
     {
         inputData.Disable();
     }
+
+    public static bool WasMovePressed(bool isPlayer1)
+    {
+        var keyboardAndMousePressed = inputData.Gameplay.Move.WasPressedThisFrame();
+        bool gamepadPressed;
+
+        if (PlayersSettings.IsSharedGamepad)
+        {
+            var sharedGamepad = isPlayer1 
+                ? inputData.GameplaySharedGamepad.MoveP1 
+                : inputData.GameplaySharedGamepad.MoveP2;
+            
+            gamepadPressed = sharedGamepad.WasPressedThisFrame();
+        }
+        else
+        {
+            gamepadPressed = inputData.GameplayGamepad.Move.WasPressedThisFrame();
+        }
+        
+        return keyboardAndMousePressed || gamepadPressed;
+    }
+    
+    public static bool WasMainActionPressed(bool isPlayer1)
+    {
+        var keyboardAndMousePressed = inputData.Gameplay.MainAction.WasPressedThisFrame();
+        bool gamepadPressed;
+
+        if (PlayersSettings.IsSharedGamepad)
+        {
+            var sharedGamepad = isPlayer1 
+                ? inputData.GameplaySharedGamepad.MainActionP1 
+                : inputData.GameplaySharedGamepad.MainActionP2;
+            
+            gamepadPressed = sharedGamepad.WasPressedThisFrame();
+        }
+        else
+        {
+            gamepadPressed = inputData.GameplayGamepad.MainAction.WasPressedThisFrame();
+        }
+        
+        return keyboardAndMousePressed || gamepadPressed;
+    }
+    
+    public static bool WasAdditionalActionPressed(bool isPlayer1)
+    {
+        var keyboardAndMousePressed = inputData.Gameplay.AdditionalAction.WasPressedThisFrame();
+        bool gamepadPressed;
+
+        if (PlayersSettings.IsSharedGamepad)
+        {
+            var sharedGamepad = isPlayer1 
+                ? inputData.GameplaySharedGamepad.AdditionalActionP1 
+                : inputData.GameplaySharedGamepad.AdditionalActionP2;
+            
+            gamepadPressed = sharedGamepad.WasPressedThisFrame();
+        }
+        else
+        {
+            gamepadPressed = inputData.GameplayGamepad.AdditionalAction.WasPressedThisFrame();
+        }
+        
+        return keyboardAndMousePressed || gamepadPressed;
+    }
     
     public static Vector2 MoveByGamepad(PlayersSettings.Player player)
     {
+        var level = LevelsManager.GetActiveLevel();
+        var sensitivity = LevelsManager.IsFlyingLevel(level) ? FLYING_SENSITIVITY : 1;
+        
         if (PlayersSettings.IsSharedGamepad)
         {
-            if (player == PlayersSettings.Player1)
-            {
-                return player.Gamepad != null 
-                    ? player.Gamepad.leftStick.ReadValue() * GAMEPAD_SENSITIVITY 
-                    : Vector2.zero;
-            }
+            var inputAction = player == PlayersSettings.Player1
+                ? inputData.GameplaySharedGamepad.MoveP1
+                : inputData.GameplaySharedGamepad.MoveP2;
             
-            return player.Gamepad != null 
-                ? player.Gamepad.rightStick.ReadValue() * GAMEPAD_SENSITIVITY 
-                : Vector2.zero;
+            return inputAction.ReadValue<Vector2>() * sensitivity;
         }
         
         return player.Gamepad != null 
-            ? player.Gamepad.leftStick.ReadValue() * GAMEPAD_SENSITIVITY 
+            ? player.Gamepad.leftStick.ReadValue() * sensitivity
             : Vector2.zero;
     }
 
@@ -58,16 +115,11 @@ public class Controls : MonoBehaviour
     {
         if (PlayersSettings.IsSharedGamepad)
         {
-            if (player == PlayersSettings.Player1)
-            {
-                return player.Gamepad != null 
-                    ? player.Gamepad.leftTrigger.ReadValue()  
-                    : 0;
-            }
+            var inputAction = player == PlayersSettings.Player1
+                ? inputData.GameplaySharedGamepad.MainActionP1
+                : inputData.GameplaySharedGamepad.MainActionP2;
             
-            return player.Gamepad != null 
-                ? player.Gamepad.rightTrigger.ReadValue()  
-                : 0;
+            return inputAction.ReadValue<float>();
         }
         
         return player.Gamepad != null 
@@ -79,16 +131,11 @@ public class Controls : MonoBehaviour
     {
         if (PlayersSettings.IsSharedGamepad)
         {
-            if (player == PlayersSettings.Player1)
-            {
-                return player.Gamepad != null 
-                    ? player.Gamepad.leftShoulder.ReadValue()  
-                    : 0;
-            }
+            var inputAction = player == PlayersSettings.Player1
+                ? inputData.GameplaySharedGamepad.AdditionalActionP1
+                : inputData.GameplaySharedGamepad.AdditionalActionP2;
             
-            return player.Gamepad != null 
-                ? player.Gamepad.rightShoulder.ReadValue()  
-                : 0;
+            return inputAction.ReadValue<float>();
         }
         
         return player.Gamepad != null 

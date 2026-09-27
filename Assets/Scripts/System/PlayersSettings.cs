@@ -33,16 +33,30 @@ public static class PlayersSettings
     
     public delegate void SwapCharactersEvent();
     public static event SwapCharactersEvent OnSwapCharactersEvent;
+    
+    public delegate void ChangeControlSchemeEvent();
+    public static event ChangeControlSchemeEvent OnChangeControlEvent;
+    
+    public delegate void ChangeShareGamepadEvent();
+    public static event ChangeShareGamepadEvent OnChangeShareGamepadEvent;
 
     public static void ClearSubscribers()
     {
         OnSwapCharactersEvent = null;
+        OnChangeControlEvent = null;
+        OnChangeShareGamepadEvent = null;
     }
     
     public static void SwapCharacters()
     {
         (Player1.Character, Player2.Character) = (Player2.Character, Player1.Character);
         OnSwapCharactersEvent?.Invoke();
+    }
+
+    public static void ChangeControlScheme(Player player, ControlScheme controlScheme)
+    {
+        player.ControlScheme = controlScheme;
+        OnChangeControlEvent?.Invoke();
     }
     
     public static bool CanShareGamepad()
@@ -67,14 +81,12 @@ public static class PlayersSettings
             Player1.Gamepad = Player2.Gamepad;
         }
 
-        IsSharedGamepad = true;
+        SetSharedGamepad(true);
     }
 
     public static void GiveGamepad(bool toPlayer1)
     {
         if (!CanShareGamepad()) return;
-        
-        IsSharedGamepad = false;
         
         if (toPlayer1)
         {
@@ -86,5 +98,13 @@ public static class PlayersSettings
             Player2.Gamepad = Player1.Gamepad;
             Player1.Gamepad = null;
         }
+        
+        SetSharedGamepad(false);
+    }
+
+    private static void SetSharedGamepad(bool value)
+    {
+        IsSharedGamepad = value;
+        OnChangeShareGamepadEvent?.Invoke();
     }
 }

@@ -1,49 +1,35 @@
 ﻿using UnityEngine;
 
-public class Room : ProgressObject
+public class Room : ProgressObjectWithCounter
 {
-    public int Target => targets.GetTargetCount();
-    
+    [Header("Room")]
     [SerializeField] private ProgressObjectsManager targets;
     [SerializeField] private Door[] doors;
-    
-    private bool isDone;
-    private int progress;
+
+    protected override void Start()
+    {
+        target = targets.GetTargetCount();
+    }
 
     public override void OnReset()
     {
+        base.OnReset();
+        
         foreach (var door in doors)
         {
             door.Close();
         }
-
-        progress = 0;
-        isDone = false;
+        
         targets.OnReset();
     }
 
-    public override void ChangeProgress(bool isIncrease)
+    protected override void Done()
     {
-        base.ChangeProgress(isIncrease);
-
-        if (isIncrease)
+        foreach (var door in doors)
         {
-            if (isDone) return;
-        
-            progress++;
-        
-            if (progress < Target) return;
-
-            isDone = true;
-        
-            foreach (var door in doors)
-            {
-                door.Open();
-            }
+            door.Open();
         }
-        else if (progress > 0)
-        {
-            progress--;
-        }
+        
+        base.Done();
     }
 }

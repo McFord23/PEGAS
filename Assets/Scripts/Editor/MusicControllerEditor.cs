@@ -12,7 +12,7 @@ public class MusicControllerEditor : Editor
     private void OnEnable()
     {
         musicController = (MusicController)target;
-        isGameScene = LevelManager.IsGameLevel();
+        isGameScene = LevelsManager.IsGameLevel();
     }
     
     public override void OnInspectorGUI()

@@ -52,7 +52,7 @@
                 {
                     "name": "",
                     "id": "ee156610-029e-45c7-ad11-4efe6b75bf2d",
-                    "path": "<Pointer>/delta",
+                    "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Mouse",
@@ -173,7 +173,7 @@
                 {
                     "name": "",
                     "id": "81d4ca09-2dd0-43dd-a3ce-f479537241a2",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -217,7 +217,7 @@
                 {
                     "name": "",
                     "id": "e6336754-f23c-4637-8d7f-2bd6790adc4b",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -255,6 +255,211 @@
                     "processors": "",
                     "groups": ";IJKL;Arrows",
                     "action": "Additional Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Gameplay Gamepad",
+            "id": "bbcb875d-2e71-4020-b3dd-cd11887d4e76",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "87b0d5f6-51da-4758-b31f-6f40540d6caa",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Main Action",
+                    "type": "Value",
+                    "id": "b9b214b1-3d67-4ad9-a991-c9bc5caffa4b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Additional Action",
+                    "type": "Value",
+                    "id": "496aba4c-b1bd-4045-a93c-b5b5adaf84cb",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1fb7c6ea-499e-4592-858c-e503c34297b2",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Mouse;WASD;Arrows",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27660444-232d-4314-b404-c3af9c1f90da",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Mouse;WASD;Arrows",
+                    "action": "Main Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5103c734-4716-48a9-abd3-e40b0db80df1",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Mouse;WASD;Arrows",
+                    "action": "Additional Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Gameplay Shared Gamepad",
+            "id": "d2257dfb-755c-4285-8bc6-028cc0157c95",
+            "actions": [
+                {
+                    "name": "Move P1",
+                    "type": "Value",
+                    "id": "3f568496-856a-4c41-925d-efc2622abcba",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Main Action P1",
+                    "type": "Value",
+                    "id": "f6326c10-5f16-4878-8521-7feb82f7024c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Additional Action P1",
+                    "type": "Value",
+                    "id": "764fb91b-4747-436a-b673-9d2b05945f1c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Move P2",
+                    "type": "Value",
+                    "id": "b314267e-4e29-4635-bbf9-07cb980ac77b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Main Action P2",
+                    "type": "Value",
+                    "id": "3f24489d-0424-4fd6-9989-7ad051d130a3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Additional Action P2",
+                    "type": "Value",
+                    "id": "34cb147b-214c-43da-82dc-9ba33c6cb4cc",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2b08696-b622-4477-aa4f-b63d7cff010b",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Mouse;WASD;Arrows",
+                    "action": "Move P1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d4cc231-be35-4d41-a574-c4916dd62d2a",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Mouse;WASD;Arrows",
+                    "action": "Move P2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35046bba-a349-4900-8359-8b0d59bb6684",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Mouse;WASD;Arrows",
+                    "action": "Main Action P1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fae0cf9d-d313-436c-9ec7-6af6c3ea0bb7",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Mouse;WASD;Arrows",
+                    "action": "Main Action P2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b36209c4-0ea9-4d9f-90ca-251713e7581c",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Mouse;WASD;Arrows",
+                    "action": "Additional Action P1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22647957-811b-46c0-b7db-0c0ac81368b2",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;Mouse;WASD;Arrows",
+                    "action": "Additional Action P2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -602,17 +807,6 @@
         }
     ],
     "controlSchemes": [
-        {
-            "name": "Gamepad",
-            "bindingGroup": "Gamepad",
-            "devices": [
-                {
-                    "devicePath": "<Gamepad>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
         {
             "name": "Mouse",
             "bindingGroup": "Mouse",

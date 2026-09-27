@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class Info : MonoBehaviour
+public class PlayerHint : MonoBehaviour
 {
     private const float MOVE_SPEED = 4f;
     private const float COLOR_SPEED = 2;

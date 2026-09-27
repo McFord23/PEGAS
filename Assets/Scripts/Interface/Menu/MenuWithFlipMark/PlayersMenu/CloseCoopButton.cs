@@ -29,8 +29,8 @@ public class CloseCoopButton : MonoBehaviour
 
     private void Start()
     {
-        var level = LevelManager.GetActiveLevel();
-        if (LevelManager.IsLevelRequiresCoop(level) && Settings.GameMode is not GameMode.Single)
+        var level = LevelsManager.GetActiveLevel();
+        if (LevelsManager.IsLevelRequiresCoop(level) && Settings.GameMode is not GameMode.Single)
         {
             gameObject.SetActive(false);
         }

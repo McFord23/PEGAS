@@ -138,7 +138,7 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ee156610-029e-45c7-ad11-4efe6b75bf2d"",
-                    ""path"": ""<Pointer>/delta"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Mouse"",
@@ -259,7 +259,7 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""81d4ca09-2dd0-43dd-a3ce-f479537241a2"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -303,7 +303,7 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e6336754-f23c-4637-8d7f-2bd6790adc4b"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -341,6 +341,211 @@ public partial class @InputData: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";IJKL;Arrows"",
                     ""action"": ""Additional Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gameplay Gamepad"",
+            ""id"": ""bbcb875d-2e71-4020-b3dd-cd11887d4e76"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""87b0d5f6-51da-4758-b31f-6f40540d6caa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Main Action"",
+                    ""type"": ""Value"",
+                    ""id"": ""b9b214b1-3d67-4ad9-a991-c9bc5caffa4b"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Additional Action"",
+                    ""type"": ""Value"",
+                    ""id"": ""496aba4c-b1bd-4045-a93c-b5b5adaf84cb"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""1fb7c6ea-499e-4592-858c-e503c34297b2"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse;WASD;Arrows"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27660444-232d-4314-b404-c3af9c1f90da"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;Mouse;WASD;Arrows"",
+                    ""action"": ""Main Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5103c734-4716-48a9-abd3-e40b0db80df1"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;Mouse;WASD;Arrows"",
+                    ""action"": ""Additional Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gameplay Shared Gamepad"",
+            ""id"": ""d2257dfb-755c-4285-8bc6-028cc0157c95"",
+            ""actions"": [
+                {
+                    ""name"": ""Move P1"",
+                    ""type"": ""Value"",
+                    ""id"": ""3f568496-856a-4c41-925d-efc2622abcba"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Main Action P1"",
+                    ""type"": ""Value"",
+                    ""id"": ""f6326c10-5f16-4878-8521-7feb82f7024c"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Additional Action P1"",
+                    ""type"": ""Value"",
+                    ""id"": ""764fb91b-4747-436a-b673-9d2b05945f1c"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Move P2"",
+                    ""type"": ""Value"",
+                    ""id"": ""b314267e-4e29-4635-bbf9-07cb980ac77b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Main Action P2"",
+                    ""type"": ""Value"",
+                    ""id"": ""3f24489d-0424-4fd6-9989-7ad051d130a3"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""Additional Action P2"",
+                    ""type"": ""Value"",
+                    ""id"": ""34cb147b-214c-43da-82dc-9ba33c6cb4cc"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f2b08696-b622-4477-aa4f-b63d7cff010b"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse;WASD;Arrows"",
+                    ""action"": ""Move P1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d4cc231-be35-4d41-a574-c4916dd62d2a"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse;WASD;Arrows"",
+                    ""action"": ""Move P2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35046bba-a349-4900-8359-8b0d59bb6684"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;Mouse;WASD;Arrows"",
+                    ""action"": ""Main Action P1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fae0cf9d-d313-436c-9ec7-6af6c3ea0bb7"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;Mouse;WASD;Arrows"",
+                    ""action"": ""Main Action P2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b36209c4-0ea9-4d9f-90ca-251713e7581c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;Mouse;WASD;Arrows"",
+                    ""action"": ""Additional Action P1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22647957-811b-46c0-b7db-0c0ac81368b2"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;Mouse;WASD;Arrows"",
+                    ""action"": ""Additional Action P2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -689,17 +894,6 @@ public partial class @InputData: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""Gamepad"",
-            ""bindingGroup"": ""Gamepad"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Mouse"",
             ""bindingGroup"": ""Mouse"",
             ""devices"": [
@@ -739,6 +933,19 @@ public partial class @InputData: IInputActionCollection2, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_MainAction = m_Gameplay.FindAction("Main Action", throwIfNotFound: true);
         m_Gameplay_AdditionalAction = m_Gameplay.FindAction("Additional Action", throwIfNotFound: true);
+        // Gameplay Gamepad
+        m_GameplayGamepad = asset.FindActionMap("Gameplay Gamepad", throwIfNotFound: true);
+        m_GameplayGamepad_Move = m_GameplayGamepad.FindAction("Move", throwIfNotFound: true);
+        m_GameplayGamepad_MainAction = m_GameplayGamepad.FindAction("Main Action", throwIfNotFound: true);
+        m_GameplayGamepad_AdditionalAction = m_GameplayGamepad.FindAction("Additional Action", throwIfNotFound: true);
+        // Gameplay Shared Gamepad
+        m_GameplaySharedGamepad = asset.FindActionMap("Gameplay Shared Gamepad", throwIfNotFound: true);
+        m_GameplaySharedGamepad_MoveP1 = m_GameplaySharedGamepad.FindAction("Move P1", throwIfNotFound: true);
+        m_GameplaySharedGamepad_MainActionP1 = m_GameplaySharedGamepad.FindAction("Main Action P1", throwIfNotFound: true);
+        m_GameplaySharedGamepad_AdditionalActionP1 = m_GameplaySharedGamepad.FindAction("Additional Action P1", throwIfNotFound: true);
+        m_GameplaySharedGamepad_MoveP2 = m_GameplaySharedGamepad.FindAction("Move P2", throwIfNotFound: true);
+        m_GameplaySharedGamepad_MainActionP2 = m_GameplaySharedGamepad.FindAction("Main Action P2", throwIfNotFound: true);
+        m_GameplaySharedGamepad_AdditionalActionP2 = m_GameplaySharedGamepad.FindAction("Additional Action P2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Retry = m_UI.FindAction("Retry", throwIfNotFound: true);
@@ -754,6 +961,8 @@ public partial class @InputData: IInputActionCollection2, IDisposable
     ~@InputData()
     {
         UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, InputData.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameplayGamepad.enabled, "This will cause a leak and performance issues, InputData.GameplayGamepad.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameplaySharedGamepad.enabled, "This will cause a leak and performance issues, InputData.GameplaySharedGamepad.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputData.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_DevOps.enabled, "This will cause a leak and performance issues, InputData.DevOps.Disable() has not been called.");
     }
@@ -945,6 +1154,275 @@ public partial class @InputData: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
     /// </summary>
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Gameplay Gamepad
+    private readonly InputActionMap m_GameplayGamepad;
+    private List<IGameplayGamepadActions> m_GameplayGamepadActionsCallbackInterfaces = new List<IGameplayGamepadActions>();
+    private readonly InputAction m_GameplayGamepad_Move;
+    private readonly InputAction m_GameplayGamepad_MainAction;
+    private readonly InputAction m_GameplayGamepad_AdditionalAction;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Gameplay Gamepad".
+    /// </summary>
+    public struct GameplayGamepadActions
+    {
+        private @InputData m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public GameplayGamepadActions(@InputData wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "GameplayGamepad/Move".
+        /// </summary>
+        public InputAction @Move => m_Wrapper.m_GameplayGamepad_Move;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplayGamepad/MainAction".
+        /// </summary>
+        public InputAction @MainAction => m_Wrapper.m_GameplayGamepad_MainAction;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplayGamepad/AdditionalAction".
+        /// </summary>
+        public InputAction @AdditionalAction => m_Wrapper.m_GameplayGamepad_AdditionalAction;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_GameplayGamepad; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="GameplayGamepadActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(GameplayGamepadActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="GameplayGamepadActions" />
+        public void AddCallbacks(IGameplayGamepadActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameplayGamepadActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameplayGamepadActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @MainAction.started += instance.OnMainAction;
+            @MainAction.performed += instance.OnMainAction;
+            @MainAction.canceled += instance.OnMainAction;
+            @AdditionalAction.started += instance.OnAdditionalAction;
+            @AdditionalAction.performed += instance.OnAdditionalAction;
+            @AdditionalAction.canceled += instance.OnAdditionalAction;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="GameplayGamepadActions" />
+        private void UnregisterCallbacks(IGameplayGamepadActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @MainAction.started -= instance.OnMainAction;
+            @MainAction.performed -= instance.OnMainAction;
+            @MainAction.canceled -= instance.OnMainAction;
+            @AdditionalAction.started -= instance.OnAdditionalAction;
+            @AdditionalAction.performed -= instance.OnAdditionalAction;
+            @AdditionalAction.canceled -= instance.OnAdditionalAction;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameplayGamepadActions.UnregisterCallbacks(IGameplayGamepadActions)" />.
+        /// </summary>
+        /// <seealso cref="GameplayGamepadActions.UnregisterCallbacks(IGameplayGamepadActions)" />
+        public void RemoveCallbacks(IGameplayGamepadActions instance)
+        {
+            if (m_Wrapper.m_GameplayGamepadActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="GameplayGamepadActions.AddCallbacks(IGameplayGamepadActions)" />
+        /// <seealso cref="GameplayGamepadActions.RemoveCallbacks(IGameplayGamepadActions)" />
+        /// <seealso cref="GameplayGamepadActions.UnregisterCallbacks(IGameplayGamepadActions)" />
+        public void SetCallbacks(IGameplayGamepadActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameplayGamepadActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameplayGamepadActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="GameplayGamepadActions" /> instance referencing this action map.
+    /// </summary>
+    public GameplayGamepadActions @GameplayGamepad => new GameplayGamepadActions(this);
+
+    // Gameplay Shared Gamepad
+    private readonly InputActionMap m_GameplaySharedGamepad;
+    private List<IGameplaySharedGamepadActions> m_GameplaySharedGamepadActionsCallbackInterfaces = new List<IGameplaySharedGamepadActions>();
+    private readonly InputAction m_GameplaySharedGamepad_MoveP1;
+    private readonly InputAction m_GameplaySharedGamepad_MainActionP1;
+    private readonly InputAction m_GameplaySharedGamepad_AdditionalActionP1;
+    private readonly InputAction m_GameplaySharedGamepad_MoveP2;
+    private readonly InputAction m_GameplaySharedGamepad_MainActionP2;
+    private readonly InputAction m_GameplaySharedGamepad_AdditionalActionP2;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Gameplay Shared Gamepad".
+    /// </summary>
+    public struct GameplaySharedGamepadActions
+    {
+        private @InputData m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public GameplaySharedGamepadActions(@InputData wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "GameplaySharedGamepad/MoveP1".
+        /// </summary>
+        public InputAction @MoveP1 => m_Wrapper.m_GameplaySharedGamepad_MoveP1;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplaySharedGamepad/MainActionP1".
+        /// </summary>
+        public InputAction @MainActionP1 => m_Wrapper.m_GameplaySharedGamepad_MainActionP1;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplaySharedGamepad/AdditionalActionP1".
+        /// </summary>
+        public InputAction @AdditionalActionP1 => m_Wrapper.m_GameplaySharedGamepad_AdditionalActionP1;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplaySharedGamepad/MoveP2".
+        /// </summary>
+        public InputAction @MoveP2 => m_Wrapper.m_GameplaySharedGamepad_MoveP2;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplaySharedGamepad/MainActionP2".
+        /// </summary>
+        public InputAction @MainActionP2 => m_Wrapper.m_GameplaySharedGamepad_MainActionP2;
+        /// <summary>
+        /// Provides access to the underlying input action "GameplaySharedGamepad/AdditionalActionP2".
+        /// </summary>
+        public InputAction @AdditionalActionP2 => m_Wrapper.m_GameplaySharedGamepad_AdditionalActionP2;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_GameplaySharedGamepad; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="GameplaySharedGamepadActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(GameplaySharedGamepadActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="GameplaySharedGamepadActions" />
+        public void AddCallbacks(IGameplaySharedGamepadActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GameplaySharedGamepadActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameplaySharedGamepadActionsCallbackInterfaces.Add(instance);
+            @MoveP1.started += instance.OnMoveP1;
+            @MoveP1.performed += instance.OnMoveP1;
+            @MoveP1.canceled += instance.OnMoveP1;
+            @MainActionP1.started += instance.OnMainActionP1;
+            @MainActionP1.performed += instance.OnMainActionP1;
+            @MainActionP1.canceled += instance.OnMainActionP1;
+            @AdditionalActionP1.started += instance.OnAdditionalActionP1;
+            @AdditionalActionP1.performed += instance.OnAdditionalActionP1;
+            @AdditionalActionP1.canceled += instance.OnAdditionalActionP1;
+            @MoveP2.started += instance.OnMoveP2;
+            @MoveP2.performed += instance.OnMoveP2;
+            @MoveP2.canceled += instance.OnMoveP2;
+            @MainActionP2.started += instance.OnMainActionP2;
+            @MainActionP2.performed += instance.OnMainActionP2;
+            @MainActionP2.canceled += instance.OnMainActionP2;
+            @AdditionalActionP2.started += instance.OnAdditionalActionP2;
+            @AdditionalActionP2.performed += instance.OnAdditionalActionP2;
+            @AdditionalActionP2.canceled += instance.OnAdditionalActionP2;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="GameplaySharedGamepadActions" />
+        private void UnregisterCallbacks(IGameplaySharedGamepadActions instance)
+        {
+            @MoveP1.started -= instance.OnMoveP1;
+            @MoveP1.performed -= instance.OnMoveP1;
+            @MoveP1.canceled -= instance.OnMoveP1;
+            @MainActionP1.started -= instance.OnMainActionP1;
+            @MainActionP1.performed -= instance.OnMainActionP1;
+            @MainActionP1.canceled -= instance.OnMainActionP1;
+            @AdditionalActionP1.started -= instance.OnAdditionalActionP1;
+            @AdditionalActionP1.performed -= instance.OnAdditionalActionP1;
+            @AdditionalActionP1.canceled -= instance.OnAdditionalActionP1;
+            @MoveP2.started -= instance.OnMoveP2;
+            @MoveP2.performed -= instance.OnMoveP2;
+            @MoveP2.canceled -= instance.OnMoveP2;
+            @MainActionP2.started -= instance.OnMainActionP2;
+            @MainActionP2.performed -= instance.OnMainActionP2;
+            @MainActionP2.canceled -= instance.OnMainActionP2;
+            @AdditionalActionP2.started -= instance.OnAdditionalActionP2;
+            @AdditionalActionP2.performed -= instance.OnAdditionalActionP2;
+            @AdditionalActionP2.canceled -= instance.OnAdditionalActionP2;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameplaySharedGamepadActions.UnregisterCallbacks(IGameplaySharedGamepadActions)" />.
+        /// </summary>
+        /// <seealso cref="GameplaySharedGamepadActions.UnregisterCallbacks(IGameplaySharedGamepadActions)" />
+        public void RemoveCallbacks(IGameplaySharedGamepadActions instance)
+        {
+            if (m_Wrapper.m_GameplaySharedGamepadActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="GameplaySharedGamepadActions.AddCallbacks(IGameplaySharedGamepadActions)" />
+        /// <seealso cref="GameplaySharedGamepadActions.RemoveCallbacks(IGameplaySharedGamepadActions)" />
+        /// <seealso cref="GameplaySharedGamepadActions.UnregisterCallbacks(IGameplaySharedGamepadActions)" />
+        public void SetCallbacks(IGameplaySharedGamepadActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GameplaySharedGamepadActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GameplaySharedGamepadActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="GameplaySharedGamepadActions" /> instance referencing this action map.
+    /// </summary>
+    public GameplaySharedGamepadActions @GameplaySharedGamepad => new GameplaySharedGamepadActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1181,19 +1659,6 @@ public partial class @InputData: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="DevOpsActions" /> instance referencing this action map.
     /// </summary>
     public DevOpsActions @DevOps => new DevOpsActions(this);
-    private int m_GamepadSchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme GamepadScheme
-    {
-        get
-        {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
-        }
-    }
     private int m_MouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1261,6 +1726,85 @@ public partial class @InputData: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAdditionalAction(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay Gamepad" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="GameplayGamepadActions.AddCallbacks(IGameplayGamepadActions)" />
+    /// <seealso cref="GameplayGamepadActions.RemoveCallbacks(IGameplayGamepadActions)" />
+    public interface IGameplayGamepadActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Main Action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMainAction(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Additional Action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAdditionalAction(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay Shared Gamepad" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="GameplaySharedGamepadActions.AddCallbacks(IGameplaySharedGamepadActions)" />
+    /// <seealso cref="GameplaySharedGamepadActions.RemoveCallbacks(IGameplaySharedGamepadActions)" />
+    public interface IGameplaySharedGamepadActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Move P1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveP1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Main Action P1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMainActionP1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Additional Action P1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAdditionalActionP1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Move P2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveP2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Main Action P2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMainActionP2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Additional Action P2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAdditionalActionP2(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
