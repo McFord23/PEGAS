@@ -151,7 +151,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: v1.3.0-dev.1 Disciplinary Cleanup
+  bundleVersion: v1.3.0-dev.3 Disciplinary Cleanup
   preloadedAssets:
   - {fileID: 11400000, guid: 63803f318ffb9954595c1896c9337e7c, type: 2}
   metroInputSource: 0

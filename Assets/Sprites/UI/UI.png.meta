@@ -1105,10 +1105,10 @@ TextureImporter:
       name: Gamepad Scheme
       rect:
         serializedVersion: 2
-        x: 230
-        y: 43
-        width: 156
-        height: 92
+        x: 249
+        y: 53
+        width: 119
+        height: 74
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1432,7 +1432,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Unused Stick
+      name: Stick Unused
       rect:
         serializedVersion: 2
         x: 44
@@ -1457,7 +1457,7 @@ TextureImporter:
       name: Trigger R
       rect:
         serializedVersion: 2
-        x: 7
+        x: 40
         y: 200
         width: 25
         height: 12
@@ -1479,7 +1479,7 @@ TextureImporter:
       name: Trigger L
       rect:
         serializedVersion: 2
-        x: 40
+        x: 7
         y: 200
         width: 25
         height: 12
@@ -1550,7 +1550,7 @@ TextureImporter:
         width: 116
         height: 92
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1572,7 +1572,7 @@ TextureImporter:
         width: 116
         height: 92
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -1658,10 +1658,10 @@ TextureImporter:
       Sound On: 4529634503963134589
       Space: -845255751
       Stick: 362594528
+      Stick Unused: 1509912792
       Swap: -3197610074630747010
       Trigger L: 1637860631
       Trigger R: 1987107064
-      Unused Stick: 1509912792
       WASD: 9094600903545770030
       empty: 7301787903208175943
   mipmapLimitGroupName: 
